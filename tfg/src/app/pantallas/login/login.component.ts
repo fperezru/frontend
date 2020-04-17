@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { LoginUsuario } from 'src/app/core/clases/clases';
 import { AuthService } from 'src/app/core/services/authService/auth-service.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { Router } from '@angular/router';
+import { AnimacionService } from 'src/app/core/services/animacionService/animacion-service.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,14 @@ export class LoginComponent implements OnInit {
   isLoginFail = false;
   roles: string[] = [];
   errorMsg = '';
+  hide: boolean;
+  disabled: boolean;
+  loading: boolean;
 
-  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router) { }
+  @ViewChild('rendererCanvas', {static: true})
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+
+  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, private animacionService: AnimacionService) { }
 
   ngOnInit() {
     if (this.tokenService.getToken()) {
@@ -26,6 +33,11 @@ export class LoginComponent implements OnInit {
       this.isLoginFail = false;
       this.roles = this.tokenService.getAuthorities();
     }
+
+    this.animacionService.createScene(this.rendererCanvas);
+    this.animacionService.animate();
+    this.hide = true;
+    this.disabled = false;
   }
 
   onLogin(): void {
@@ -38,13 +50,22 @@ export class LoginComponent implements OnInit {
 
       this.isLogged = true;
       this.isLoginFail = false;
+      this.loading = true;
+      this.disabled = true;
       this.roles = this.tokenService.getAuthorities();
-      window.location.reload();
     },
       (err: any) => {
         this.isLogged = false;
         this.isLoginFail = true;
+        this.loading = false;
         this.errorMsg = err.error.message;
+      },
+      () => {
+        if(this.isLogged = true) {
+          this.router.navigate(['home']);
+        } else {
+          console.log("Error al iniciar sesión");
+        }
       }
     );
   }

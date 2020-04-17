@@ -12,6 +12,12 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [LoginComponent, HomeComponent, PersonasComponent, MascotasComponent, ViajesComponent, OtrosComponent, RegistroComponent],
@@ -20,7 +26,12 @@ import { RegistroComponent } from './registro/registro.component';
     MatSidenavModule,
     MatListModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class PantallasModule { }
