@@ -128,6 +128,10 @@ export class AnimacionService implements OnDestroy {
   public animate(): void {
     // We have to run this outside angular zones,
     // because it could trigger heavy changeDetection cycles.
+    window.addEventListener('resize', () => {
+      this.resize();
+
+    });
     this.ngZone.runOutsideAngular(() => {
       if (document.readyState !== 'loading') {
         this.render();
@@ -135,11 +139,6 @@ export class AnimacionService implements OnDestroy {
 
         window.addEventListener('DOMContentLoaded', () => {
           this.render();
-        });
-
-        window.addEventListener('resize', () => {
-          this.resize();
-
         });
       }
     });

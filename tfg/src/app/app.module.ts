@@ -7,12 +7,14 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { PantallasModule } from './pantallas/pantallas.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { interceptorProvider } from './core/services/interceptorService/interceptor-service.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,9 @@ import { interceptorProvider } from './core/services/interceptorService/intercep
     HttpModule,
     HttpClientModule,
     PantallasModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CoreModule,
+    SharedModule
   ],
   providers: [interceptorProvider],
   bootstrap: [AppComponent]

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { JwtModel } from 'src/app/core/clases/clases';
 import { NuevoUsuario } from 'src/app/core/clases/clases';
 
+const cabecera = {headers: new HttpHeaders({'Content-Type': ''})};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +18,10 @@ export class AuthService {
 
   public login(usuario: LoginUsuario): Observable<JwtModel> {
     return this.httpClient.post<JwtModel>(this.authURL + 'login', usuario);
+  }
+
+  public getUser(nombreUsuario: String): Observable<any> {
+    return this.httpClient.get<any>(this.authURL + `user/${nombreUsuario}`, cabecera);
   }
 
   public registro(usuario: NuevoUsuario): Observable<any> {

@@ -1,0 +1,80 @@
+.container {
+    background-color: mediumvioletred;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 56px;
+    min-height: 56px;
+  }
+  
+  .header-title {
+    display: flex;
+  
+    align-items: center;
+    padding-left: 0;
+  
+    :hover {
+      cursor: pointer;
+    }
+  
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  .header-menu {
+  
+    width: fit-content;
+  
+    button {
+      background-color: transparent;
+      border: none;
+    }
+  }
+  
+  button:focus {
+    border: none;
+    outline: none;
+  }
+  
+  button.cdk-program-focused {
+    background-color: inherit;
+  
+    div {
+      background-color: inherit;
+      z-index: -1;
+    }
+  }
+  
+  button:not(disabled) {
+    cursor: pointer;
+  }
+  
+  .div-header-submenu {
+    width: 100%;
+  }
+  
+  .header-submenu {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      box-shadow: none;
+    }
+  }
+  
+  .header-icon {
+    color: white;
+    font-size: 24px;
+  }
+  
+  mat-label {
+    color: white;
+    font-size: 30px;
+  }

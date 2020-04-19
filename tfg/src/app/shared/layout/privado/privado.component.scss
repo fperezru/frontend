@@ -1,0 +1,15 @@
+.private-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  
+    .container {
+      height: 100%;
+      background-color: rgb(245, 245, 245);
+    }
+  
+    .content {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+  }

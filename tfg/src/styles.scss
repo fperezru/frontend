@@ -9,3 +9,12 @@ body {
 }
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.snackbar-ok {
+    background: #00c853;
+    color: white;
+  }
+  .snackbar-no {
+    background: #d50000;
+    color: white;
+  }

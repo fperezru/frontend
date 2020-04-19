@@ -20,6 +20,10 @@ export class PersonaService {
     return this.httpClient.get<Persona>(this.personaURL + `detalle/${id}`);
   }
 
+  public getPersonasPorUser(id: Number): Observable<Persona[]> {
+    return this.httpClient.get<Persona[]>(this.personaURL + `lista/${id}`);
+  }
+
   public crearPersona(persona: Persona): Observable<any> {
     return this.httpClient.post<any>(this.personaURL + 'nuevo', persona);
   }

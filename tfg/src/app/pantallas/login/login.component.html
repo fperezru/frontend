@@ -21,7 +21,7 @@
               </mat-form-field>
           </div>
           <div id="actions">
-            <button id="bregistro" mat-raised-button routerLink="/registro">Registrarse</button>
+            <button id="bregistro" type="button" mat-raised-button routerLink="/registro">Registrarse</button>
             <button id="blogin" mat-raised-button type="submit" [disabled]="disabled">
               <span *ngIf="!loading; else load">Entrar</span>
               <ng-template #load>

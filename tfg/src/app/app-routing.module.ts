@@ -9,24 +9,47 @@ import { LoginComponent } from './pantallas/login/login.component';
 import { RegistroComponent } from './pantallas/registro/registro.component';
 
 import { GuardService as guard} from 'src/app/core/services/guardService/guard-service.service';
+import { PublicoComponent } from './shared/layout/publico/publico.component';
+import { PrivadoComponent } from './shared/layout/privado/privado.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'personas', component: PersonasComponent},
-  
-  {path: 'detalle/:id', component: MascotasComponent,
-    canActivate: [guard], data: { expectedRol: ['admin', 'user']}},
+  {
+    path: 'login', 
+    component: PublicoComponent,
+    children : [{path:'', component: LoginComponent}],
+  },
+  {
+    path: 'registro', 
+    component: RegistroComponent,
+  },
+  {
+    path: '', 
+    component: PrivadoComponent,
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent,
+      },
+      {
+        path: 'personas',
+        component: PersonasComponent,
+      },
+      {
+        path: 'mascotas',
+        component: MascotasComponent,
+      },
+      {
+        path: 'viajes',
+        component: ViajesComponent,
+      },
+      {
+        path: 'otros',
+        component: OtrosComponent,
+      },
 
-  {path: 'editar/:id', component: ViajesComponent,
-    canActivate: [guard], data: { expectedRol: ['admin']}},
-
-  {path: 'nuevo', component: OtrosComponent,
-    canActivate: [guard], data: { expectedRol: ['admin']}},
-
-  {path: 'login', component: LoginComponent},
-  {path: 'registro', component: RegistroComponent},
-  {path: '**', redirectTo: 'home', pathMatch: 'full'}
+    ],
+    canActivate: [guard]
+  },
 ];
 
 @NgModule({

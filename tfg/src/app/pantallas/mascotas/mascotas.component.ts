@@ -17,18 +17,8 @@ export class MascotasComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.params.id;
-    this.personaService.getPersonaPorId(id).subscribe(data => {
-      this.persona = data;
-    },
-      err => {
-        this.router.navigate(['personas']);
-      }
-    );
+
   }
 
-  volver(): void {
-    window.history.back();
-  }
-
+ 
 }

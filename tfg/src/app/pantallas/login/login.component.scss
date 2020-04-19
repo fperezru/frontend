@@ -9,96 +9,93 @@ canvas {
     height: 100%;
 }
 
-  #login-right {
-    max-width: 600px;
-    padding: 35px;
-    border-radius: 15px;
-    background: rgba(16,16,16,0.5);
-    display: flex;
-    justify-content: center;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 200px;
-    color: white;
+#login-right {
+  max-width: 600px;
+  padding: 35px;
+  border-radius: 15px;
+  background: rgba(16,16,16,0.5);
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 200px;
+  color: white;
 
-    ::ng-deep {
-        .mat-form-field-appearance-outline .mat-form-field-outline {
-           color: white;
-        }
-        mat-form-field {
-            margin-bottom: 20px;
-
-           .mat-hint, input, ::placeholder, .mat-form-field-label {
-              color: white;
-           }
-        }
-     }
-
-  
-    form {
-      margin: auto;
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: white;
     }
-  
-    #card {
-      width: auto;
-  
-      #header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0.8;
-        padding-bottom: 15px;
-        margin-bottom: 30px;
-  
-        span {
-          font-size: 5vh;
-        }
-  
-        mat-label {
-          font-size: 25px;
-          color: white;
-        }
-      }
-  
-      #login-card {
-        display: flex;
-        flex-direction: column;
-  
-        input:-moz-autofill {
-          box-shadow: 0 0 0px 1000px #fff inset;
-          background-color: rgba(16,16,16,0.5);
-        }
-  
-        input:-webkit-autofill {
-          box-shadow: 0 0 0px 1000px #fff inset;
-          background-color:rgba(16,16,16,0.5);
-        }
-  
-        .icon {
-          color: blue;
-        }
-      }
-  
-      #actions {
-        display: flex;
-
-        button {
-          width: 120px;
-          height: 40px;
-          font-size: 15px;
-          color: white;
-          display: flex;
-          justify-content: center;
-        }
-
-        #bregistro {
-            background: rgba(0,28,28,1);
-        }
-
-        #blogin {
-            background: rgba(13,167,167,1);
-            margin-left: 230px;
-        }
+    mat-form-field {
+      margin-bottom: 20px;
+        .mat-hint, input, ::placeholder, .mat-form-field-label {
+         color: white;
       }
     }
   }
+  form {
+    margin: auto;
+  }
+  
+  #card {
+    width: auto;
+
+    #header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.8;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+  
+      span {
+        font-size: 5vh;
+      }
+  
+      mat-label {
+        font-size: 25px;
+        color: white;
+      }
+    }
+  
+    #login-card {
+      display: flex;
+      flex-direction: column;
+  
+      input:-moz-autofill {
+        box-shadow: 0 0 0px 1000px #fff inset;
+        background-color: rgba(16,16,16,0.5);
+      }
+  
+      input:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px #fff inset;
+        background-color: inherit;
+      }
+  
+      .icon {
+        color: blue;
+      }
+    }
+  
+    #actions {
+      display: flex;
+
+      button {
+        width: 120px;
+        height: 40px;
+        font-size: 15px;
+        color: white;
+        display: flex;
+        justify-content: center;
+      }
+
+      #bregistro {
+          background: rgba(0,28,28,1);
+      }
+
+      #blogin {
+          background: rgba(13,167,167,1);
+          margin-left: 230px;
+      }
+    }
+  }
+}

@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-
-
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MatSnackBarModule
-  ],
-  exports: [
-    MatSnackBarModule,
+    LayoutModule
   ]
 })
-export class CoreModule { }
+export class SharedModule { }
