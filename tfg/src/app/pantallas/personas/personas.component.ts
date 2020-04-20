@@ -3,6 +3,7 @@ import { Persona } from 'src/app/core/clases/clases';
 import { PersonaService } from 'src/app/core/services/persona/persona.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { LoginUsuario } from 'src/app/core/clases/clases';
+import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
 
 @Component({
   selector: 'app-personas',
@@ -15,7 +16,7 @@ export class PersonasComponent implements OnInit {
   usuario: LoginUsuario;
   id: Number;
 
-  constructor(private personaService: PersonaService, private tokenService: TokenService) { }
+  constructor(private personaService: PersonaService, private tokenService: TokenService, private dialogoService: DialogoService) { }
 
   ngOnInit(): void {
     this.cargarPersonas();

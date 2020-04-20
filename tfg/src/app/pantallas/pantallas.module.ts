@@ -6,6 +6,8 @@ import { PersonasComponent } from './personas/personas.component';
 import { MascotasComponent } from './mascotas/mascotas.component';
 import { ViajesComponent } from './viajes/viajes.component';
 import { OtrosComponent } from './otros/otros.component';
+import { NuevaPersonaComponent } from './nueva-persona/nueva-persona.component';
+import { EditarPersonaComponent } from './editar-persona/editar-persona.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -17,7 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [LoginComponent, HomeComponent, PersonasComponent, MascotasComponent, ViajesComponent, OtrosComponent, RegistroComponent],
@@ -32,6 +34,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-  ]
+    MatDialogModule,
+  ],
+  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent]
 })
 export class PantallasModule { }
