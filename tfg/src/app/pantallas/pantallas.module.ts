@@ -19,10 +19,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { DatePipe } from '@angular/common'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, PersonasComponent, MascotasComponent, ViajesComponent, OtrosComponent, RegistroComponent],
+  declarations: [LoginComponent, HomeComponent, PersonasComponent, MascotasComponent, ViajesComponent, OtrosComponent, RegistroComponent, NuevaPersonaComponent, EditarPersonaComponent],
   imports: [
     CommonModule,
     MatSidenavModule,
@@ -35,6 +52,14 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatCardModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+  ],
+  providers: [
+    DatePipe,
+    MatDatepickerModule,
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
   entryComponents: [NuevaPersonaComponent, EditarPersonaComponent]
 })

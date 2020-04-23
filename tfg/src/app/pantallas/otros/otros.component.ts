@@ -21,17 +21,7 @@ export class OtrosComponent implements OnInit {
   }
 
   onCreate(): void {
-    this.personaService.crearPersona(this.form).subscribe(data => {
-      this.mensajeOK = data.mensaje;
-      this.creado = true;
-      this.failProducto = false;
-    },
-      (err: any) => {
-        this.mensajeFail = err.error.mensaje;
-        this.creado = false;
-        this.failProducto = true;
-      }
-    );
+    
   }
 
   volver(): void {

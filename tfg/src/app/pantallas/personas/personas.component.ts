@@ -16,7 +16,7 @@ export class PersonasComponent implements OnInit {
   usuario: LoginUsuario;
   id: Number;
 
-  constructor(private personaService: PersonaService, private tokenService: TokenService, private dialogoService: DialogoService) { }
+  constructor(private personaService: PersonaService, public tokenService: TokenService, public dialogoService: DialogoService) { }
 
   ngOnInit(): void {
     this.cargarPersonas();

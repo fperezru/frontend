@@ -34,8 +34,7 @@
           <td>{{persona.imagen4}}</td>
           <td>{{persona.video1}}</td>
           <td>{{persona.video2}}</td>
-          <td><button class="btn btn-primary" routerLink="/detalle/{{persona.id}}">Ver</button></td>
-          <td><button class="btn btn-warning" routerLink="/editar/{{persona.id}}">Editar</button></td>
+          <td><button class="btn btn-warning" (click)="dialogoService.abrirDialogo('EditarPersonaComponent', persona, {width: '1100px', height: 'auto'})">Editar</button></td>
           <td><button class="btn btn-danger" (click)="onDelete(persona.id)">Borrar</button></td>
         </tr>
       </tbody>
