@@ -1,0 +1,21 @@
+<mat-card-title>Editar Mascota</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-label>
+            <h4>Datos de la mascota: </h4>
+        </mat-label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.nombre" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Nombre"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.especie" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Espécie"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.descripcion" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
+        <button mat-raised-button primary (click)="editarMascota(mascota)" >Guardar</button>
+    </mat-dialog-actions>
+</div>

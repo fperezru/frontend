@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonaService } from 'src/app/core/services/persona/persona.service';
-import { Persona } from 'src/app/core/clases/clases';
+import { OtrosRecuerdos, LoginUsuario } from 'src/app/core/clases/clases';
+import { OtroService } from 'src/app/core/services/otro/otro.service';
+import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
+import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
 @Component({
   selector: 'app-otros',
   templateUrl: './otros.component.html',
@@ -8,24 +10,35 @@ import { Persona } from 'src/app/core/clases/clases';
 })
 export class OtrosComponent implements OnInit {
 
-  form: any = {};
-  persona: Persona;
-  creado = false;
-  failProducto = false;
-  mensajeFail = '';
-  mensajeOK = '';
+  otros: OtrosRecuerdos[] = [];
+  usuario: LoginUsuario;
+  id: Number;
 
-  constructor(private personaService: PersonaService) { }
+  constructor(private otroService: OtroService, public tokenService: TokenService, public dialogoService: DialogoService) { }
 
   ngOnInit(): void {
+    this.cargarRecuerdos();
   }
 
-  onCreate(): void {
-    
+  cargarRecuerdos(): void {
+    this.id = this.tokenService.getId();
+    console.log(this.tokenService.getUserName());
+    console.log(this.id);
+    this.otroService.getRecuerdosPorUser(this.id).subscribe(data => {
+      this.otros = data;
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
   }
 
-  volver(): void {
-    window.history.back();
+  onDelete(id: number): void {
+    if (confirm('¿Estás seguro?')) {
+      this.otroService.borrar(id).subscribe(data => {
+        this.cargarRecuerdos();
+      });
+    }
   }
 
 }

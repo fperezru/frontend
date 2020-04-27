@@ -1,11 +1,12 @@
 <mat-toolbar class="container">
-    <mat-toolbar-row class="header-menu">
-        <button mat-icon-button>
-            <i class="material-icons header-icon">menu</i>
-        </button>
-    </mat-toolbar-row>
-    <mat-toolbar-row routerLink="/home" >
+    <mat-toolbar-row class="header-menu" routerLink="/home">
         <mat-label>MyMemory</mat-label>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-user">
+        <mat-label>{{tokenService.getUserName()}}</mat-label>
+        <button mat-icon-button>
+            <i class="material-icons header-icon">person_outline</i>
+        </button>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-submenu">
         <button mat-raised-button routerLink="/personas">Personas</button>

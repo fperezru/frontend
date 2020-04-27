@@ -1,0 +1,33 @@
+<div class="container">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Imagen1</th>
+        <th scope="col">Imagen2</th>
+        <th scope="col">Imagen3</th>
+        <th scope="col">Imagen4</th>
+        <th scope="col">Video1</th>
+        <th scope="col">Video2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let otro of otros">
+        <td>{{otro.id}}</td>
+        <td>{{otro.tipo}}</td>
+        <td>{{otro.descripcion}}</td>
+        <td>{{otro.imagen1}}</td>
+        <td>{{otro.imagen2}}</td>
+        <td>{{otro.imagen3}}</td>
+        <td>{{otro.imagen4}}</td>
+        <td>{{otro.video1}}</td>
+        <td>{{otro.video2}}</td>
+        <td><button class="btn btn-warning" (click)="dialogoService.abrirDialogo('EditarOtroComponent', otro, {width: '1100px', height: 'auto'})">Editar</button></td>
+        <td><button class="btn btn-danger" (click)="onDelete(otro.id)">Borrar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div><button class="btn btn-success btn-lg" (click)="dialogoService.abrirDialogo('NuevoOtroComponent', tokenService.getId(), {width: '1100px', height: 'auto'})">Nueva Recuerdo</button></div>
+</div>

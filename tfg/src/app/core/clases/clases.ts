@@ -17,6 +17,7 @@ export class Persona {
 
 export class Mascota {
     id?: number;
+    nombre: string;
     especie: string;
     descripcion: string;
     imagen1: string;

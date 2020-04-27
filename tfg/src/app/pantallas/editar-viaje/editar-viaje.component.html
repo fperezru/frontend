@@ -1,0 +1,18 @@
+<mat-card-title>Editar Viaje</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-label>
+            <h4>Datos del viaje: </h4>
+        </mat-label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="viaje.lugar" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Lugar"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="viaje.descripcion" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
+        <button mat-raised-button primary (click)="editarViaje(viaje)" >Guardar</button>
+    </mat-dialog-actions>
+</div>

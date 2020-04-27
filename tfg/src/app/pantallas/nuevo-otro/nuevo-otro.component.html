@@ -1,0 +1,18 @@
+<mat-card-title>Añadir Recuerdo</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-label>
+            <h4>Datos del recuerdo: </h4>
+        </mat-label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="otro.tipo" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Nombre"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="otro.descripcion" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Cancelar</button>
+        <button mat-raised-button primary (click)="addRecuerdo(otro)" >Guardar</button>
+    </mat-dialog-actions>
+</div>

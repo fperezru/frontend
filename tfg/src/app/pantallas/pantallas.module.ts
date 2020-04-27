@@ -25,6 +25,12 @@ import { DatePipe } from '@angular/common'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { EditarMascotaComponent } from './editar-mascota/editar-mascota.component';
+import { NuevaMascotaComponent } from './nueva-mascota/nueva-mascota.component';
+import { NuevoViajeComponent } from './nuevo-viaje/nuevo-viaje.component';
+import { EditarViajeComponent } from './editar-viaje/editar-viaje.component';
+import { EditarOtroComponent } from './editar-otro/editar-otro.component';
+import { NuevoOtroComponent } from './nuevo-otro/nuevo-otro.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -39,7 +45,25 @@ export const MY_FORMATS = {
 };
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, PersonasComponent, MascotasComponent, ViajesComponent, OtrosComponent, RegistroComponent, NuevaPersonaComponent, EditarPersonaComponent],
+  declarations: [
+    LoginComponent, 
+    HomeComponent, 
+    PersonasComponent, 
+    MascotasComponent, 
+    ViajesComponent, 
+    OtrosComponent, 
+    RegistroComponent, 
+    NuevaPersonaComponent, 
+    EditarPersonaComponent, 
+    EditarMascotaComponent, 
+    NuevaMascotaComponent, 
+    NuevaMascotaComponent, 
+    EditarMascotaComponent, 
+    NuevoViajeComponent, 
+    EditarViajeComponent, 
+    EditarOtroComponent, 
+    NuevoOtroComponent
+  ],
   imports: [
     CommonModule,
     MatSidenavModule,
@@ -61,6 +85,6 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
-  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent]
+  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent ]
 })
 export class PantallasModule { }

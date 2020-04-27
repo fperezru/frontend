@@ -24,12 +24,12 @@ export class MascotaService {
     return this.httpClient.get<Mascota[]>(this.mascotaURL + `lista/${id}`);
   }
 
-  public crearMascota(persona: Mascota, id: Number): Observable<any> {
-    return this.httpClient.post<any>(this.mascotaURL + `nuevo/${id}`, persona);
+  public crearMascota(mascota: Mascota, id: Number): Observable<any> {
+    return this.httpClient.post<any>(this.mascotaURL + `nuevo/${id}`, mascota);
   }
 
-  public editarMascota(persona: Mascota, id: number): Observable<any> {
-    return this.httpClient.put<any>(this.mascotaURL + `actualizar/${id}`, persona);
+  public editarMascota(mascota: Mascota, id: number): Observable<any> {
+    return this.httpClient.put<any>(this.mascotaURL + `actualizar/${id}`, mascota);
   }
 
   public borrar(id: number): Observable<any> {
