@@ -13,8 +13,8 @@ export class DialogoService {
     this.componentsForDialog = dialogoComponentes;
   }
 
-  abrirDialogo(nombreDialgo: any, data?: any, config?: any): MatDialogRef<unknown, any> {
-    const componente = this.getComponente(nombreDialgo);
+  abrirDialogo(nombreDialogo: any, data?: any, config?: any): MatDialogRef<unknown, any> {
+    const componente = this.getComponente(nombreDialogo);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = data;
     dialogConfig.autoFocus = false;
@@ -27,9 +27,13 @@ export class DialogoService {
     return this.dialog.open(componente, dialogConfig);
   }
 
-  getComponente(nombreDialgo: string) {
+  cerrarDialogo() {
+    this.dialog.closeAll();
+  }
+
+  getComponente(nombreDialogo: string) {
     return this.componentsForDialog.find(
-      componente => componente.nombre === nombreDialgo
+      componente => componente.nombre === nombreDialogo
     ).componente;
   }
 }

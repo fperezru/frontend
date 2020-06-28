@@ -39,5 +39,9 @@
         </tr>
       </tbody>
     </table>
-    <div><button class="btn btn-success btn-lg" (click)="dialogoService.abrirDialogo('NuevaPersonaComponent', tokenService.getId(), {width: '1100px', height: 'auto'})">Nueva Persona</button></div>
-  </div>
+    <div><button class="btn btn-success btn-lg" (click)="openMenu()">Nueva Persona</button></div>
+</div>
+<div class="engine-wrapper">
+  <canvas #rendererCanvas width="300px" height="300px"></canvas>
+</div>
+

@@ -3,7 +3,8 @@ import { Persona } from 'src/app/core/clases/clases';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { PersonaService } from 'src/app/core/services/persona/persona.service';
-import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
+import { UploadService } from 'src/app/core/services/uploadService/upload.service';
+import { InterfazPersonasService } from 'src/app/core/services/interfaz-personas/interfaz-personas.service';
 
 @Component({
   selector: 'app-editar-persona',
@@ -19,10 +20,15 @@ export class EditarPersonaComponent implements OnInit {
   private descripcionActual: string;
   private nacimientoActual: Date;
   private defuncionActual: Date;
+  private archvioSeleccionado: File;
+  modo: number;
+  imageObject: Array<object>;
 
-  constructor(public dialogoRef: MatDialogRef<EditarPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Persona, public snackService: SnackService, private personaService: PersonaService, private tokenService: TokenService) { }
+  constructor(public dialogoRef: MatDialogRef<EditarPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Persona, public snackService: SnackService, private personaService: PersonaService, private uploadService: UploadService, private interfacePersona: InterfazPersonasService) { }
 
   ngOnInit(): void {
+    this.modo = 0;
+    
     if(this.data !== null) {
       this.persona = this.data;
     }
@@ -36,6 +42,37 @@ export class EditarPersonaComponent implements OnInit {
     this.descripcionActual = this.persona.descripcion;
     this.nacimientoActual = this.persona.fechaNacimiento;
     this.defuncionActual = this.persona.fechaDefuncion;
+
+    this.imageObject = [
+      {
+        image: '../assets/a.png',
+        thumbImage: '../assets/a.png',
+      }, 
+      {
+        image: '../assets/b.png', // Support base64 image
+        thumbImage: '../assets/b.png', // Support base64 image
+      },
+      {
+        image: '../assets/c.png', // Support base64 image
+        thumbImage: '../assets/c.png', // Support base64 image
+      },
+      {
+        image: '../assets/d.png', // Support base64 image
+        thumbImage: '../assets/d.png', // Support base64 image
+      },
+      {
+        image: '../assets/e.png', // Support base64 image
+        thumbImage: '../assets/e.png', // Support base64 image
+      },
+      {
+        image: '../assets/f.png', // Support base64 image
+        thumbImage: '../assets/f.png', // Support base64 image
+      },
+      {
+        video: this.persona.video2, // Support base64 image
+        
+      },
+    ];
 
   }
 
@@ -68,6 +105,27 @@ export class EditarPersonaComponent implements OnInit {
     return save;
   }
 
+  public onFileChanged(event) {
+    this.archvioSeleccionado = event.target.files[0];
+  }
+
+  public onUpload() {
+    this.persona.imagen1 = this.archvioSeleccionado.name;
+    console.log(this.archvioSeleccionado);
+
+    const uploadImageData = new FormData();
+    uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
+
+    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+      console.log("subida archivo ok");
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
+
+  }
+
   public editarPersona(persona: Persona) {
     this.persona.nombre = persona.nombre;
     this.persona.apellido1 = persona.apellido1;
@@ -81,13 +139,14 @@ export class EditarPersonaComponent implements OnInit {
     if (save) {
       this.personaService.editarPersona(persona, persona.id).subscribe(data => {
         console.log("actualizado persona ok");
+        this.onUpload();
       },
         (error: any) => {
           console.log(error)
         }
       );
-      this.dialogoRef.close();
     }
+    this.modo = 0;
   }
 
   public noEditar() {
@@ -98,7 +157,21 @@ export class EditarPersonaComponent implements OnInit {
     this.persona.descripcion = this.descripcionActual;
     this.persona.fechaNacimiento = this.nacimientoActual;
     this.persona.fechaDefuncion = this.defuncionActual;
-    this.dialogoRef.close();
+    this.modo = 0;
+  }
+
+  public eliminarPersona(id: number): void {
+    if (confirm('¿Estás seguro?')) {
+      this.personaService.borrar(id).subscribe(data => {
+        this.interfacePersona.deleteRecuerdo(id);
+        this.dialogoRef.close();
+        this.interfacePersona.back();
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
   }
 
 }

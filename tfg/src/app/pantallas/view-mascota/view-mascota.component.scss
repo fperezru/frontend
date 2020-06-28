@@ -1,0 +1,32 @@
+#EditionForm {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  
+    #Information {
+      display: flex;
+      flex-direction: column;
+  
+      h4 {
+        display: inline;
+        margin-right: 10px;
+      }
+  
+      label {
+        margin-bottom: 15px;
+      }
+    }
+  
+    button {
+      width: 200px;
+    }
+  }
+  
+.mat-dialog-actions {
+    justify-content: flex-end;
+}
+  
+mat-form-field {
+    margin-left: 20px;
+}

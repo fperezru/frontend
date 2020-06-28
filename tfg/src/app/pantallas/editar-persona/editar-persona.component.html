@@ -1,37 +1,85 @@
-<mat-card-title>Editar Persona</mat-card-title>
-<div id="EditorForm">
-    <mat-dialog-content id=Information>
-        <mat-label>
-            <h4>Datos de la persona: </h4>
-        </mat-label>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.nombre" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Nombre"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.apellido1" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Primer apellido"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.apellido2" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Segundo apellido"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.fechaNacimiento" [matDatepicker]="fechaNacimiento" required placeholder="Fecha de nacimiento" [readonly]="true"/>
-            <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
-            <mat-datepicker #fechaNacimiento></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.fechaDefuncion" [matDatepicker]="fechaDefuncion" placeholder="Fecha de defuncion" [readonly]="true"/>
-            <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
-            <mat-datepicker #fechaDefuncion></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.relacion" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Relación"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="persona.descripcion" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
-        </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
-        <button mat-raised-button primary (click)="editarPersona(persona)" >Guardar</button>
-    </mat-dialog-actions>
+<div *ngIf= "modo == 0">
+    <mat-card-title>Recuerdo</mat-card-title>
+    <div id="EditorForm">
+        <mat-dialog-content id=Information>
+            <mat-label>
+                <h4>Datos de la persona: </h4>
+            </mat-label>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.nombre" [readonly]="true" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Nombre"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.apellido1" [readonly]="true" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Primer apellido"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.apellido2" [readonly]="true" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Segundo apellido"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.fechaNacimiento" required placeholder="Fecha de nacimiento" [readonly]="true"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.fechaDefuncion" placeholder="Fecha de defuncion" [readonly]="true"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.relacion" [readonly]="true" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Relación"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.descripcion" [readonly]="true" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+            </mat-form-field>
+        </mat-dialog-content>
+    </div>
+    <div>
+        <ng-image-slider #nav
+            [images]="imageObject"
+            [infinite]="false"
+            [autoSlide]="1"
+            [imageSize]="{width: '25%', height: 200}"
+            slideImage="1">
+        </ng-image-slider>
+        <mat-dialog-actions>
+            <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
+            <button mat-raised-button primary (click)="modo = 1" >Editar</button>
+        </mat-dialog-actions>
+    </div>
+</div>
+
+<div *ngIf= "modo ==1">
+    <mat-card-title>Editar Persona</mat-card-title>
+    <div id="EditorForm">
+        <mat-dialog-content id=Information>
+            <mat-label>
+                <h4>Datos de la persona: </h4>
+            </mat-label>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.nombre" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Nombre"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.apellido1" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Primer apellido"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.apellido2" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Segundo apellido"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.fechaNacimiento" [matDatepicker]="fechaNacimiento" required placeholder="Fecha de nacimiento" [readonly]="true"/>
+                <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                <mat-datepicker #fechaNacimiento></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.fechaDefuncion" [matDatepicker]="fechaDefuncion" placeholder="Fecha de defuncion" [readonly]="true"/>
+                <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
+                <mat-datepicker #fechaDefuncion></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.relacion" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Relación"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="persona.descripcion" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
+            <button mat-raised-button primary (click)="editarPersona(persona)" >Guardar</button>
+            <button mat-raised-button primary (click)="eliminarPersona(persona.id)" >Eliminar</button>
+        </mat-dialog-actions>
+    </div>
 </div>

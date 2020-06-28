@@ -1,4 +1,4 @@
-<div *ngIf="info.token; else loggedOut">
+<!--<div *ngIf="info.token; else loggedOut">
     <div class="container">
       <p><strong>Tu nombre de usuario: </strong>{{ info.nombreUsuario}}</p>
       <p><strong>Este es el token: </strong>{{ info.token}}</p>
@@ -9,4 +9,38 @@
     <div class="container">
       No has iniciado sesión
     </div>
-  </ng-template>
+  </ng-template>-->
+
+<div id="home">
+  <ul class="boxes">
+
+    <li routerLink="/personas" class="box  box--top  box--left  box--alpha">
+      <section class="box__content">
+        <header class="box__header">Personas</header>
+        <footer class="box__footer  box__cut"></footer>
+      </section>
+    </li>
+  
+    <li routerLink="/mascotas" class="box  box--top  box--right  box--beta">
+      <section class="box__content">
+        <header class="box__header">Mascotas</header>
+        <footer class="box__footer  box__cut"></footer>
+      </section>
+    </li>
+  
+    <li routerLink="/viajes" class="box  box--bottom  box--left  box--gamma">
+      <section class="box__content">
+        <header class="box__header  box__cut"></header>
+        <footer class="box__footer"> Viajes</footer>
+      </section>
+    </li>
+  
+    <li routerLink="/otros" class="box  box--bottom  box--right  box--delta">
+      <section class="box__content">
+        <header class="box__header  box__cut"></header>
+        <footer class="box__footer">Otros recuerdos</footer>
+      </section>
+    </li>
+  
+  </ul>
+</div>

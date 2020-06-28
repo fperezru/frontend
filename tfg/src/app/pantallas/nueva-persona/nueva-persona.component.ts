@@ -4,6 +4,8 @@ import { Persona } from 'src/app/core/clases/clases';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { PersonaService } from 'src/app/core/services/persona/persona.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
+import { InterfazPersonasService } from 'src/app/core/services/interfaz-personas/interfaz-personas.service';
+import { UploadService } from 'src/app/core/services/uploadService/upload.service';
 
 
 @Component({
@@ -13,9 +15,11 @@ import { TokenService } from 'src/app/core/services/tokenService/token-service.s
 })
 export class NuevaPersonaComponent implements OnInit {
   persona: Persona;
+  personas: Persona[] = [];
   idUser: Number;
+  private archvioSeleccionado: File;
 
-  constructor(public dialogoRef: MatDialogRef<NuevaPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Number, public snackService: SnackService, private personaService: PersonaService, private tokenService: TokenService) { }
+  constructor(public dialogoRef: MatDialogRef<NuevaPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Number, public snackService: SnackService, private personaService: PersonaService, private tokenService: TokenService, private interfazPersona: InterfazPersonasService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
     this.persona = new Persona();
@@ -23,6 +27,26 @@ export class NuevaPersonaComponent implements OnInit {
       this.idUser = this.data;
       console.log(this.idUser);
     }
+  }
+
+  public onFileChanged(event) {
+    this.archvioSeleccionado = event.target.files[0];
+  }
+
+  public onUpload() {
+    this.persona.imagen1 = this.archvioSeleccionado.name;
+    console.log(this.archvioSeleccionado);
+
+    const uploadImageData = new FormData();
+    uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
+
+    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+      console.log("subida archivo ok");
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
   }
 
   public validaciones(persona: Persona) {
@@ -62,12 +86,20 @@ export class NuevaPersonaComponent implements OnInit {
     if (save) {
       this.personaService.crearPersona(persona, this.idUser).subscribe(data => {
         console.log("guardado persona ok");
+        this.interfazPersona.addRecuerdo(this.personas[this.personas.length-1]);
       },
         (error: any) => {
           console.log(error)
         }
       );
       this.dialogoRef.close();
+      this.interfazPersona.back();
     }
   }
+
+  public close() {
+    this.dialogoRef.close();
+    this.interfazPersona.back();
+  }
+  
 }

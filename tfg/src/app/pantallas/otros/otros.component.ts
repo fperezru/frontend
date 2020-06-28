@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OtrosRecuerdos, LoginUsuario } from 'src/app/core/clases/clases';
 import { OtroService } from 'src/app/core/services/otro/otro.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
+import { InterfazOtrosService } from 'src/app/core/services/interfaz-otros/interfaz-otros.service';
 @Component({
   selector: 'app-otros',
   templateUrl: './otros.component.html',
@@ -14,10 +15,16 @@ export class OtrosComponent implements OnInit {
   usuario: LoginUsuario;
   id: Number;
 
-  constructor(private otroService: OtroService, public tokenService: TokenService, public dialogoService: DialogoService) { }
+  @ViewChild('rendererCanvas', {static: true})
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+
+  constructor(private otroService: OtroService, public tokenService: TokenService, public dialogoService: DialogoService, private interfazOtros: InterfazOtrosService) { }
 
   ngOnInit(): void {
     this.cargarRecuerdos();
+
+    this.interfazOtros.createScene(this.rendererCanvas);
+    this.interfazOtros.animate();
   }
 
   cargarRecuerdos(): void {

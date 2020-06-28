@@ -1,0 +1,175 @@
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+// Configuration variables
+$margin: 2em;
+$mask-size: 12em;
+$circle-size: 5em;
+$breakpoint: 700px;
+$border-radius: .25em; 
+$colors: (alpha: #1abc9c, beta: #2ecc71, gamma: #3498db, delta: #9b59b6);
+
+// Boxes wrapper
+// 1. Clearing inner float
+// 2. Enabling position context for pseudo-element
+.boxes {
+  list-style: none; 
+  padding: 0 $margin;
+  margin: 0;
+  overflow: hidden; // 1
+  position: relative; // 2
+  
+  // Central dark disk
+  &:after {
+    content: '';
+    position: absolute;
+    width: $circle-size;
+    height: $circle-size;
+    top: 50%;
+    left: 50%;
+    margin: -$circle-size/2 (0 0) -$circle-size/2;
+    border-radius: 50%;
+    border: .5em solid #2c3e50;
+    background: #34495e;
+  
+    // Hiding it on small screens
+    @media (max-width: $breakpoint) {
+      content: none;
+    }
+    
+    // Hiding it on browsers not supporting box-shadow/border-radius/pseudo-elements
+    .no-boxshadow & {
+      content: none;
+    }
+  }
+}
+
+// Box
+.box {
+  float: left;
+  width: 50%;
+  margin: $margin 0;
+  
+  // Moving them back to a single column on small screens
+  @media (max-width: $breakpoint) {
+    width: 100%;
+    float: none;
+  }
+}
+
+// Inner box wrapper
+.box__content {
+  
+  // Adding a right padding on left boxes for the central gutter
+  .box--left & {
+    padding-right: $margin;
+  }
+  
+  // Adding a left padding on right boxes for the central gutter
+  .box--right & {
+    padding-left: $margin;
+  }
+  
+  // Removing padding on small screens
+  @media (max-width: $breakpoint) {
+    padding: 0 !important;
+  }
+}
+
+// Since there is no content, forcing some height
+.box__header,
+.box__footer {
+  min-height: 12em;
+}
+
+// Applying border-radius to top corners
+.box__header {
+  border-radius: $border-radius $border-radius 0 0;
+}
+
+// Applying border-radius to bottom corners
+.box__footer {
+  border-radius: 0 0 $border-radius $border-radius;
+}
+
+// Part that is being truncated by the circle
+// 1. Removing background color
+// 2. Making sure the box-shadow from pseudo-element doesn't leak outside the container
+// 3. Enabling position context for pseudo-element
+.box__cut {
+  background: none !important; // 1
+  overflow: hidden; // 2
+  position: relative; // 3
+  
+  // Transparent circle
+  // 1. Moving it on a lower plan
+  // 2. Applying a very large box-shadow, using currentColor as color
+  &:after {
+    content: '';
+    position: absolute;
+    width: $mask-size;
+    height: $mask-size;
+    z-index: -1; // 1
+    border-radius: 50%;
+    margin: -($mask-size / 2 + $margin);
+    box-shadow: 0 0 0 55em; // 2
+    
+    // Hiding it on small screens
+    @media (max-width: $breakpoint) {   
+      content: none;
+    }
+  }
+  
+  // Positioning transparent circles for left boxes
+  .box--left &:after {
+    right: 0;
+  }
+  
+  // Positioning transparent circles for right boxes
+  .box--right &:after {
+    left: 0;
+  }
+  
+  // Positioning transparent circles for top boxes
+  .box--top &:after {
+    bottom: 0;
+  }
+  
+  // Positioning transparent circles for bottom boxes
+  .box--bottom &:after {
+    top: 0;
+  }
+}
+
+// Applying colors by looping on the color map
+@each $key, $value in $colors {
+  // Targeting the box
+  .box--#{$key} {
+    // Applying background colors
+    .box__header,
+    .box__footer {
+      background: $value;
+    }
+  
+    // Applying color for box-shadow
+    .box__cut {
+      &:after {
+        color: darken($value, 10%);
+      }
+  
+      // Applying background for small screens
+      // since the pseudo-element will be hidden
+      @media (max-width: $breakpoint) {
+        background: darken($value, 10%) !important;
+      }
+     
+      // Applying background on browsers not supporting box-shadow/border-radius/pseudo-elements
+      .no-boxshadow & {
+        background: darken($value, 10%) !important;
+      }
+    }
+  }
+}
+

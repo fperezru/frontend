@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { PersonaService } from 'src/app/core/services/persona/persona.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Mascota } from 'src/app/core/clases/clases';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LoginUsuario } from 'src/app/core/clases/clases';
 import { MascotaService } from 'src/app/core/services/mascota/mascota.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
+import { InterfazService } from 'src/app/core/services/interfaz.service';
 
 
 @Component({
@@ -19,11 +18,16 @@ export class MascotasComponent implements OnInit {
   usuario: LoginUsuario;
   id: Number;
 
-  constructor(private mascotaService: MascotaService, public tokenService: TokenService, public dialogoService: DialogoService) { }
+  @ViewChild('rendererCanvas', {static: true})
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+
+  constructor(private mascotaService: MascotaService, public tokenService: TokenService, public dialogoService: DialogoService, private interfaz: InterfazService) { }
 
   ngOnInit(): void {
     this.cargarMascotas();
 
+    this.interfaz.createScene(this.rendererCanvas);
+    this.interfaz.animate();
   }
 
   cargarMascotas(): void {

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Viaje, LoginUsuario } from 'src/app/core/clases/clases';
 import { ViajeService } from 'src/app/core/services/viaje/viaje.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
+import { InterfazViajesService } from 'src/app/core/services/interfaz-viajes/interfaz-viajes.service';
+
 
 @Component({
   selector: 'app-viajes',
@@ -15,10 +17,16 @@ export class ViajesComponent implements OnInit {
   usuario: LoginUsuario;
   id: Number;
 
-  constructor(private viajeService: ViajeService, public tokenService: TokenService, public dialogoService: DialogoService) { }
+  @ViewChild('rendererCanvas', {static: true})
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+
+  constructor(private viajeService: ViajeService, public tokenService: TokenService, public dialogoService: DialogoService, private interfazViajes: InterfazViajesService) { }
 
   ngOnInit(): void {
     this.cargarViajes();
+
+    this.interfazViajes.createScene(this.rendererCanvas);
+    this.interfazViajes.animate();
   }
 
   cargarViajes(): void {

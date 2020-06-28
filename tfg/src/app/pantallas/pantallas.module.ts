@@ -31,6 +31,11 @@ import { NuevoViajeComponent } from './nuevo-viaje/nuevo-viaje.component';
 import { EditarViajeComponent } from './editar-viaje/editar-viaje.component';
 import { EditarOtroComponent } from './editar-otro/editar-otro.component';
 import { NuevoOtroComponent } from './nuevo-otro/nuevo-otro.component';
+import { ViewMascotaComponent } from './view-mascota/view-mascota.component';
+import { ViewPersonaComponent } from './view-persona/view-persona.component';
+import { ViewOtroComponent } from './view-otro/view-otro.component';
+import { ViewViajeComponent } from './view-viaje/view-viaje.component';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 export const MY_FORMATS = {
   parse: {
@@ -62,7 +67,11 @@ export const MY_FORMATS = {
     NuevoViajeComponent, 
     EditarViajeComponent, 
     EditarOtroComponent, 
-    NuevoOtroComponent
+    NuevoOtroComponent, 
+    ViewMascotaComponent, 
+    ViewPersonaComponent, 
+    ViewOtroComponent, 
+    ViewViajeComponent
   ],
   imports: [
     CommonModule,
@@ -79,12 +88,13 @@ export const MY_FORMATS = {
     MatCardModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    NgImageSliderModule
   ],
   providers: [
     DatePipe,
     MatDatepickerModule,
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
-  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent ]
+  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent, ViewMascotaComponent, ViewPersonaComponent, ViewOtroComponent, ViewViajeComponent ],
 })
 export class PantallasModule { }

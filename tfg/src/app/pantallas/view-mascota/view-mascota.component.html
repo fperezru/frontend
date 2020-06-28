@@ -1,0 +1,29 @@
+<mat-card-title>Recuerdo</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-label>
+            <h4>Datos de la mascota: </h4>
+        </mat-label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.nombre" [readonly]="true" placeholder="Nombre" />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.especie" [readonly]="true" placeholder="Especie" />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="mascota.descripcion" [readonly]="true" placeholder="Descripcion" />
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
+        <button mat-raised-button primary (click)="this.openMenu(mascota)" >Editar</button>
+    </mat-dialog-actions>
+</div>
+<div>
+    <ng-image-slider #nav
+    [images]="imageObject"
+    [infinite]="false"
+    [autoSlide]="1"
+    [imageSize]="{width: '25%', height: 200}"
+    slideImage="1"></ng-image-slider>
+</div>
