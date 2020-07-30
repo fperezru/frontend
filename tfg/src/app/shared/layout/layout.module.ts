@@ -10,9 +10,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes} from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MenuComponent } from './menu/menu.component';
+
 
 @NgModule({
-  declarations: [HeaderComponent, PrivadoComponent, PublicoComponent],
+  declarations: [HeaderComponent, PrivadoComponent, PublicoComponent, MenuComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -21,8 +24,9 @@ import { RouterModule, Routes} from '@angular/router';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    FlexLayoutModule
   ],
-  exports: [HeaderComponent]
+  exports: [HeaderComponent, MenuComponent]
 })
 export class LayoutModule { }

@@ -29,6 +29,14 @@ export class InterfazViajesService implements OnDestroy {
   private geometry;
   private textureloader;
   private material: THREE.MeshLambertMaterial;
+  private raycaster = new THREE.Raycaster();
+  private pickPosition: any = {x: 0, y: 0};
+  private pickedObject: any = 0;
+  private use: boolean;
+  private segments: number = 64;
+  private radius: number = 0.995;
+  private base_globe: number = 0;
+  private hover_scale: number = 1.01;
 
   constructor(private ngZone: NgZone, private viajeService: ViajeService, public tokenService: TokenService, private dialogoService: DialogoService) { }
 
@@ -51,6 +59,8 @@ export class InterfazViajesService implements OnDestroy {
     this.renderer.setPixelRatio( window.devicePixelRatio );
 
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x00000f);
+    this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 4500);
     this.camera.position.z = 100;
@@ -73,11 +83,6 @@ export class InterfazViajesService implements OnDestroy {
     directionalLight4.position.set(1, 1, 1).normalize();
     this.scene.add(directionalLight4);
 
-    var segments = 64;
-    var radius = 0.995;
-    var base_globe = 0;
-    //var mar = null, tierra;
-
     this.tierra = new THREE.Object3D();
     this.tierra.scale.set(20, 20, 20);
     this.scene.add(this.tierra);
@@ -89,7 +94,7 @@ export class InterfazViajesService implements OnDestroy {
     this.mar.wrapT = THREE.RepeatWrapping;
     this.mar.repeat.set(16, 8);
 
-    const geometry_sphere = new THREE.SphereGeometry(radius, segments, segments);
+    const geometry_sphere = new THREE.SphereGeometry(this.radius, this.segments, this.segments);
     this.material = new THREE.MeshLambertMaterial({
       transparent: true,
       depthTest: true,
@@ -124,6 +129,8 @@ export class InterfazViajesService implements OnDestroy {
     this.controls.minDistance = 23.0;
     this.controls.maxDistance = 70.0;
     this.controls.dynamicDampingFactor = 0.1;
+
+    this.use = true;
   }
 
   public animate(): void {
@@ -133,6 +140,7 @@ export class InterfazViajesService implements OnDestroy {
       this.resize();
 
     });
+    window.addEventListener('mousemove', (event:MouseEvent) => {this.pick();});
     this.ngZone.runOutsideAngular(() => {
       if (document.readyState !== 'loading') {
         this.render();
@@ -160,6 +168,63 @@ export class InterfazViajesService implements OnDestroy {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize( width, height );
+  }
+
+  public pick() {
+
+    if (this.pickedObject !== 0) {
+      this.pickedObject.scale.set(1.0, 1.0, 1.0);
+    }
+    this.raycaster.setFromCamera(this.setPickPosition(event), this.camera);
+    var intersects = this.raycaster.intersectObject(this.tierra, true);
+
+    if (intersects.length && this.use == true) {
+      if (intersects[0].point !== null) {
+        if (intersects[0].object.name === "land") {
+          intersects[0].object.scale.set(this.hover_scale, this.hover_scale, this.hover_scale);
+          this.pickedObject = intersects[0].object;
+          //this.openMenu();
+      
+      
+        }
+      }
+    }
+  }
+
+  public getCanvasRelativePosition(event: MouseEvent) {
+    const rect = this.canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    }
+  }
+
+  public setPickPosition(event) {
+    const pos = this.getCanvasRelativePosition(event);
+    this.pickPosition.x = (pos.x / this.canvas.clientWidth) * 2 -1;
+    this.pickPosition.y = (pos.y / this.canvas.clientHeight) * -2 +1;
+    return this.pickPosition;
+  }
+
+  public clearPosition() {
+    this.pickPosition.x = -100000;
+    this.pickPosition.y = -100000;
+  }
+
+  public openMenu(viaje: Viaje) {
+    this.dialogoService.abrirDialogo('NuevoViajeComponent', viaje, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
+      this.controls.bindEvents();
+      this.use = true;
+      this.controls.lookSpeed = 0.1;
+    },
+    error => console.log(error)
+    );
+  }
+
+  public back() {
+    this.controls.bindEvents();
+    this.use = true;
+    this.controls.lookSpeed = 0.1;
   }
 
 }

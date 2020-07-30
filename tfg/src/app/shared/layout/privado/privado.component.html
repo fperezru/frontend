@@ -1,6 +1,9 @@
 <div class="private-layout">
-    <app-header></app-header>
+    <app-header (menuOpenEvent)="sidenav.toggle()" ></app-header>
     <mat-sidenav-container class="container">
+        <mat-sidenav #sidenav closed mode="side">
+            <app-menu></app-menu>
+        </mat-sidenav>
         <mat-sidenav-content class="content">
             <router-outlet></router-outlet>
         </mat-sidenav-content>

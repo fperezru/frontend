@@ -7,6 +7,7 @@
     max-height: 56px;
     min-height: 56px;
     font-size: 15px;
+    list-style-type: none;
   }
   
   .header-title {
@@ -26,13 +27,10 @@
   }
   
   .header-menu {
-  
+    display: flex;
     width: fit-content;
-  
-    button {
-      background-color: transparent;
-      border: none;
-    }
+    border: none;
+    
   }
   
   button:focus {
@@ -67,7 +65,22 @@
       outline: none;
       color: white;
       box-shadow: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: inherit;
+        border-left: 6px solid white;
+        box-sizing: border-box;
+      }
     }
+
+    button:focus{
+      color: mediumvioletred;
+      background-color: white;
+    }
+
   }
   
   .header-icon {
@@ -87,4 +100,20 @@
   mat-label {
     color: white;
     font-size: 30px;
+  }
+
+  .item-active {
+    background-color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    color: mediumvioletred;
+    width:110px;
+    height: auto;
+    text-align: center;
+  }
+
+  a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
   }

@@ -1,0 +1,36 @@
+
+.auto-grid {
+    --auto-grid-min-size: 16rem;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+    grid-gap: 1rem;
+  }
+  
+  /*
+    WRAPPER
+    A utility with a max width that contains child elements and horizontal centers them
+  */
+  .wrapper {
+    max-width: 65rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  
+  /* Presentational styles */
+  
+  body {
+    background: #efefef;
+    padding: 1rem 0;
+    line-height: 1.4;
+    font-family: sans-serif;
+  }
+  
+  li {
+    padding: 5rem 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+    background: #be2edd;
+    color: #ffffff;
+  }

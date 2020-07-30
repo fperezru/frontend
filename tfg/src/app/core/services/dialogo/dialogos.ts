@@ -10,6 +10,10 @@ import { ViewMascotaComponent } from 'src/app/pantallas/view-mascota/view-mascot
 import { ViewPersonaComponent } from 'src/app/pantallas/view-persona/view-persona.component';
 import { ViewViajeComponent } from 'src/app/pantallas/view-viaje/view-viaje.component';
 import { ViewOtroComponent } from 'src/app/pantallas/view-otro/view-otro.component';
+import { NuevaPaginaComponent } from 'src/app/pantallas/nueva-pagina/nueva-pagina.component';
+import { EditarPaginaComponent } from 'src/app/pantallas/editar-pagina/editar-pagina.component';
+import { NuevaInformacionComponent } from 'src/app/pantallas/nueva-informacion/nueva-informacion.component';
+import { EditarInformacionComponent } from 'src/app/pantallas/editar-informacion/editar-informacion.component';
 
 export const dialogoComponentes = [
     {
@@ -45,6 +49,14 @@ export const dialogoComponentes = [
         componente: EditarOtroComponent,
     },
     {
+        nombre: 'NuevaPaginaComponent',
+        componente: NuevaPaginaComponent,
+    },
+    {
+        nombre: 'EditarPaginaComponent',
+        componente: EditarPaginaComponent,
+    },
+    {
         nombre: 'ViewMascotaComponent',
         componente: ViewMascotaComponent,
     },
@@ -59,6 +71,14 @@ export const dialogoComponentes = [
     {
         nombre: 'ViewOtroComponent',
         componente: ViewOtroComponent,
+    },
+    {
+        nombre: 'NuevaInformacionComponent',
+        componente: NuevaInformacionComponent,
+    },
+    {
+        nombre: 'EditarInformacionComponent',
+        componente: EditarInformacionComponent,
     },
     
   ];

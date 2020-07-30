@@ -1,0 +1,49 @@
+<div class="login-div" id="login-right">
+    <form #login="ngForm" (ngSubmit)="onRegister()">
+      <div id="card">
+        <div id="header">
+          <mat-label>Registro de familiares</mat-label>
+        </div>
+        <div id="login-card">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input name="user" [(ngModel)]="form.nombre" required matInput placeholder="Usuario"/>
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-error> Campo nombre vacío </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input name="user" [(ngModel)]="form.nombreUsuario" required matInput placeholder="Usuario"/>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-error> Campo usuario vacío </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input name="user" [(ngModel)]="form.email" required matInput placeholder="Usuario"/>
+            <mat-icon matSuffix>alternate_email</mat-icon>
+            <mat-error> Campo usuario vacío </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input name="password" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"/>
+            <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error> Campo contraseña vacío </mat-error>
+          </mat-form-field>
+        </div>
+        <div id="actions">
+          <button id="bregistro" mat-raised-button type="button" routerLink="/login">Cancelar</button>
+          <button id="blogin" mat-raised-button type="submit" [disabled]="disabled">
+            <span *ngIf="!loading; else load">Registrarse</span>
+              <ng-template #load>
+                <mat-spinner diameter=40 color="accent"></mat-spinner>
+              </ng-template>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="engine-wrapper">
+    <canvas #rendererCanvas></canvas>
+  </div>

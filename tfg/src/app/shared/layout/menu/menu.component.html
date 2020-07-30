@@ -1,0 +1,39 @@
+<nav *ngIf= "this.roles[0] == 'ROLE_USER'">
+    <mat-nav-list>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/personas">
+            <span>Personas</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/mascotas">
+            <span>Mascotas</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/viajes">
+            <span>Viajes</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/otros">
+            <span>Otros recuerdos</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/diario">
+            <span>Diario personal</span>
+        </a>
+    </mat-nav-list>
+</nav>
+<nav *ngIf= "this.roles[0] == 'ROLE_ADMIN'" fxShow="true" fxHide.gt-sm>
+    <mat-nav-list>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/adminuser">
+            <span>Gestión usuarios</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/admininfo">
+            <span>Gestión información</span>
+        </a>
+    </mat-nav-list>
+</nav>
+<nav *ngIf= "this.roles[0] == 'ROLE_ADMIN'" fxShow="true" fxHide.gt-sm>
+    <mat-nav-list>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/familiaruser">
+            <span>Gestión usuarios</span>
+        </a>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/familiarininfo">
+            <span>Gestión información</span>
+        </a>
+    </mat-nav-list>
+</nav>

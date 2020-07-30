@@ -1,18 +1,57 @@
-<mat-toolbar class="container">
-    <mat-toolbar-row class="header-menu" routerLink="/home">
-        <mat-label>MyMemory</mat-label>
+<mat-toolbar class="container" fxFlexFill *ngIf= "this.roles[0] == 'ROLE_USER'">
+    <mat-toolbar-row class="header-menu">
+        <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
+            <i class="material-icons header-icon">menu</i>
+        </button>
+        <mat-label fxFlexAlign="center">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-user">
         <mat-label>{{tokenService.getUserName()}}</mat-label>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="tokenService.logOut()">
             <i class="material-icons header-icon">person_outline</i>
         </button>
     </mat-toolbar-row>
-    <mat-toolbar-row class="header-submenu">
-        <button mat-raised-button routerLink="/personas">Personas</button>
-        <button mat-raised-button routerLink="/mascotas">Mascotas</button>
-        <button mat-raised-button routerLink="/viajes">Viajes</button>
-        <button mat-raised-button routerLink="/otros">Otros recuerdos</button>
-        <button mat-raised-button (click)="tokenService.logOut()">Diario de actividad</button>
+    <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
+        <a routerLink="/personas" routerLinkActive="item-active">Personas</a>
+        <a routerLink="/mascotas" routerLinkActive="item-active">Mascotas</a>
+        <a routerLink="/viajes" routerLinkActive="item-active">Viajes</a>
+        <a routerLink="/otros" routerLinkActive="item-active">Otros recuerdos</a>
+        <a routerLink="/diario" routerLinkActive="item-active">Diario personal</a>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="container" fxFlexFill *ngIf= "this.roles[0] == 'ROLE_ADMIN'">
+    <mat-toolbar-row class="header-menu">
+        <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
+            <i class="material-icons header-icon">menu</i>
+        </button>
+        <mat-label fxFlexAlign="center">MyMemory</mat-label>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-user">
+        <mat-label>{{tokenService.getUserName()}}</mat-label>
+        <button mat-icon-button (click)="tokenService.logOut()">
+            <i class="material-icons header-icon">person_outline</i>
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
+        <button mat-raised-button routerLink="/adminuser">Gestión usuarios</button>
+        <button mat-raised-button routerLink="/admininfo">Gestión información</button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="container" fxFlexFill *ngIf= "this.roles[0] == 'ROLE_FAMILIAR'">
+    <mat-toolbar-row class="header-menu">
+        <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
+            <i class="material-icons header-icon">menu</i>
+        </button>
+        <mat-label fxFlexAlign="center">MyMemory</mat-label>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-user">
+        <mat-label>{{tokenService.getUserName()}}</mat-label>
+        <button mat-icon-button (click)="tokenService.logOut()">
+            <i class="material-icons header-icon">person_outline</i>
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
+        <button mat-raised-button routerLink="/familiaruser">Familiares</button>
+        <button mat-raised-button routerLink="/familiarinfo">Información</button>
     </mat-toolbar-row>
 </mat-toolbar>

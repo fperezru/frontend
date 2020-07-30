@@ -7,7 +7,14 @@ import { ViajesComponent } from './pantallas/viajes/viajes.component';
 import { OtrosComponent } from './pantallas/otros/otros.component';
 import { LoginComponent } from './pantallas/login/login.component';
 import { RegistroComponent } from './pantallas/registro/registro.component';
-
+import { RegistroFamiliarComponent } from './pantallas/registro-familiar/registro-familiar.component';
+import { DiarioComponent } from './pantallas/diario/diario.component';
+import { AdminHomeComponent } from './pantallas/admin-home/admin-home.component';
+import { FamiliarHomeComponent } from './pantallas/familiar-home/familiar-home.component';
+import { AdminConfigComponent } from './pantallas/admin-config/admin-config.component';
+import { AdminInfoComponent } from './pantallas/admin-info/admin-info.component';
+import { FamiliarInfoComponent } from './pantallas/familiar-info/familiar-info.component';
+import { FamiliarUserComponent } from './pantallas/familiar-user/familiar-user.component';
 import { GuardService as guard} from 'src/app/core/services/guardService/guard-service.service';
 import { PublicoComponent } from './shared/layout/publico/publico.component';
 import { PrivadoComponent } from './shared/layout/privado/privado.component';
@@ -21,6 +28,10 @@ const routes: Routes = [
   {
     path: 'registro', 
     component: RegistroComponent,
+  },
+  {
+    path: 'registrofamiliar', 
+    component: RegistroFamiliarComponent,
   },
   {
     path: '', 
@@ -46,7 +57,34 @@ const routes: Routes = [
         path: 'otros',
         component: OtrosComponent,
       },
-
+      {
+        path: 'diario',
+        component: DiarioComponent,
+      },
+      {
+        path: 'adminhome',
+        component: AdminHomeComponent,
+      },
+      {
+        path: 'adminuser',
+        component: AdminConfigComponent,
+      },
+      {
+        path: 'admininfo',
+        component: AdminInfoComponent,
+      },
+      {
+        path: 'familiarhome',
+        component: FamiliarHomeComponent,
+      },
+      {
+        path: 'familiaruser',
+        component: FamiliarUserComponent,
+      },
+      {
+        path: 'familiarinfo',
+        component: FamiliarInfoComponent,
+      }
     ],
     canActivate: [guard]
   },

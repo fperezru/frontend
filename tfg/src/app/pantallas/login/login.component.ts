@@ -1,11 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { LoginUsuario } from 'src/app/core/clases/clases';
+import { LoginUsuario, Usuario } from 'src/app/core/clases/clases';
 import { AuthService } from 'src/app/core/services/authService/auth-service.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { Router } from '@angular/router';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { AnimacionService } from 'src/app/core/services/animacionService/animacion-service.service';
 import { isGeneratedFile } from '@angular/compiler/src/aot/util';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('rendererCanvas', {static: true})
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
-  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, private animacionService: AnimacionService, private snackService: SnackService) { }
+  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, private animacionService: AnimacionService, private snackService: SnackService, public userService: UserService) { }
 
   ngOnInit() {
     if (this.tokenService.getToken()) {
@@ -40,6 +41,14 @@ export class LoginComponent implements OnInit {
     this.animacionService.animate();
     this.hide = true;
     this.disabled = false;
+
+    this.userService.getUsuarios().subscribe(data => {
+      usuarios = data;
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
   }
 
   onLogin(): void {
@@ -74,8 +83,13 @@ export class LoginComponent implements OnInit {
       () => {
         if(this.isLogged = true) {
           console.log(this.usuario.id);
-          if(this.tokenService.isLoggedIn())
+          if(this.tokenService.isLoggedIn() && this.roles[0] == 'ROLE_USER')
             this.router.navigate(['home']);
+          else if(this.tokenService.isLoggedIn() && this.roles[0] == 'ROLE_ADMIN')
+            this.router.navigate(['adminhome']);
+          else if(this.tokenService.isLoggedIn() && this.roles[0] == 'ROLE_FAMILIAR')
+            this.router.navigate(['familiarhome']);
+          console.log(this.roles[0]);
           this.snackService.successSnackbar('Inicio de sesión correcto');
         } else {
           console.log("Error al iniciar sesión");
@@ -83,5 +97,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 }
+
+export var usuarios: Usuario[] = [];

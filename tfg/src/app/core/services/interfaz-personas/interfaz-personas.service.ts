@@ -40,7 +40,6 @@ export class InterfazPersonasService {
   public ngOnDestroy(): void {
     if (this.frameId != null) {
       cancelAnimationFrame(this.frameId);
-
     }
   }
 
@@ -124,8 +123,8 @@ export class InterfazPersonasService {
     this.composer = new POSTPROCESSING.EffectComposer(this.renderer);
     
     this.controls = new FirstPersonControls( this.camera, this.renderer.domElement );
-    this.controls.movementSpeed = 150;
-    this.controls.lookSpeed = 0.1;
+    this.controls.movementSpeed = 300;
+    this.controls.lookSpeed = 0;
 
     this.use = true;
 

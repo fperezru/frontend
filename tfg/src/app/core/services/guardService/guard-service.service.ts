@@ -7,12 +7,18 @@ import { TokenService } from '../tokenService/token-service.service';
 
 export class GuardService implements CanActivate {
 
-  realRol: string;
+  realRol: string[];
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if(this.tokenService.isLoggedIn()) {
+    this.realRol = this.tokenService.getAuthorities();
+    console.log(this.realRol[0]);
+    if(this.tokenService.isLoggedIn() && this.realRol[0] == 'ROLE_USER') {
       return true;
-    } else {
+    } else if(this.tokenService.isLoggedIn() && this.realRol[0] == 'ROLE_ADMIN') {
+      return true;
+    } else if(this.tokenService.isLoggedIn() && this.realRol[0] == 'ROLE_FAMILIAR') {
+      return true;
+    } else  {
       this.tokenService.logOut();
       this.router.navigate(["login"]);
     }

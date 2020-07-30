@@ -23,8 +23,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common'
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { EditarMascotaComponent } from './editar-mascota/editar-mascota.component';
 import { NuevaMascotaComponent } from './nueva-mascota/nueva-mascota.component';
 import { NuevoViajeComponent } from './nuevo-viaje/nuevo-viaje.component';
@@ -36,6 +37,23 @@ import { ViewPersonaComponent } from './view-persona/view-persona.component';
 import { ViewOtroComponent } from './view-otro/view-otro.component';
 import { ViewViajeComponent } from './view-viaje/view-viaje.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { DiarioComponent } from './diario/diario.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { NuevaPaginaComponent } from './nueva-pagina/nueva-pagina.component';
+import { EditarPaginaComponent } from './editar-pagina/editar-pagina.component';
+import { EditorDiarioComponent } from './editor-diario/editor-diario.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NuevoDiarioComponent } from './nuevo-diario/nuevo-diario.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { FamiliarHomeComponent } from './familiar-home/familiar-home.component';
+import { AdminConfigComponent } from './admin-config/admin-config.component';
+import { AdminInfoComponent } from './admin-info/admin-info.component';
+import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion.component';
+import { EditarInformacionComponent } from './editar-informacion/editar-informacion.component';
+import { RegistroFamiliarComponent } from './registro-familiar/registro-familiar.component';
+import { FamiliarInfoComponent } from './familiar-info/familiar-info.component';
+import { FamiliarUserComponent } from './familiar-user/familiar-user.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -71,7 +89,18 @@ export const MY_FORMATS = {
     ViewMascotaComponent, 
     ViewPersonaComponent, 
     ViewOtroComponent, 
-    ViewViajeComponent
+    ViewViajeComponent, 
+    DiarioComponent, 
+    NuevaPaginaComponent, 
+    EditarPaginaComponent, 
+    EditorDiarioComponent, 
+    NuevoDiarioComponent, 
+    AdminHomeComponent, 
+    FamiliarHomeComponent, 
+    AdminConfigComponent, 
+    AdminInfoComponent, 
+    NuevaInformacionComponent, 
+    EditarInformacionComponent, RegistroFamiliarComponent, FamiliarInfoComponent, FamiliarUserComponent,
   ],
   imports: [
     CommonModule,
@@ -88,13 +117,22 @@ export const MY_FORMATS = {
     MatCardModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    NgImageSliderModule
+    NgImageSliderModule, 
+    MatTableModule,
+    MatPaginatorModule,
+    CKEditorModule,
+    MatSelectModule
   ],
   providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: DiarioComponent,
+    },
+
     DatePipe,
     MatDatepickerModule,
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],
-  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent, ViewMascotaComponent, ViewPersonaComponent, ViewOtroComponent, ViewViajeComponent ],
+  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent, ViewMascotaComponent, ViewPersonaComponent, ViewOtroComponent, ViewViajeComponent, NuevaPaginaComponent, EditarPaginaComponent, NuevaInformacionComponent, EditarInformacionComponent],
 })
 export class PantallasModule { }

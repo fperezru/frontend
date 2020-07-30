@@ -1,0 +1,29 @@
+<mat-card-title>Nueva información</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-label>
+            <h4>Título:
+                <mat-form-field>
+                    <input matInput [(ngModel)]="informacion.titulo" required ngModel/>
+                </mat-form-field> 
+                Administrador:
+                <mat-form-field id="description">
+                    <input matInput [(ngModel)]="this.admin" [readonly]="true" required ngModel />
+                </mat-form-field>
+                Tipo:
+                <mat-form-field>
+                    <mat-select [(ngModel)]="informacion.tipo" name="tipo" required placeholder="Tipo">
+                        <mat-option *ngFor= "let tipo of tipoInformacion" [value]="tipo"> {{tipo.tipoNombre}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </h4>
+        </mat-label>
+        <mat-form-field>
+            <input matInput [(ngModel)]="informacion.contenido" required ngModel placeholder="Contenido de la información"/>
+        </mat-form-field> 
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Cancelar</button>
+        <button mat-raised-button primary (click)="addInformacion(informacion)" >Guardar</button>
+    </mat-dialog-actions>
+</div>

@@ -1,3 +1,5 @@
+import { AdminConfigComponent } from 'src/app/pantallas/admin-config/admin-config.component';
+
 export class Persona {
     id?: number;
     nombre: string;
@@ -26,7 +28,6 @@ export class Mascota {
     imagen4: string;
     video1: string;
     video2: string;
-
 }
 
 export class Viaje {
@@ -53,6 +54,41 @@ export class OtrosRecuerdos {
     video2: string;
 }
 
+export class Diario {
+    id?: number;
+    titulo: string;
+    fecha: Date;
+    diario: string;
+}
+
+export class Informacion {
+    id?: number;
+    titulo: string;
+    contenido: string;
+    usuario: Usuario;
+    tipo: Tipo;
+}
+
+export class Tipo {
+    id?: number;
+    tipoNombre: string;
+}
+
+export class Rol {
+    id?: number;
+    rolNombre: string;
+}
+
+export class Usuario {
+    id?: number;
+    nombre: string;
+    nombreUsuario: string;
+    email: string;
+    roles: string[];
+    password: string;
+    familiar: number;
+}
+
 export class JwtModel {
     token: string;
     type: string;
@@ -66,13 +102,15 @@ export class NuevoUsuario {
     email: string;
     roles: string[];
     password: string;
+    familiar: number;
 
-    constructor(nombre: string, nombreUsuario: string, email: string, password: string) {
+    constructor(nombre: string, nombreUsuario: string, email: string, password: string, roles: string[], familiar: number) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
-        this.roles = ['user'];
+        this.roles = roles;
+        this.familiar = familiar;
     }
 }
 

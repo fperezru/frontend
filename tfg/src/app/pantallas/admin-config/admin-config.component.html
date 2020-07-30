@@ -1,0 +1,32 @@
+<div class="title-card-screen">
+    <h1>USUARIOS DE MYMEMORY</h1>    
+</div>
+<div>
+    <div class="container">
+        <div class="mat-elevation-z3">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="usuario">
+                    <th mat-header-cell *matHeaderCellDef> USUARIO </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombreUsuario}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="contraseña">
+                    <th mat-header-cell *matHeaderCellDef> EMAIL </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="editar">
+                    <th mat-header-cell *matHeaderCellDef> INFORMACIÓN</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button  (click)="dialogoService.abrirDialogo('EditarPaginaComponent', element, {width: '1100px', height: 'auto'})"><mat-icon class="color-icons">perm_identity</mat-icon></button> 
+                    </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[8]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

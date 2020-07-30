@@ -31,6 +31,12 @@
           </button>
           <mat-error> Campo contraseña vacío </mat-error>
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Familiar</mat-label>
+          <input name="user" [(ngModel)]="form.familiar" required matInput placeholder="Familiar"/>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error> Campo familiar vacío </mat-error>
+        </mat-form-field>
       </div>
       <div id="actions">
         <button id="bregistro" mat-raised-button type="button" routerLink="/login">Cancelar</button>
