@@ -80,7 +80,7 @@ export class EditarOtroComponent implements OnInit {
   }
 
   public onUpload() {
-    this.otro.imagen1 = this.archvioSeleccionado.name;
+    //this.otro.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();

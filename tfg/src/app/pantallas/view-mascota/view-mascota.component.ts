@@ -50,7 +50,7 @@ export class ViewMascotaComponent implements OnInit {
         thumbImage: '../assets/f.png', // Support base64 image
       },
       {
-        video: this.mascota.video2, // Support base64 image
+        //video: this.mascota.video2, // Support base64 image
         
       },
     ];

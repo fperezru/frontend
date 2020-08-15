@@ -16,8 +16,8 @@ export class InformacionService {
     return this.httpClient.get<Informacion[]>(this.informacionURL+'lista');
   }
 
-  public getInformacionPorTipo(tipo: String): Observable<Informacion[]> {
-    return this.httpClient.get<Informacion[]>(this.informacionURL + `detalle/${tipo}`);
+  public getInformacionPorTipo(tipo: number): Observable<Informacion[]> {
+    return this.httpClient.get<Informacion[]>(this.informacionURL + `lista/${tipo}`);
   }
 
   public getInformacionPorId(id: number): Observable<Informacion> {

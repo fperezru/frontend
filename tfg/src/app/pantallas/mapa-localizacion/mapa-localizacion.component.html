@@ -1,0 +1,10 @@
+<div>
+    <google-map width="800" height="600" [center] = "position">
+        <map-marker
+            [position] = "position"
+            [label] = "label"
+            [title] = "title">
+        </map-marker>
+    </google-map>
+    <button mat-raised-button primary (click)="openMaps()" >Abrir maps</button>
+</div>

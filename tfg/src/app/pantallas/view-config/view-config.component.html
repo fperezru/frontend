@@ -1,0 +1,17 @@
+<mat-card-title>Información detallada</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.nombreUsuario" [readonly]="true"  placeholder="Usuario"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.email" [readonly]="true"  placeholder="Email"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.nombre" [readonly]="true"  placeholder="Nombre"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.roles[0].rolNombre" [readonly]="true"  placeholder="Rol"/>
+        </mat-form-field>
+    </mat-dialog-content>
+</div>

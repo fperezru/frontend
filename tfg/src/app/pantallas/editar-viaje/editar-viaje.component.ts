@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { ViajeService } from 'src/app/core/services/viaje/viaje.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-editar-viaje',

@@ -34,7 +34,7 @@ export class NuevaMascotaComponent implements OnInit {
   }
 
   public onUpload() {
-    this.mascota.imagen1 = this.archvioSeleccionado.name;
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();

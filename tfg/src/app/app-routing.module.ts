@@ -11,6 +11,8 @@ import { RegistroFamiliarComponent } from './pantallas/registro-familiar/registr
 import { DiarioComponent } from './pantallas/diario/diario.component';
 import { AdminHomeComponent } from './pantallas/admin-home/admin-home.component';
 import { FamiliarHomeComponent } from './pantallas/familiar-home/familiar-home.component';
+import { InformacionTipoComponent } from './pantallas/informacion-tipo/informacion-tipo.component';
+import { InformacionContenidoComponent } from './pantallas/informacion-contenido/informacion-contenido.component';
 import { AdminConfigComponent } from './pantallas/admin-config/admin-config.component';
 import { AdminInfoComponent } from './pantallas/admin-info/admin-info.component';
 import { FamiliarInfoComponent } from './pantallas/familiar-info/familiar-info.component';
@@ -84,6 +86,14 @@ const routes: Routes = [
       {
         path: 'familiarinfo',
         component: FamiliarInfoComponent,
+      },
+      {
+        path: 'informaciontipo',
+        component: InformacionTipoComponent,
+      },
+      {
+        path: 'informacioncontenido',
+        component: InformacionContenidoComponent,
       }
     ],
     canActivate: [guard]

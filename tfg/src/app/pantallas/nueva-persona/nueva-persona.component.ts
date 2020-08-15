@@ -34,7 +34,7 @@ export class NuevaPersonaComponent implements OnInit {
   }
 
   public onUpload() {
-    this.persona.imagen1 = this.archvioSeleccionado.name;
+    //this.persona.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();

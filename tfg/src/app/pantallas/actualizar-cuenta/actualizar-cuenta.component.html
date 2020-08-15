@@ -1,0 +1,26 @@
+<mat-card-title>Actualizar cuenta</mat-card-title>
+<div id="EditorForm">
+    <mat-dialog-content id=Information>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.nombreUsuario" placeholder="Usuario"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.email" placeholder="Email"/>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [(ngModel)]="usuario.nombre" placeholder="Nombre"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input name="password" [(ngModel)]="this.password" required matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"/>
+            <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error> Campo contraseña vacío </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
+        <button mat-raised-button primary (click)="editarCuenta(usuario)" >Guardar</button>
+    </mat-dialog-actions>
+</div>

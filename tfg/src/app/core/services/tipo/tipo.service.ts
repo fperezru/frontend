@@ -12,7 +12,7 @@ export class TipoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getInformacion(): Observable<Tipo[]> {
+  public getTipos(): Observable<Tipo[]> {
     return this.httpClient.get<Tipo[]>(this.tipoURL+'lista');
   }
 }

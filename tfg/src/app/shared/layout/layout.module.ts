@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes} from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuComponent } from './menu/menu.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MenuComponent } from './menu/menu.component';
     MatIconModule,
     MatButtonModule,
     RouterModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatMenuModule
   ],
   exports: [HeaderComponent, MenuComponent]
 })

@@ -58,7 +58,8 @@ export class RegistroFamiliarComponent implements OnInit {
 
   onRegister() {
     if (this.validaciones() == true) {
-      this.usuario = new NuevoUsuario(this.form.nombre, this.form.nombreUsuario, this.form.email, this.form.password, this.roles, null );
+      this.usuario = new NuevoUsuario(this.form.nombre, this.form.nombreUsuario, this.form.apellidos, this.form.identificacion, this.form.fechaNacimiento, this.form.domicilio, this.form.telefono, this.form.email, this.form.password, this.roles, null, true);
+      console.log(this.usuario);
       this.authService.registro(this.usuario).subscribe(data => {
         this.isRegister = true;
         this.isRegisterFail = false;

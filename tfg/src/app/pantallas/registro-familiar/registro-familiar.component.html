@@ -1,49 +1,80 @@
 <div class="login-div" id="login-right">
-    <form #login="ngForm" (ngSubmit)="onRegister()">
-      <div id="card">
-        <div id="header">
-          <mat-label>Registro de familiares</mat-label>
-        </div>
-        <div id="login-card">
-          <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input name="user" [(ngModel)]="form.nombre" required matInput placeholder="Usuario"/>
-            <mat-icon matSuffix>account_circle</mat-icon>
-            <mat-error> Campo nombre vacío </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Usuario</mat-label>
-            <input name="user" [(ngModel)]="form.nombreUsuario" required matInput placeholder="Usuario"/>
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <mat-error> Campo usuario vacío </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input name="user" [(ngModel)]="form.email" required matInput placeholder="Usuario"/>
-            <mat-icon matSuffix>alternate_email</mat-icon>
-            <mat-error> Campo usuario vacío </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Contraseña</mat-label>
-            <input name="password" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"/>
-            <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error> Campo contraseña vacío </mat-error>
-          </mat-form-field>
-        </div>
-        <div id="actions">
-          <button id="bregistro" mat-raised-button type="button" routerLink="/login">Cancelar</button>
-          <button id="blogin" mat-raised-button type="submit" [disabled]="disabled">
-            <span *ngIf="!loading; else load">Registrarse</span>
-              <ng-template #load>
-                <mat-spinner diameter=40 color="accent"></mat-spinner>
-              </ng-template>
-          </button>
-        </div>
+  <form #login="ngForm" (ngSubmit)="onRegister()">
+    <div id="card">
+      <div id="header">
+        <mat-label>Registro de familiares</mat-label>
       </div>
-    </form>
-  </div>
+      <div id="login-card">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input name="user" [(ngModel)]="form.nombre" required matInput placeholder="Nombre"/>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error> Campo nombre vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input name="user" [(ngModel)]="form.apellidos" required matInput placeholder="Apellidos"/>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error> Campo apellidos vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput name="user" [(ngModel)]="form.fechaNacimiento" [matDatepicker]="fechaNacimiento" required placeholder="Fecha de nacimiento" [readonly]="true"/>
+          <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+          <mat-datepicker #fechaNacimiento></mat-datepicker>
+          <mat-error> Campo cumpleaños vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input name="user" [(ngModel)]="form.nombreUsuario" required matInput placeholder="Usuario"/>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error> Campo usuario vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input name="user" [(ngModel)]="form.email" required matInput placeholder="Usuario"/>
+          <mat-icon matSuffix>alternate_email</mat-icon>
+          <mat-error> Campo usuario vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>DNI/Pasaporte</mat-label>
+          <input name="user" [(ngModel)]="form.identificacion" required matInput placeholder="Identificación"/>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error> Campo identificación vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input name="user" [(ngModel)]="form.telefono" required matInput placeholder="Identificación"/>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error> Campo teléfono vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Domicilio</mat-label>
+          <input name="user" [(ngModel)]="form.domicilio" required matInput placeholder="Domicilio"/>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error> Campo domicilio vacío </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input name="password" [(ngModel)]="form.password" required matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"/>
+          <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error> Campo contraseña vacío </mat-error>
+        </mat-form-field>
+      </div>
+      <div id="actions">
+        <button id="bregistro" mat-raised-button type="button" routerLink="/login">Cancelar</button>
+        <button id="blogin" mat-raised-button type="submit" [disabled]="disabled">
+          <span *ngIf="!loading; else load">Registrarse</span>
+            <ng-template #load>
+              <mat-spinner diameter=40 color="accent"></mat-spinner>
+            </ng-template>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
   <div class="engine-wrapper">
     <canvas #rendererCanvas></canvas>
   </div>

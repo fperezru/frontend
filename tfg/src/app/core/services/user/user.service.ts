@@ -16,11 +16,15 @@ export class UserService {
     return this.httpClient.get<Usuario[]>(this.usuarioURL+'lista');
   }
 
-  public getFamiliares(rol: Rol): Observable<Usuario[]> {
+  public getFamiliares(rol: number): Observable<Usuario[]> {
     return this.httpClient.get<Usuario[]>(this.usuarioURL + `lista/${rol}`);
   }
 
   public getPacientes(familiar: number): Observable<Usuario[]> {
     return this.httpClient.get<Usuario[]>(this.usuarioURL + `familiar/${familiar}`);
+  }
+
+  public editarUsuario(usuario: Usuario, id: number): Observable<any> {
+    return this.httpClient.put<any>(this.usuarioURL + `actualizar/${id}`, usuario);
   }
 }

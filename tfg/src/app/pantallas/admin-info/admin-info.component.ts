@@ -3,8 +3,10 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
 import { InformacionService } from 'src/app/core/services/informacion/informacion.service';
-import { Informacion } from 'src/app/core/clases/clases';
+import { Informacion, Tipo, Usuario } from 'src/app/core/clases/clases';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
+import { usuarios } from '../login/login.component';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-admin-info',
@@ -18,10 +20,12 @@ export class AdminInfoComponent extends MatPaginatorIntl {
   dataSource = null;
   user: string;
   informaciones: Informacion[];
+  tipoAux: Tipo;
+  usuarioAux: Usuario;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(public dialogoService: DialogoService, private informacionService: InformacionService, private tokenService: TokenService) {
+  constructor(public dialogoService: DialogoService, private informacionService: InformacionService, private tokenService: TokenService, private userService: UserService) {
     super();
     this.nextPageLabel = 'Siguiente'
     this.previousPageLabel = 'Anterior';
@@ -38,33 +42,51 @@ export class AdminInfoComponent extends MatPaginatorIntl {
   public loadInformaciones() {
     this.informacionService.getInformacion().subscribe(
       informacion => {
-        /*for(let i = 0; i < informacion.length; i++) {
-          if(Number(informacion[i].tipo) == 1)
-            informacion[i].tipo = eval("ALIMENTACION");
-          
-          if(Number(informacion[i].tipo) == 2)
-            informacion[i].tipo = eval("EJERCICIOS");
-          
-          if(Number(informacion[i].tipo) == 3)
-            informacion[i].tipo = eval("ENFERMEDAD");
-          
-          if(Number(informacion[i].tipo) == 4)
-            informacion[i].tipo = eval("ORGANIZACIONES");
-        }*/
-        
-        this.informaciones = informacion
-        for(let i = 0; i < this.informaciones.length; i++) {
-          if (Number(this.informaciones[i]) == 1)
-            this.informaciones[i].tipo.tipoNombre == "ALIMENTACION";
-          if (Number(this.informaciones[i]) == 2)
-            this.informaciones[i].tipo.tipoNombre == "EJERCICIOS";
-          if (Number(this.informaciones[i]) == 3)
-            this.informaciones[i].tipo.tipoNombre == "ENFERMEDAD";
-          if (Number(this.informaciones[i]) == 4)
-            this.informaciones[i].tipo.tipoNombre == "ORGANIZACIONES";
+        for(let i = 0; i < informacion.length; i++) {
+          if (Number(informacion[i].tipo) === 1) {
+            this.tipoAux = new Tipo();
+            this.tipoAux.id = 1;
+            this.tipoAux.tipoNombre = "ALIMENTACION";
+            informacion[i].tipo = this.tipoAux;
+          }
+          else if (Number(informacion[i].tipo) === 2) {
+            this.tipoAux = new Tipo();
+            this.tipoAux.id = 2;
+            this.tipoAux.tipoNombre = "EJERCICIOS";
+            informacion[i].tipo = this.tipoAux;
+          }
+          else if (Number(informacion[i].tipo) === 3) {
+            this.tipoAux = new Tipo();
+            this.tipoAux.id = 3;
+            this.tipoAux.tipoNombre = "ENFERMEDAD";
+            informacion[i].tipo = this.tipoAux;
+          }
+          else if (Number(informacion[i].tipo) === 4) {
+            this.tipoAux = new Tipo();
+            this.tipoAux.id = 4;
+            this.tipoAux.tipoNombre = "ORGANIZACIONES";
+            informacion[i].tipo = this.tipoAux;
+          }
         }
-        this.dataSource = new MatTableDataSource<Informacion>(this.informaciones);
-        console.log(Number(this.informaciones[0]));
+
+        this.userService.getUsuarios().subscribe(data => {
+          for (let i = 0; i < informacion.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if(Number(informacion[i].usuario) === data[j].id) {
+                this.usuarioAux = new Usuario();
+                this.usuarioAux.id = data[j].id;
+                this.usuarioAux.nombreUsuario = data[j].nombreUsuario;
+                informacion[i].usuario = this.usuarioAux;
+              }
+            }
+          }
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+
+        this.dataSource = new MatTableDataSource<Informacion>(informacion);
         this.dataSource.paginator = this.paginator;
       },
       error => console.log(error)
@@ -75,8 +97,17 @@ export class AdminInfoComponent extends MatPaginatorIntl {
     this.user = this.tokenService.getUserName();
     this.dialogoService.abrirDialogo('NuevaInformacionComponent', this.user, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
       this.loadInformaciones();
+      this.dataSource._updateChangeSubscription();
     },
     error => console.log(error)
+    );
+  }
+
+  public deleteInformacion(informacion: Informacion) {
+    this.informacionService.borrar(informacion.id).subscribe(data => {
+      this.loadInformaciones();
+    },
+      error => console.log(error)
     );
   }
 }

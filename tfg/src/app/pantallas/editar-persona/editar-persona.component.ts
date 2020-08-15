@@ -69,7 +69,7 @@ export class EditarPersonaComponent implements OnInit {
         thumbImage: '../assets/f.png', // Support base64 image
       },
       {
-        video: this.persona.video2, // Support base64 image
+        //video: this.persona.video2, // Support base64 image
         
       },
     ];
@@ -110,7 +110,7 @@ export class EditarPersonaComponent implements OnInit {
   }
 
   public onUpload() {
-    this.persona.imagen1 = this.archvioSeleccionado.name;
+    //this.persona.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();

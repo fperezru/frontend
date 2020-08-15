@@ -1,0 +1,3 @@
+<div>
+    <button *ngFor= "let info of informacion" mat-raised-button primary routerLink="/informacioncontenido" (click)="this.setContenidoInformacion(info)">{{info.titulo}}</button>
+</div>

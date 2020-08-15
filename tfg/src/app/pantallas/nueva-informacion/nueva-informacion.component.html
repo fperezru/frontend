@@ -18,9 +18,7 @@
                 </mat-form-field>
             </h4>
         </mat-label>
-        <mat-form-field>
-            <input matInput [(ngModel)]="informacion.contenido" required ngModel placeholder="Contenido de la información"/>
-        </mat-form-field> 
+        <app-info-editor [(informacion)]="informacion.contenido" ></app-info-editor>
     </mat-dialog-content>
     <mat-dialog-actions>
         <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Cancelar</button>

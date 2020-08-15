@@ -41,23 +41,25 @@ export class RegistroComponent implements OnInit {
     this.rol.id = 3;
     this.rol.rolNombre = "ROLE_FAMILIAR";
 
-    for (var i = 0; i < usuarios.length; i++) {
-      if (usuarios[i].familiar !== null && usuarios[i].roles[0] === 'ROLE_FAMILIAR')
-        usuarios.splice(i, 1);
-        console.log(usuarios[i].nombreUsuario);
-    }
-
-    console.log(usuarios.length);
+    this.userService.getFamiliares(3).subscribe(data => {
+      this.usuarios = data;
+      console.log(this.usuarios);
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
+    console.log(this.usuarios);
   }
 
   public validaciones() {
     let save: boolean = true;
 
-    for(let i = 0; i < usuarios.length; i ++) {
-      if(this.form.familiar === usuarios[i].nombreUsuario) {
+    for(let i = 0; i < this.usuarios.length; i ++) {
+      if(this.form.familiar === this.usuarios[i].nombreUsuario) {
           save = true;
-          this.familiar = usuarios[i].id;
-          console.log(this.form.familiar === usuarios[i].nombreUsuario);
+          this.familiar = this.usuarios[i].id;
+          console.log(this.form.familiar === this.usuarios[i].nombreUsuario);
           this.save = false;
       }
       else if (this.save === true) {
@@ -74,7 +76,7 @@ export class RegistroComponent implements OnInit {
     console.log(save);
     console.log(this.familiar);
     if (save) {
-      this.usuario = new NuevoUsuario(this.form.nombre, this.form.nombreUsuario, this.form.email, this.form.password, this.roles, this.familiar);
+      this.usuario = new NuevoUsuario(this.form.nombre, this.form.nombreUsuario, this.form.apellidos, this.form.identificacion, this.form.fechaNacimiento, this.form.domicilio, this.form.telefono, this.form.email, this.form.password, this.roles, this.familiar, true);
       this.authService.registro(this.usuario).subscribe(data => {
         this.isRegister = true;
         this.isRegisterFail = false;

@@ -10,10 +10,15 @@ import { ViewMascotaComponent } from 'src/app/pantallas/view-mascota/view-mascot
 import { ViewPersonaComponent } from 'src/app/pantallas/view-persona/view-persona.component';
 import { ViewViajeComponent } from 'src/app/pantallas/view-viaje/view-viaje.component';
 import { ViewOtroComponent } from 'src/app/pantallas/view-otro/view-otro.component';
+import { ViewDiarioComponent } from 'src/app/pantallas/view-diario/view-diario.component';
 import { NuevaPaginaComponent } from 'src/app/pantallas/nueva-pagina/nueva-pagina.component';
 import { EditarPaginaComponent } from 'src/app/pantallas/editar-pagina/editar-pagina.component';
 import { NuevaInformacionComponent } from 'src/app/pantallas/nueva-informacion/nueva-informacion.component';
 import { EditarInformacionComponent } from 'src/app/pantallas/editar-informacion/editar-informacion.component';
+import { ViewConfigComponent } from 'src/app/pantallas/view-config/view-config.component';
+import { ActualizarCuentaComponent } from 'src/app/pantallas/actualizar-cuenta/actualizar-cuenta.component';
+import { MapaLocalizacionComponent } from 'src/app/pantallas/mapa-localizacion/mapa-localizacion.component';
+
 
 export const dialogoComponentes = [
     {
@@ -80,5 +85,22 @@ export const dialogoComponentes = [
         nombre: 'EditarInformacionComponent',
         componente: EditarInformacionComponent,
     },
+    {
+        nombre: 'ViewDiarioComponent',
+        componente: ViewDiarioComponent,
+    },
+    {
+        nombre: 'ViewConfigComponent',
+        componente: ViewConfigComponent,
+    },
+    {
+        nombre: 'ActualizarCuentaComponent',
+        componente: ActualizarCuentaComponent,
+    },
+    {
+        nombre: 'MapaLocalizacionComponent',
+        componente: MapaLocalizacionComponent,
+    },
+
     
   ];

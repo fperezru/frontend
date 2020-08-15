@@ -23,6 +23,7 @@ export class NuevaInformacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.informacion = new Informacion();
+    this.informacion.contenido = '';
     this.idAdmin = this.tokenService.getId();
     if (isNaN(this.idAdmin)) this.idAdmin = 1;
     console.log(this.idAdmin);
@@ -30,7 +31,7 @@ export class NuevaInformacionComponent implements OnInit {
       this.admin = this.data;
     }
 
-    this.tipoService.getInformacion().subscribe(
+    this.tipoService.getTipos().subscribe(
       data => {
         this.tipoInformacion = data;
         console.log(this.tipoInformacion[0].tipoNombre);

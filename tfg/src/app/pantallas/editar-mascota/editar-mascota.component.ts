@@ -61,7 +61,7 @@ export class EditarMascotaComponent implements OnInit {
         thumbImage: '../assets/f.png', // Support base64 image
       },
       {
-        video: this.mascota.video2, // Support base64 image
+        //video: this.mascota.video2, // Support base64 image
         
       },
     ];
@@ -94,7 +94,7 @@ export class EditarMascotaComponent implements OnInit {
   }
 
   public onUpload() {
-    this.mascota.imagen1 = this.archvioSeleccionado.name;
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();

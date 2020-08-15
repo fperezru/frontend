@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { LoginUsuario, Usuario } from 'src/app/core/clases/clases';
+import { LoginUsuario, Usuario, Rol } from 'src/app/core/clases/clases';
 import { AuthService } from 'src/app/core/services/authService/auth-service.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { Router } from '@angular/router';
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   hide: boolean;
   disabled: boolean;
   loading: boolean;
+  rol: Rol;
 
   @ViewChild('rendererCanvas', {static: true})
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
@@ -37,13 +38,18 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenService.getAuthorities();
     }
 
+    this.rol = new Rol();
+    this.rol.id = 3;
+    this.rol.rolNombre = 'ROLE_FAMILIAR';
+
     this.animacionService.createScene(this.rendererCanvas);
     this.animacionService.animate();
     this.hide = true;
     this.disabled = false;
 
-    this.userService.getUsuarios().subscribe(data => {
+    this.userService.getFamiliares(3).subscribe(data => {
       usuarios = data;
+      console.log(usuarios);
     },
       (error: any) => {
         console.log(error)

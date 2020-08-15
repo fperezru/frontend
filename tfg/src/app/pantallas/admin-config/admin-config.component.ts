@@ -12,9 +12,10 @@ import { UserService } from 'src/app/core/services/user/user.service';
 })
 export class AdminConfigComponent implements OnInit {
 
-  displayedColumns: string[] = ['usuario', 'contraseña', 'editar'];
+  displayedColumns: string[] = ['usuario', 'contraseña', 'nombre', 'editar'];
   columsnToDisplay: string[] = this.displayedColumns.slice();
   dataSource = null;
+  usuarios: Usuario[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -27,7 +28,8 @@ export class AdminConfigComponent implements OnInit {
   public loadUsuarios() {
     this.usuarioService.getUsuarios().subscribe(
       usuarios => {
-        this.dataSource = new MatTableDataSource<Usuario>(usuarios);
+        this.usuarios = usuarios;
+        this.dataSource = new MatTableDataSource<Usuario>(this.usuarios);
         this.dataSource.paginator = this.paginator;
       },
       error => console.log(error)

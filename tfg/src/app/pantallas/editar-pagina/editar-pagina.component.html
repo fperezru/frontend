@@ -12,11 +12,10 @@
                 </mat-form-field>
             </h4>
         </mat-label>
-        <app-editor-diario [(diario)]="diario.diario" ></app-editor-diario>
+        <app-nuevo-diario [(diario)]="diario.diario" ></app-nuevo-diario>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-raised-button secondary *ngIf="this.editAux == true" (click)="this.dialogoRef.close()" >Cancelar</button>
-        <button mat-raised-button primary *ngIf="this.editAux == true" (click)="editarPagina(diario)" >Guardar</button>
-        <button mat-raised-button secondary *ngIf="this.editAux == false" (click)="this.dialogoRef.close()" >{{this.editAux}}Cerrar</button>
+        <button mat-raised-button secondary  (click)="this.dialogoRef.close()" >Cancelar</button>
+        <button mat-raised-button primary (click)="editarPagina(diario)" >Guardar</button>
     </mat-dialog-actions>
 </div>

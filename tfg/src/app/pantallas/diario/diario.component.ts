@@ -21,6 +21,7 @@ export class DiarioComponent extends MatPaginatorIntl {
   visible: boolean = true;
   fechaAux: string;
   fechaPaginaAux: string;
+  fechaBoton: Date;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
@@ -37,6 +38,8 @@ export class DiarioComponent extends MatPaginatorIntl {
   ngOnInit(): void {
     this.loadDiario();
     this.comprobarDiario();
+    this.fechaBoton = new Date();
+    this.fechaBoton.setHours(0,0,0,0);
   }
 
   applyFilter(event: Event) {
@@ -63,7 +66,9 @@ export class DiarioComponent extends MatPaginatorIntl {
     this.fecha = new Date();
     this.fecha.setHours(0,0,0,0);
     this.dialogoService.abrirDialogo('NuevaPaginaComponent', this.fecha, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
-      
+      this.loadDiario();
+      this.comprobarDiario();
+      this.dataSource._updateChangeSubscription();
     },
     error => console.log(error)
     );
@@ -90,5 +95,19 @@ export class DiarioComponent extends MatPaginatorIntl {
         console.log(error);
       }
     );
+  }
+
+  public visibleBoton(fecha: Date) {
+    let visible = true;
+    var fechaAux = new Date(fecha);
+    fechaAux.setHours(0,0,0,0);
+
+    if(fechaAux.getTime() === this.fechaBoton.getTime())
+      visible = true;
+    else 
+      visible = false;
+      
+    return visible;
+
   }
 }

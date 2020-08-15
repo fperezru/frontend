@@ -9,12 +9,6 @@ export class Persona {
     fechaDefuncion: Date;
     relacion: string;
     descripcion: string;
-    imagen1: string;
-    imagen2: string;
-    imagen3: string; 
-    imagen4: string;
-    video1: string;
-    video2: string;
 }
 
 export class Mascota {
@@ -22,36 +16,18 @@ export class Mascota {
     nombre: string;
     especie: string;
     descripcion: string;
-    imagen1: string;
-    imagen2: string;
-    imagen3: string; 
-    imagen4: string;
-    video1: string;
-    video2: string;
 }
 
 export class Viaje {
     id?: number;
     lugar: string;
     descripcion: string;
-    imagen1: string;
-    imagen2: string;
-    imagen3: string; 
-    imagen4: string;
-    video1: string;
-    video2: string;
 }
 
 export class OtrosRecuerdos {
     id?: number;
     tipo: string;
     descripcion: string;
-    imagen1: string;
-    imagen2: string;
-    imagen3: string; 
-    imagen4: string;
-    video1: string;
-    video2: string;
 }
 
 export class Diario {
@@ -83,10 +59,22 @@ export class Usuario {
     id?: number;
     nombre: string;
     nombreUsuario: string;
+    apellidos: string;
+    identificacion: string;
+    fechaNacimiento: Date;
+    domicilio: string;
+    telefono: string;
     email: string;
-    roles: string[];
+    roles: Rol[];
     password: string;
     familiar: number;
+    permiso: boolean;
+}
+
+export class Localizacion {
+    id?: number;
+    latitud: number;
+    longitud: number;
 }
 
 export class JwtModel {
@@ -99,18 +87,30 @@ export class JwtModel {
 export class NuevoUsuario {
     nombre: string;
     nombreUsuario: string;
+    apellidos: string;
+    identificacion: string;
+    fechaNacimiento: Date;
+    domicilio: string;
+    telefono: string;
     email: string;
     roles: string[];
     password: string;
     familiar: number;
+    permiso: boolean
 
-    constructor(nombre: string, nombreUsuario: string, email: string, password: string, roles: string[], familiar: number) {
+    constructor(nombre: string, nombreUsuario: string, apellidos: string, identificacion: string, fechaNacimiento: Date, domicilio: string, telefono: string, email: string, password: string, roles: string[], familiar: number, permiso: boolean) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
+        this.apellidos = apellidos;
+        this.identificacion = identificacion;
+        this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
+        this.telefono = telefono;
         this.email = email;
         this.password = password;
         this.roles = roles;
         this.familiar = familiar;
+        this.permiso = permiso;
     }
 }
 

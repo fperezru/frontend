@@ -1,4 +1,4 @@
-<nav *ngIf= "this.roles[0] == 'ROLE_USER'">
+<nav *ngIf= "this.roles[0] == 'ROLE_USER'" fxShow="true" fxHide.gt-sm>
     <mat-nav-list>
         <a mat-list-item routerLinkActive="item-active" routerLink="/personas">
             <span>Personas</span>
@@ -27,13 +27,13 @@
         </a>
     </mat-nav-list>
 </nav>
-<nav *ngIf= "this.roles[0] == 'ROLE_ADMIN'" fxShow="true" fxHide.gt-sm>
+<nav *ngIf= "this.roles[0] == 'ROLE_FAMILIAR'" fxShow="true" fxHide.gt-sm>
     <mat-nav-list>
         <a mat-list-item routerLinkActive="item-active" routerLink="/familiaruser">
-            <span>Gestión usuarios</span>
+            <span>Familiares</span>
         </a>
-        <a mat-list-item routerLinkActive="item-active" routerLink="/familiarininfo">
-            <span>Gestión información</span>
+        <a mat-list-item routerLinkActive="item-active" routerLink="/familiarinfo">
+            <span>Información</span>
         </a>
     </mat-nav-list>
 </nav>

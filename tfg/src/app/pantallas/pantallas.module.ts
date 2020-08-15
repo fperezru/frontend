@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common'
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -54,6 +55,15 @@ import { EditarInformacionComponent } from './editar-informacion/editar-informac
 import { RegistroFamiliarComponent } from './registro-familiar/registro-familiar.component';
 import { FamiliarInfoComponent } from './familiar-info/familiar-info.component';
 import { FamiliarUserComponent } from './familiar-user/familiar-user.component';
+import { ViewDiarioComponent } from './view-diario/view-diario.component';
+import { ViewConfigComponent } from './view-config/view-config.component';
+import { InfoEditorComponent } from './info-editor/info-editor.component';
+import { InformacionTipoComponent } from './informacion-tipo/informacion-tipo.component';
+import { InformacionContenidoComponent } from './informacion-contenido/informacion-contenido.component';
+import { ActualizarCuentaComponent } from './actualizar-cuenta/actualizar-cuenta.component';
+import { MapaLocalizacionComponent } from './mapa-localizacion/mapa-localizacion.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 export const MY_FORMATS = {
   parse: {
@@ -100,7 +110,17 @@ export const MY_FORMATS = {
     AdminConfigComponent, 
     AdminInfoComponent, 
     NuevaInformacionComponent, 
-    EditarInformacionComponent, RegistroFamiliarComponent, FamiliarInfoComponent, FamiliarUserComponent,
+    EditarInformacionComponent, 
+    RegistroFamiliarComponent, 
+    FamiliarInfoComponent, 
+    FamiliarUserComponent, 
+    ViewDiarioComponent, 
+    ViewConfigComponent, 
+    InfoEditorComponent, 
+    InformacionTipoComponent, 
+    InformacionContenidoComponent, 
+    ActualizarCuentaComponent, 
+    MapaLocalizacionComponent,
   ],
   imports: [
     CommonModule,
@@ -115,13 +135,16 @@ export const MY_FORMATS = {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatCardModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatDatepickerModule,
     NgImageSliderModule, 
     MatTableModule,
     MatPaginatorModule,
     CKEditorModule,
-    MatSelectModule
+    MatSelectModule,
+    GoogleMapsModule,
+    DeviceDetectorModule
   ],
   providers: [
     {
@@ -133,6 +156,27 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],
-  entryComponents: [NuevaPersonaComponent, EditarPersonaComponent, NuevaMascotaComponent, EditarMascotaComponent, NuevoViajeComponent, EditarViajeComponent, EditarOtroComponent, NuevoOtroComponent, ViewMascotaComponent, ViewPersonaComponent, ViewOtroComponent, ViewViajeComponent, NuevaPaginaComponent, EditarPaginaComponent, NuevaInformacionComponent, EditarInformacionComponent],
+  entryComponents: [
+    NuevaPersonaComponent, 
+    EditarPersonaComponent, 
+    NuevaMascotaComponent, 
+    EditarMascotaComponent, 
+    NuevoViajeComponent, 
+    EditarViajeComponent, 
+    EditarOtroComponent, 
+    NuevoOtroComponent, 
+    ViewMascotaComponent, 
+    ViewPersonaComponent, 
+    ViewOtroComponent, 
+    ViewViajeComponent, 
+    NuevaPaginaComponent, 
+    EditarPaginaComponent, 
+    NuevaInformacionComponent, 
+    EditarInformacionComponent,
+    ViewDiarioComponent,
+    ViewConfigComponent,
+    ActualizarCuentaComponent,
+    MapaLocalizacionComponent
+  ],
 })
 export class PantallasModule { }
