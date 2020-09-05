@@ -45,6 +45,15 @@ export class TokenService {
     return Number(sessionStorage.getItem(ID_KEY));
   }
 
+  public setIdUsuario(id: Number): void {
+    window.sessionStorage.removeItem('ID_USUARIO');
+    window.sessionStorage.setItem('ID_USUARIO', JSON.stringify(id));
+  }
+
+  public getIdUsuario(): number {
+    return Number(sessionStorage.getItem('ID_USUARIO'));
+  }
+
   public setAuthorities(authorities: string[]): void {
     window.sessionStorage.removeItem(AUTHORITIES_KEY);
     window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(authorities));

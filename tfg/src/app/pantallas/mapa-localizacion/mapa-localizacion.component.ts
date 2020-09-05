@@ -33,7 +33,7 @@ export class MapaLocalizacionComponent implements OnInit {
   }
   position: google.maps.LatLngLiteral
 
-  constructor(public dialogoRef: MatDialogRef<MapaLocalizacionComponent>, @Inject(MAT_DIALOG_DATA) public data: Usuario, public snackService: SnackService, private localizacionService: LocalizacionService, private tokenService: TokenService, private deviceService: DeviceDetectorService) { }
+  constructor(public dialogoRef: MatDialogRef<MapaLocalizacionComponent>, @Inject(MAT_DIALOG_DATA) public data: Usuario, public snackService: SnackService, private localizacionService: LocalizacionService, private tokenService: TokenService, public deviceService: DeviceDetectorService) { }
 
   ngOnInit() {
     if(this.data !== null) {
@@ -74,11 +74,15 @@ export class MapaLocalizacionComponent implements OnInit {
   public openMaps() {
 
     if(this.deviceService.isMobile())
-      window.open("maps://maps.google.com/maps?daddr="+this.position.lat+","+ this.position.lng+"&amp;ll=");
+      window.open("https://maps.google.com/maps?daddr="+this.position.lat+","+ this.position.lng+"&amp;ll=");
     else if(this.deviceService.isTablet())
-      window.open("maps://maps.google.com/maps?daddr="+this.position.lat+","+ this.position.lng+"&amp;ll="); 
+      window.open("https://maps.google.com/maps?daddr="+this.position.lat+","+ this.position.lng+"&amp;ll="); 
     else if(this.deviceService.isDesktop())
       window.open("https://maps.google.com/maps?daddr="+this.position.lat+","+ this.position.lng+"&amp;ll=");
+  }
+
+  public openPhone() {
+    window.open('tel:+112', '_system');
   }
 }
 

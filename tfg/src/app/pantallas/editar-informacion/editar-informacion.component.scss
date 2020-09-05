@@ -1,0 +1,165 @@
+@import './src/assets/scss/colores';
+
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+    mat-form-field {
+      width:250px !important;
+      height:65px !important;
+    }
+  
+    
+    form {
+        margin: auto;
+    }
+
+    #principal {
+        margin-top: 25px;
+        overflow-y: visible;
+        overflow-x: hidden;
+    }
+        
+    #actions {
+        display: grid;
+        flex-direction: column;
+        justify-content: space-around;
+        align-content: center;
+        margin-top: 10px;
+    
+        button {
+            width: 120px;
+            height: 40px;
+            font-size: 15px;
+            color: white;
+            justify-content: center;
+        }
+    
+        #bregistro {
+            background: rgba(0,28,28,1);
+        }
+    
+        #blogin {
+            background: $informacion;
+            margin-top: 8px;
+        }
+
+        #beliminar {
+            background: lightsalmon;
+            width: 140px;
+            margin-top: 10px;
+            margin-left: -10px;
+        }
+    }
+
+    
+    mat-datepicker-toggle {
+        color: lightseagreen !important;
+    }
+
+    .filas {
+        display: inline-flexbox;
+        flex-direction: column;
+    }
+  
+    /deep/ .mat-checkbox-frame { 
+        border-color: white;
+    }
+  
+    a {
+        font-size: 11px;
+    }
+  
+    mat-error {
+        visibility: hidden;
+    }
+}
+  
+//ORDENADORES
+@media all and (min-device-width: 1025px) {   
+    mat-form-field {
+      width:250px !important;
+      margin-right: 5px;
+    }
+
+    #principal {
+        margin-top: 25px;
+        overflow-y: hidden;
+    }
+
+    #pass {
+        width:505px !important;
+      }
+  
+    form {
+        margin: auto;
+    }
+      
+    #actions {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin-top: 20px;
+        justify-content: space-between;
+    
+        button {
+            width: 120px;
+            height: 40px;
+            font-size: 15px;
+            color: white;
+            justify-content: center;
+        }
+    
+        #bregistro {
+            background: rgba(0,28,28,1);
+        }
+    
+        #blogin {
+            background: $informacion;
+        }
+
+        #beliminar {
+            background: lightsalmon;
+            width: 140px;
+        }
+    }
+    
+    mat-datepicker-toggle {
+        color: lightseagreen !important;
+    }
+      
+    .filas {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+    }
+  
+    /deep/ .mat-checkbox-frame { 
+        border-color: lightgreen;
+    } 
+}
+  
+mat-error ::ng-deep{
+    color:lightsalmon;
+}
+
+mat-icon {
+    color: $informacion;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: $informacion !important;
+} 
+  
+  ::ng-deep.mat-form-field-ripple {
+   /*change color of underline when focused*/
+   background-color: $informacion !important;;
+}
+
+::ng-deep.mat-form-field-empty.mat-form-field-label {
+    color: $informacion;
+}
+
+::ng-deep.mat-form-field-focused {
+    color: $importante;
+}

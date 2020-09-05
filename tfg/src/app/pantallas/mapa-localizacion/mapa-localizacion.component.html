@@ -1,10 +1,31 @@
 <div>
-    <google-map width="800" height="600" [center] = "position">
+    <google-map *ngIf="this.deviceService.isDesktop()" width="800" height="600" [center] = "position">
         <map-marker
             [position] = "position"
             [label] = "label"
             [title] = "title">
         </map-marker>
     </google-map>
-    <button mat-raised-button primary (click)="openMaps()" >Abrir maps</button>
+    <google-map *ngIf="this.deviceService.isTablet()" width="800" height="600" [center] = "position">
+        <map-marker
+            [position] = "position"
+            [label] = "label"
+            [title] = "title">
+        </map-marker>
+    </google-map>
+    <google-map *ngIf="this.deviceService.isMobile()" width="300" height="700" [center] = "position">
+        <map-marker
+            [position] = "position"
+            [label] = "label"
+            [title] = "title">
+        </map-marker>
+    </google-map>
+    <div id="actions">
+        <button id="blogin" mat-fab color="accent" (click)="openMaps()">
+            <mat-icon>maps</mat-icon>
+        </button>
+        <button *ngIf="this.deviceService.isMobile()" id="beliminar" mat-fab color="accent" (click)="openPhone()">
+            <mat-icon>phone</mat-icon>
+        </button>
+    </div>
 </div>

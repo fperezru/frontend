@@ -25,15 +25,17 @@ $colors: (alpha: #1abc9c, beta: #2ecc71, gamma: #3498db, delta: #9b59b6);
   &:after {
     content: '';
     position: absolute;
-    width: $circle-size;
-    height: $circle-size;
+    width: 20%;
+    height: 30%;
     top: 50%;
     left: 50%;
     margin: -$circle-size/2 (0 0) -$circle-size/2;
-    border-radius: 50%;
-    border: .5em solid #2c3e50;
-    background: #34495e;
-  
+    margin-top: -105px;
+    margin-left: -102px;
+    //border-radius: 50%;
+    //border: .5em solid #2c3e50;
+    background-image: url('src/assets/200x200.png');
+    background-repeat: no-repeat;
     // Hiding it on small screens
     @media (max-width: $breakpoint) {
       content: none;
@@ -61,7 +63,6 @@ $colors: (alpha: #1abc9c, beta: #2ecc71, gamma: #3498db, delta: #9b59b6);
 
 // Inner box wrapper
 .box__content {
-  
   // Adding a right padding on left boxes for the central gutter
   .box--left & {
     padding-right: $margin;
@@ -173,3 +174,6 @@ $colors: (alpha: #1abc9c, beta: #2ecc71, gamma: #3498db, delta: #9b59b6);
   }
 }
 
+*:focus {
+  outline: none;
+}

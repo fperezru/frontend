@@ -6,6 +6,8 @@ import { TokenService } from '../tokenService/token-service.service';
 import { DialogoService } from '../dialogo/dialogo.service';
 import * as POSTPROCESSING from 'postprocessing';
 import { OtrosRecuerdos } from '../../clases/clases';
+import { Vector3 } from 'three';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +36,10 @@ export class InterfazOtrosService implements OnDestroy {
   private esferas: Array<THREE.Mesh> = [];
   id: number;
   i: number;
-
-  constructor(private ngZone: NgZone, private otroService: OtroService, public tokenService: TokenService, private dialogoService: DialogoService) { }
+  private movimientoDelante: boolean;
+  private movimientoDetras: boolean;
+  private openButton: boolean;
+  constructor(private ngZone: NgZone, private otroService: OtroService, public tokenService: TokenService, private dialogoService: DialogoService, public deviceService: DeviceDetectorService) { }
 
   public ngOnDestroy(): void {
     if (this.frameId != null) {
@@ -89,24 +93,48 @@ export class InterfazOtrosService implements OnDestroy {
       blending: THREE.AdditiveBlending,
       transparent: true
     });
+
+    console.log(this.tokenService.getIdUsuario());
   
-    this.otroService.getRecuerdosPorUser(this.id).subscribe(data => {
-      for (let i = 0; i < data.length; i ++) {
-        const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
-        this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-        this.sphere.position.x = 100;
-        this.sphere.position.y = 0;
-        this.sphere.position.z = 900 * i;
-        this.sphere.name = data[i].id.toString();
-        this.scene.add(this.sphere);
-        this.recuerdos.push(data[i]);
-        this.esferas.push(this.sphere);
-      }
-    },
-      (error: any) => {
-        console.log(error)
-      }
-    );
+    if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+      this.otroService.getRecuerdosPorUser(this.id).subscribe(data => {
+        for (let i = 0; i < data.length; i ++) {
+          const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+          this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+          this.sphere.position.x = 600 * i;
+          this.sphere.position.y = 0;
+          this.sphere.position.z = 0;
+          this.sphere.name = data[i].id.toString();
+          this.scene.add(this.sphere);
+          this.recuerdos.push(data[i]);
+          this.esferas.push(this.sphere);
+          console.log("entro");
+        }
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+    else {
+      this.otroService.getRecuerdosPorUser(this.tokenService.getIdUsuario()).subscribe(data => {
+        for (let i = 0; i < data.length; i ++) {
+          const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+          this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+          this.sphere.position.x = 600*i;
+          this.sphere.position.y = 0;
+          this.sphere.position.z = 0;
+          this.sphere.name = data[i].id.toString();
+          this.scene.add(this.sphere);
+          this.recuerdos.push(data[i]);
+          this.esferas.push(this.sphere);
+        }
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
     
     this.raycaster = new THREE.Raycaster();
 
@@ -122,8 +150,8 @@ export class InterfazOtrosService implements OnDestroy {
     this.composer = new POSTPROCESSING.EffectComposer(this.renderer);
     
     this.controls = new FirstPersonControls( this.camera, this.renderer.domElement );
-    this.controls.movementSpeed = 150;
-    this.controls.lookSpeed = 0.1;
+    this.controls.movementSpeed = 300;
+    this.controls.lookSpeed = 0;
 
     this.use = true;
 
@@ -169,6 +197,10 @@ export class InterfazOtrosService implements OnDestroy {
 
       this.i = 0;
 
+      this.movimientoDelante = false;
+      this.movimientoDetras = false;
+      this.openButton = false;
+
   }
 
   public animate(): void {
@@ -176,7 +208,19 @@ export class InterfazOtrosService implements OnDestroy {
       this.resize();
 
     });
-    window.addEventListener('click', (event:MouseEvent) => {this.pick();});
+
+    if(this.deviceService.isDesktop())
+      window.addEventListener('click', (event:MouseEvent) => {this.pick();});
+
+    if(this.deviceService.isTablet() || this.deviceService.isMobile()) {
+      window.addEventListener('click', (event:MouseEvent) => {
+        if(this.openButton === true) {
+          this.pick();
+          this.openButton = false;
+        }
+      });    
+    }
+    //window.addEventListener('touchend', (event:MouseEvent) => {this.pickTouch();});
     // We have to run this outside angular zones,
     // because it could trigger heavy changeDetection cycles.
     this.ngZone.runOutsideAngular(() => {
@@ -210,6 +254,14 @@ export class InterfazOtrosService implements OnDestroy {
     });
     this.starGeo.verticesNeedUpdate = true;
     this.stars.rotation.y +=0.002;
+
+    if(this.movimientoDelante === true) {
+      this.camera.position.x += 2;
+    }
+
+    if(this.movimientoDetras === true) {
+      this.camera.position.x -= 2;
+    }
   }
 
   public resize(): void {
@@ -252,25 +304,77 @@ export class InterfazOtrosService implements OnDestroy {
       }
     }
   }
+  
+  public pickTouch() {
+    
+    this.raycaster.setFromCamera(new Vector3(this.camera.position.x + 1000000, this.camera.position.y, this.camera.position.z), this.camera);
+    var intersects = this.raycaster.intersectObjects(this.scene.children);
+
+    if(intersects.length && this.use == true) {
+      this.pickedObject = intersects[0].object;
+      console.log(this.pickedObject.name);
+      if (Math.sqrt((this.camera.position.x - this.pickedObject.position.x) ** 2 + (this.camera.position.y - this.pickedObject.position.y) ** 2 + (this.camera.position.z - this.pickedObject.position.z) ** 2 ) < 120) {
+        for (let i = 0; i < this.recuerdos.length; i++) {
+          if (parseInt(this.pickedObject.name) == this.recuerdos[i].id && this.use == true) {
+            this.controls.dispose();
+            this.openMenu(this.recuerdos[i]);
+            console.log(this.recuerdos[i]);
+            this.controls.lookSpeed = 0;
+            this.use = false;
+          }
+        }
+      }
+    }
+  }
 
   public addRecuerdo(recuerdo: OtrosRecuerdos) {
-    this.otroService.getRecuerdosPorUser(this.id).subscribe(data => {
-      recuerdo = data[data.length-1];
-      const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
-      this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-      this.sphere.position.x = 100;
-      this.sphere.position.y = 0;
-      this.sphere.position.z = 900 * (this.recuerdos.length);
-      this.sphere.name = recuerdo.id.toString();
-      this.scene.add(this.sphere);
-      this.recuerdos.push(recuerdo);
-      this.esferas.push(this.sphere);
-      this.i ++;
-    },
-      (error: any) => {
-        console.log(error)
-      }
-    );
+    if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+      this.otroService.getRecuerdosPorUser(this.id).subscribe(data => {
+        recuerdo = data[data.length-1];
+        const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+        this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+        if(this.esferas.length < 1)
+          this.sphere.position.x = 10;
+        else
+          this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
+        this.sphere.position.y = 0;
+        this.sphere.position.z = 0;
+        this.sphere.name = recuerdo.id.toString();
+        this.scene.add(this.sphere);
+        this.recuerdos.push(recuerdo);
+        this.esferas.push(this.sphere);
+        this.i ++;
+        this.controls.bindEvents();
+        this.use = true;
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    } else {
+        this.otroService.getRecuerdosPorUser(this.tokenService.getIdUsuario()).subscribe(data => {
+          recuerdo = data[data.length-1];
+          const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+          this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+          this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
+          this.sphere.position.y = 0;
+          this.sphere.position.z = 0;
+          this.sphere.name = recuerdo.id.toString();
+          this.scene.add(this.sphere);
+          this.recuerdos.push(recuerdo);
+          this.esferas.push(this.sphere);
+          this.i ++;
+          this.controls.bindEvents();
+          this.use = true;
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+
+      
+    
   }
 
   public deleteRecuerdo(id: Number) {
@@ -317,7 +421,7 @@ export class InterfazOtrosService implements OnDestroy {
     this.dialogoService.abrirDialogo('EditarOtroComponent', recuerdo, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
       this.controls.bindEvents();
       this.use = true;
-      this.controls.lookSpeed = 0.1;
+      this.controls.lookSpeed = 0;
     },
     error => console.log(error)
     );
@@ -326,6 +430,30 @@ export class InterfazOtrosService implements OnDestroy {
   public back() {
     this.controls.bindEvents();
     this.use = true;
-    this.controls.lookSpeed = 0.1;
+    this.controls.lookSpeed = 0;
+  }
+
+  public stop() {
+    this.controls.dispose();
+    this.use = true;
+    this.controls.lookSpeed = 0;
+  }
+
+  public delante(event: TouchEvent) {
+    this.movimientoDelante = true;
+    this.movimientoDetras = false;
+  }
+
+  public detras(event: TouchEvent) {
+    this.movimientoDetras = true;
+    this.movimientoDelante = false;
+    
+  }
+
+  public openTouch(event: TouchEvent) {
+    this.movimientoDelante = false;
+    this.movimientoDetras = false;
+    this.openButton = true;
+    //this.pickTouch();
   }
 }

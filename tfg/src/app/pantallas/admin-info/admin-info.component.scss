@@ -1,9 +1,10 @@
+@import './src/assets/scss/colores';
 
 table {
     width: 100%;
 
     .color-icons {
-        color: darkcyan;
+        color: $informacion;
     }
 }
 
@@ -24,13 +25,17 @@ table {
 }
 
 #add {
-    background-color: darkcyan;
+    background-color:$informacion;
 }
 
 #add.cdk-program-focused {
-    background-color: darkcyan;
+    background-color: $informacion;
     
     div {
-        background-color: darkcyan;
+        background-color: $informacion;
     }
+}
+
+#actions {
+    margin-top: 20px;
 }

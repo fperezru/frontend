@@ -39,6 +39,10 @@
             </table>
             <mat-paginator [pageSizeOptions]="[8]" showFirstLastButtons></mat-paginator>
         </div>
-        <button id="add" *ngIf="visible == true" mat-raised-button primary (click)="addPagina()" >Añadir página diaria</button>
+        <div id="actions">
+            <button id="add" *ngIf="visible == true" mat-mini-fab color="accent" (click)="addPagina()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

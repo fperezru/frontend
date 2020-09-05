@@ -1,32 +1,74 @@
-#EditionForm {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  
-    #Information {
-      display: flex;
-      flex-direction: column;
-  
-      h4 {
-        display: inline;
-        margin-right: 10px;
-      }
-  
-      label {
-        margin-bottom: 15px;
-      }
-    }
-  
-    button {
-      width: 200px;
-    }
+
+
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+  mat-form-field {
+    width:250px !important;
+    height:65px !important;
   }
+
   
-.mat-dialog-actions {
-    justify-content: flex-end;
-}
+  form {
+      margin: auto;
+  }
+
+  #principal {
+      margin-top: 25px;
+      overflow-y: visible;
+      overflow-x: hidden;
+  }
+      
+  #actions {
+      display: inline;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: center;
+      
+      button {
+          width: 120px;
+          height: 40px;
+          font-size: 15px;
+          color: white;
+          justify-content: center;
+      }
   
-mat-form-field {
-    margin-left: 20px;
+      #bregistro {
+          background: rgba(0,28,28,1);
+      }
+  
+      #blogin {
+          background: rgba(13,167,167,1);
+          margin-top: 8px;
+          margin-left: 40px;
+      }
+
+      #beliminar {
+          background: lightsalmon;
+          width: 140px;
+          margin-top: 10px;
+          margin-left: -10px;
+      }
+  }
+
+  
+  mat-datepicker-toggle {
+      color: lightseagreen !important;
+  }
+
+  .filas {
+      display: inline-flexbox;
+      flex-direction: column;
+  }
+
+  /deep/ .mat-checkbox-frame { 
+      border-color: white;
+  }
+
+  a {
+      font-size: 11px;
+  }
+
+  mat-error {
+      visibility: hidden;
+  }
 }

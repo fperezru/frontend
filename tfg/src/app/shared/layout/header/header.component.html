@@ -3,15 +3,22 @@
         <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
             <i class="material-icons header-icon">menu</i>
         </button>
-        <mat-label fxFlexAlign="center">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-user">
         <mat-label>{{tokenService.getUserName()}}</mat-label>
         <button mat-icon-button [matMenuTriggerFor]="menu" >
-            <mat-icon>person_outline</mat-icon>
+            <mat-icon class="icon">person_outline</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button *ngIf="this.deviceService.isMobile() && this.permiso === true" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: '90%'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isTablet() && this.permiso === true" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isDesktop() && this.permiso === true" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
                 <mat-icon>edit</mat-icon>
                 <span>Editar Perfil</span>
             </button>
@@ -20,6 +27,9 @@
                 <span>Cerrar sesión</span>
             </button>
         </mat-menu>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-menu" layout-align="center" >
+        <mat-label routerLink="/home">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
         <a routerLink="/personas" routerLinkActive="item-active">Personas</a>
@@ -34,15 +44,22 @@
         <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
             <i class="material-icons header-icon">menu</i>
         </button>
-        <mat-label fxFlexAlign="center">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-user">
         <mat-label>{{tokenService.getUserName()}}</mat-label>
         <button mat-icon-button [matMenuTriggerFor]="menu" >
-            <mat-icon>person_outline</mat-icon>
+            <mat-icon class="icon">person_outline</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button *ngIf="this.deviceService.isMobile()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: '90%'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isTablet()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isDesktop()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
                 <mat-icon>edit</mat-icon>
                 <span>Editar Perfil</span>
             </button>
@@ -51,6 +68,9 @@
                 <span>Cerrar sesión</span>
             </button>
         </mat-menu>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-menu" layout-align="center" >
+        <mat-label routerLink="/adminhome">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
         <a routerLink="/adminuser" routerLinkActive="item-active">Gestión usuarios</a>
@@ -62,15 +82,22 @@
         <button mat-icon-button (click)="toggleSideNav()" fxShow="true" fxHide.gt-sm>
             <i class="material-icons header-icon">menu</i>
         </button>
-        <mat-label fxFlexAlign="center">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-user">
         <mat-label>{{tokenService.getUserName()}}</mat-label>
         <button mat-icon-button [matMenuTriggerFor]="menu" >
-            <mat-icon>person_outline</mat-icon>
+            <mat-icon class="icon">person_outline</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button *ngIf="this.deviceService.isMobile()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: '90%'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isTablet()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
+                <mat-icon>edit</mat-icon>
+                <span>Editar Perfil</span>
+            </button>
+            <button *ngIf="this.deviceService.isDesktop()" mat-menu-item (click)="dialogoService.abrirDialogo('ActualizarPerfilComponent', this.usuario, {width: 'auto', height: 'auto'})">
                 <mat-icon>edit</mat-icon>
                 <span>Editar Perfil</span>
             </button>
@@ -79,6 +106,9 @@
                 <span>Cerrar sesión</span>
             </button>
         </mat-menu>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-menu" layout-align="center" >
+        <mat-label routerLink="/familiarhome">MyMemory</mat-label>
     </mat-toolbar-row>
     <mat-toolbar-row class="header-submenu" fxShow="true" fxHide.lt-md>
         <a routerLink="/familiaruser" routerLinkActive="item-active">Familiares</a>

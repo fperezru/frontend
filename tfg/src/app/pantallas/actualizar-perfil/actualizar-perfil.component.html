@@ -1,0 +1,76 @@
+<mat-card-title>Actualizar cuenta</mat-card-title>
+<div id="principal">
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.nombre" required matInput placeholder="Nombre"/>
+        <mat-error> Campo nombre vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Apellidos</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.apellidos" required matInput placeholder="Apellidos"/>
+        <mat-error> Campo apellidos vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput name="user" [(ngModel)]="this.fecha" [matDatepicker]="fechaNacimiento" required placeholder="Fecha de nacimiento" [readonly]="true"/>
+        <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+        <mat-datepicker #fechaNacimiento></mat-datepicker>
+        <mat-error> Campo cumpleaños vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>DNI/Pasaporte</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.identificacion" required matInput placeholder="Identificación"/>
+        <mat-error> Campo identificación vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.nombreUsuario" required matInput placeholder="Email"/>
+        <mat-error> Campo usuario vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.email" required matInput placeholder="Usuario"/>
+        <mat-error> Campo usuario vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.telefono" required matInput placeholder="Teléfono"/>
+        <mat-error> Campo teléfono vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Domicilio</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.domicilio" required matInput placeholder="Domicilio"/>
+        <mat-error> Campo domicilio vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field id="pass">
+        <mat-label>Contraseña</mat-label>
+        <input name="password" [(ngModel)]="this.password" matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"/>
+        <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+  <div id="actions" *ngIf= "this.roles[0] === 'ROLE_USER'">
+    <button id="bregistro" mat-raised-button (click)="noEditar()">Cancelar</button>
+    <button id="beliminar" mat-raised-button (click)="eliminarCuenta(this.usuario.id)">Eliminar cuenta</button>
+    <button id="blogin" mat-raised-button [disabled]="disabled" (click)="modificarPerfil(usuario, password, fecha)">Editar perfil</button>
+  </div>
+  <div id="actions" *ngIf= "this.roles[0] === 'ROLE_FAMILIAR'">
+      <button id="bregistro" mat-raised-button  (click)="noEditar()">Cancelar</button>
+      <button id="beliminar" mat-raised-button (click)="eliminarCuenta(this.usuario.id)">Eliminar cuenta</button>
+      <button id="blogin" mat-raised-button [disabled]="disabled" (click)="modificarPerfil(usuario, password, fecha)">Editar perfil</button>
+  </div>
+  <div id="actions" *ngIf= "this.roles[0] === 'ROLE_ADMIN'">
+      <button id="bregistro" mat-raised-button (click)="noEditar()">Cancelar</button>
+      <button id="beliminar" mat-raised-button (click)="eliminarCuenta(this.usuario.id)">Eliminar cuenta</button>
+      <button id="blogin" mat-raised-button [disabled]="disabled" (click)="modificarPerfil(usuario, password, fecha)">Editar perfil</button>
+  </div>
+</div>
+

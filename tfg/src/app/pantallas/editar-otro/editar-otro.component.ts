@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { OtrosRecuerdos } from 'src/app/core/clases/clases';
+import { OtrosRecuerdos, Usuario } from 'src/app/core/clases/clases';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { OtroService } from 'src/app/core/services/otro/otro.service';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UploadService } from 'src/app/core/services/uploadService/upload.service';
 import { InterfazOtrosService } from 'src/app/core/services/interfaz-otros/interfaz-otros.service';
+import { AuthService } from 'src/app/core/services/authService/auth-service.service';
 
 @Component({
   selector: 'app-editar-otro',
@@ -15,13 +16,14 @@ import { InterfazOtrosService } from 'src/app/core/services/interfaz-otros/inter
 export class EditarOtroComponent implements OnInit {
 
   otro: OtrosRecuerdos;
+  usuario: Usuario;
   private tipoActual: string;
   private descripcionActual: string;
   private archvioSeleccionado: File;
   modo: number;
   imageObject: Array<object>;
 
-  constructor(public dialogoRef: MatDialogRef<EditarOtroComponent>, @Inject(MAT_DIALOG_DATA) public data: OtrosRecuerdos, public snackService: SnackService, private otroService: OtroService, private uploadService: UploadService, private interfaceOtros: InterfazOtrosService) { }
+  constructor(public dialogoRef: MatDialogRef<EditarOtroComponent>, @Inject(MAT_DIALOG_DATA) public data: OtrosRecuerdos, public snackService: SnackService, private otroService: OtroService, private uploadService: UploadService, private interfaceOtros: InterfazOtrosService, private tokenService: TokenService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.modo = 0;
@@ -31,9 +33,18 @@ export class EditarOtroComponent implements OnInit {
     }
     else 
       this.otro= this.otro;
+    
 
     this.tipoActual = this.otro.tipo;
     this.descripcionActual = this.otro.descripcion;
+
+    this.authService.getUser(this.tokenService.getUserName()).subscribe(data => {
+      this.usuario = data;
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
 
     this.imageObject = [
       {
@@ -79,21 +90,20 @@ export class EditarOtroComponent implements OnInit {
     this.archvioSeleccionado = event.target.files[0];
   }
 
-  public onUpload() {
-    //this.otro.imagen1 = this.archvioSeleccionado.name;
+  public onUpload(idUsuario: number, idRecuerdo: number) {
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();
     uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
 
-    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+    this.uploadService.uploadFile(uploadImageData, "otro", idUsuario, idRecuerdo ).subscribe(data => {
       console.log("subida archivo ok");
     },
       (error: any) => {
         console.log(error)
       }
     );
-
   }
 
   public editarRecuerdo(recuerdo: OtrosRecuerdos) {
@@ -105,7 +115,12 @@ export class EditarOtroComponent implements OnInit {
     if (save) {
       this.otroService.editarRecuerdo(recuerdo, recuerdo.id).subscribe(data => {
         console.log("actualizado recuerdo ok");
-        this.onUpload();
+        if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+          this.onUpload(this.tokenService.getId(), recuerdo.id);
+        }
+        else {
+          this.onUpload(this.tokenService.getIdUsuario(), recuerdo.id);
+        }
       },
         (error: any) => {
           console.log(error)

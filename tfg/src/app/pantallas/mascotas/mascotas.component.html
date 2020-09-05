@@ -1,37 +1,29 @@
 <div class="container">
-    <table class="table table-dark">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Especie</th>
-          <th scope="col">Descripcion</th>
-          <th scope="col">Imagen1</th>
-          <th scope="col">Imagen2</th>
-          <th scope="col">Imagen3</th>
-          <th scope="col">Imagen4</th>
-          <th scope="col">Video1</th>
-          <th scope="col">Video2</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let mascota of mascotas">
-          <td>{{mascota.id}}</td>
-          <td>{{mascota.nombre}}</td>
-          <td>{{mascota.especie}}</td>
-          <td>{{mascota.descripcion}}</td>
-          <td>{{mascota.imagen1}}</td>
-          <td>{{mascota.imagen2}}</td>
-          <td>{{mascota.imagen3}}</td>
-          <td>{{mascota.imagen4}}</td>
-          <td>{{mascota.video1}}</td>
-          <td>{{mascota.video2}}</td>
-          <td><button class="btn btn-warning" (click)="dialogoService.abrirDialogo('EditarMascotaComponent', mascota, {width: '1100px', height: 'auto'})">Editar</button></td>
-          <td><button class="btn btn-danger" (click)="onDelete(mascota.id)">Borrar</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <div><button class="btn btn-success btn-lg" (click)="dialogoService.abrirDialogo('NuevaMascotaComponent', tokenService.getId(), {width: '1100px', height: 'auto'})">Nueva Mascota</button></div>
+  <button *ngIf="this.permiso === true" mat-fab color="accent" (click)="openMenu()" aria-label="Nuevo Recuerdo">
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="container2" *ngIf="(this.deviceService.isMobile() || this.deviceService.isTablet()) && this.permiso === false">
+    <button mat-fab color="accent" (click)="this.interfaz.delante($event)" aria-label="Delante">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <button id="btn1" mat-fab color="accent" (click)="this.interfaz.detras($event)" aria-label="Detrás">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+    <button id="btn2" mat-fab color="accent" (click)="this.interfaz.openTouch($event)" aria-label="Stop">
+      <mat-icon>brightness_1</mat-icon>
+    </button>
+  </div>
+  <div class="container3" *ngIf="(this.deviceService.isMobile() || this.deviceService.isTablet()) && this.permiso === true">
+    <button mat-fab color="accent" (click)="this.interfaz.delante($event)" aria-label="Delante">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <button id="btn1" mat-fab color="accent" (click)="this.interfaz.detras($event)" aria-label="Detrás">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+    <button id="btn2" mat-fab color="accent" (click)="this.interfaz.openTouch($event)" aria-label="Stop">
+      <mat-icon>brightness_1</mat-icon>
+    </button>
+  </div>
 </div>
 <div class="engine-wrapper">
   <canvas #rendererCanvas width="300px" height="300px"></canvas>

@@ -17,6 +17,7 @@ import { NuevaInformacionComponent } from 'src/app/pantallas/nueva-informacion/n
 import { EditarInformacionComponent } from 'src/app/pantallas/editar-informacion/editar-informacion.component';
 import { ViewConfigComponent } from 'src/app/pantallas/view-config/view-config.component';
 import { ActualizarCuentaComponent } from 'src/app/pantallas/actualizar-cuenta/actualizar-cuenta.component';
+import { ActualizarPerfilComponent } from 'src/app/pantallas/actualizar-perfil/actualizar-perfil.component';
 import { MapaLocalizacionComponent } from 'src/app/pantallas/mapa-localizacion/mapa-localizacion.component';
 
 
@@ -96,6 +97,10 @@ export const dialogoComponentes = [
     {
         nombre: 'ActualizarCuentaComponent',
         componente: ActualizarCuentaComponent,
+    },
+    {
+        nombre: 'ActualizarPerfilComponent',
+        componente: ActualizarPerfilComponent,
     },
     {
         nombre: 'MapaLocalizacionComponent',

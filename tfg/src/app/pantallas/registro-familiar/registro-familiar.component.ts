@@ -24,7 +24,8 @@ export class RegistroFamiliarComponent implements OnInit {
   loading: boolean;
   usuarios: Usuario[] = [];
   ok: boolean = true;
-  roles: string[] = ['familiar']
+  roles: string[] = ['familiar'];
+  terminos: boolean = false;
 
   @ViewChild('rendererCanvas', {static: true})
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
@@ -35,7 +36,8 @@ export class RegistroFamiliarComponent implements OnInit {
     this.animacionService.createScene(this.rendererCanvas);
     this.animacionService.animate();
     this.hide = true;
-    this.disabled = false;
+    this.disabled = true;
+    this.terminos = false;
   }
 
   public validaciones(): boolean {
@@ -64,7 +66,6 @@ export class RegistroFamiliarComponent implements OnInit {
         this.isRegister = true;
         this.isRegisterFail = false;
         this.loading = true;
-        this.disabled = true;
       },
         (error: any) => {
           console.log(error.error.mensaje);
@@ -86,7 +87,12 @@ export class RegistroFamiliarComponent implements OnInit {
     }
   }
 
-
+  aceptarTerminos() {
+    if(this.disabled === true) 
+      this.disabled = false;
+    else if( this.disabled === false) 
+      this.disabled = true;
+  }
 
 
 

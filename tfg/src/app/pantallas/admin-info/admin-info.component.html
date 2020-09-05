@@ -1,5 +1,5 @@
 <div class="title-card-screen">
-    <h1>GESTIÓN DE INFORMACION</h1>    
+    <h1>GESTIÓN DE INFORMACIÓN</h1>    
 </div>
 
 <div>
@@ -24,7 +24,7 @@
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef> ACCIONES</th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button  (click)="dialogoService.abrirDialogo('EditarInformacionComponent', element, {width: '1100px', height: 'auto'})"><mat-icon class="color-icons">chrome_reader_mode</mat-icon></button>
+                        <button mat-icon-button  (click)="dialogoService.abrirDialogo('EditarInformacionComponent', element, {width: 'auto', height: 'auto'})"><mat-icon class="color-icons">chrome_reader_mode</mat-icon></button>
                         <button mat-icon-button  (click)="this.deleteInformacion(element)"><mat-icon class="color-icons">clear</mat-icon></button>  
                     </td>
                 </ng-container>
@@ -35,6 +35,10 @@
             </table>
             <mat-paginator [pageSizeOptions]="[8]" showFirstLastButtons></mat-paginator>
         </div>
-        <button id="add" mat-raised-button primary (click)="addInformacion()" >Añadir nueva información</button>
+        <div id="actions">
+            <button id="add" mat-mini-fab color="accent" (click)="addInformacion()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

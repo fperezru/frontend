@@ -16,12 +16,16 @@ export class NuevaMascotaComponent implements OnInit {
 
   mascota: Mascota;
   mascotas: Mascota[] = [];
-  idUser: Number;
+  idUser: number;
+  idFamiliar: Number;
+  mascotaGuardada: Mascota;
   private archvioSeleccionado: File;
 
-  constructor(public dialogoRef: MatDialogRef<NuevaMascotaComponent>, @Inject(MAT_DIALOG_DATA) public data:Number, public snackService: SnackService, private mascotaService: MascotaService, private tokenService: TokenService, private uploadService: UploadService, private interfazService: InterfazService) { }
+  constructor(public dialogoRef: MatDialogRef<NuevaMascotaComponent>, @Inject(MAT_DIALOG_DATA) public data:number, public snackService: SnackService, private mascotaService: MascotaService, private tokenService: TokenService, private uploadService: UploadService, private interfazService: InterfazService) { }
 
   ngOnInit(): void {
+    this.mascotaGuardada = new Mascota();
+    this.interfazService.stop();
     this.mascota = new Mascota();
     if(this.data !== null){
       this.idUser = this.data;
@@ -33,14 +37,14 @@ export class NuevaMascotaComponent implements OnInit {
     this.archvioSeleccionado = event.target.files[0];
   }
 
-  public onUpload() {
+  public onUpload(idUsuario: number, idRecuerdo: number) {
     //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();
     uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
 
-    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+    this.uploadService.uploadFile(uploadImageData, "mascota", idUsuario, idRecuerdo ).subscribe(data => {
       console.log("subida archivo ok");
     },
       (error: any) => {
@@ -54,7 +58,7 @@ export class NuevaMascotaComponent implements OnInit {
 
     let save: boolean = true;
 
-    if (mascota.nombre === undefined || mascota.nombre.trim().length === 0 || !/^[a-zA-Z\u00C0-\u00FF]*$/.test(mascota.nombre)) {
+    /*if (mascota.nombre === undefined || mascota.nombre.trim().length === 0 || !/^[a-zA-Z\u00C0-\u00FF]*$/.test(mascota.nombre)) {
       this.snackService.errorSnackbar('El nombre de la mascota no debe estar vacío ni contener números');
       save = false;
     }
@@ -65,7 +69,7 @@ export class NuevaMascotaComponent implements OnInit {
     else if (mascota.descripcion === undefined || mascota.descripcion === null || !/^[a-zA-Z\u00C0-\u00FF]*$/.test(mascota.descripcion)) {
       this.snackService.errorSnackbar('La descripción de la mascota no debe estar vacío ni contener números');
       save = false;
-    }
+    }*/
 
     console.log(save);
     return save;
@@ -74,19 +78,45 @@ export class NuevaMascotaComponent implements OnInit {
   public addMascota(mascota: Mascota) {
 
     this.idUser = this.tokenService.getId();
+    let idRecuerdo: number;
 
     let save = this.validaciones(mascota);
     if (save) {
-      this.mascotaService.crearMascota(mascota, this.idUser).subscribe(data => {
-        console.log("guardado mascota ok");
-        this.interfazService.addRecuerdo(this.mascotas[this.mascotas.length-1]);
-      },
-        (error: any) => {
-          console.log(error)
-        }
-      );
+      if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+        this.mascotaService.crearMascota(mascota, this.idUser).subscribe(data => {
+          console.log("guardado mascota ok");
+          this.mascotaGuardada = data;
+          idRecuerdo = this.mascotaGuardada.id;
+          console.log(idRecuerdo);
+          this.interfazService.addRecuerdo(this.mascotas[this.mascotas.length-1]);
+          this.onUpload(this.idUser, idRecuerdo);
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
+      else {
+        this.mascotaService.crearMascota(mascota, this.tokenService.getIdUsuario()).subscribe(data => {
+          console.log("guardado mascota ok");
+          this.mascotaGuardada = data;
+          idRecuerdo = this.mascotaGuardada.id;
+          console.log(idRecuerdo);
+          this.interfazService.addRecuerdo(this.mascotas[this.mascotas.length-1]);
+          this.onUpload(this.tokenService.getIdUsuario(), idRecuerdo)
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
       this.dialogoRef.close();
     }
+  }
+
+  public close() {
+    this.dialogoRef.close();
+    this.interfazService.back();
   }
 
 }

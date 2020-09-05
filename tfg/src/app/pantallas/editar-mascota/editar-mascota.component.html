@@ -17,16 +17,16 @@
         </mat-dialog-content>
     </div>
     <div>
-        <ng-image-slider #nav
+        <ng-image-slider *ngIf="this.imageObject.length !== 0" #nav
             [images]="imageObject"
             [infinite]="false"
             [autoSlide]="1"
             [imageSize]="{width: '25%', height: 200}"
             slideImage="1">
         </ng-image-slider>
-        <mat-dialog-actions>
-            <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
-            <button mat-raised-button primary (click)="modo = 1" >Editar</button>
+        <mat-dialog-actions id="actions">
+            <button id="bregistro" mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
+            <button id="blogin" *ngIf="this.permiso === true" mat-raised-button primary (click)="modo = 1" >Editar</button>
         </mat-dialog-actions>
     </div>
 </div>

@@ -16,12 +16,15 @@ export class NuevoOtroComponent implements OnInit {
 
   otro: OtrosRecuerdos;
   otros: OtrosRecuerdos[] = [];
-  idUser: Number;
+  otroGuardado: OtrosRecuerdos;
+  idUser: number;
   private archvioSeleccionado: File;
 
-  constructor(public dialogoRef: MatDialogRef<NuevoOtroComponent>, @Inject(MAT_DIALOG_DATA) public data:Number, public snackService: SnackService, private otroService: OtroService, private tokenService: TokenService, private uploadService: UploadService, private interfazOtros: InterfazOtrosService) { }
+  constructor(public dialogoRef: MatDialogRef<NuevoOtroComponent>, @Inject(MAT_DIALOG_DATA) public data:number, public snackService: SnackService, private otroService: OtroService, private tokenService: TokenService, private uploadService: UploadService, private interfazOtros: InterfazOtrosService) { }
 
   ngOnInit(): void {
+    this.otroGuardado = new OtrosRecuerdos();
+    this.interfazOtros.stop();
     this.otro = new OtrosRecuerdos();
     if(this.data !== null){
       this.idUser = this.data;
@@ -33,14 +36,14 @@ export class NuevoOtroComponent implements OnInit {
     this.archvioSeleccionado = event.target.files[0];
   }
 
-  public onUpload() {
-    //this.otro.imagen1 = this.archvioSeleccionado.name;
+  public onUpload(idUsuario: number, idRecuerdo: number) {
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();
     uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
 
-    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+    this.uploadService.uploadFile(uploadImageData, "otro", idUsuario, idRecuerdo ).subscribe(data => {
       console.log("subida archivo ok");
     },
       (error: any) => {
@@ -70,19 +73,43 @@ export class NuevoOtroComponent implements OnInit {
   public addRecuerdo(recuerdo: OtrosRecuerdos) {
 
     this.idUser = this.tokenService.getId();
+    let idRecuerdo: number;
 
     let save = this.validaciones(recuerdo);
     if (save) {
-      this.otroService.crearRecuerdo(recuerdo, this.idUser).subscribe(data => {
-        console.log("guardado recuerdo ok");
-        this.interfazOtros.addRecuerdo(this.otros[this.otros.length-1]);
-      },
-        (error: any) => {
-          console.log(error)
-        }
-      );
+      if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+        this.otroService.crearRecuerdo(recuerdo, this.idUser).subscribe(data => {
+          console.log("guardado recuerdo ok");
+          this.otroGuardado = data;
+          idRecuerdo = this.otroGuardado.id;
+          this.interfazOtros.addRecuerdo(this.otros[this.otros.length-1]);
+          this.onUpload(this.idUser, idRecuerdo);
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
+      else {
+        this.otroService.crearRecuerdo(recuerdo, this.tokenService.getIdUsuario()).subscribe(data => {
+          console.log("guardado recuerdo ok");
+          this.otroGuardado = data;
+          idRecuerdo = this.otroGuardado.id;
+          this.interfazOtros.addRecuerdo(this.otros[this.otros.length-1]);
+          this.onUpload(this.idUser, idRecuerdo);
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
       this.dialogoRef.close();
     }
+  }
+
+  public close() {
+    this.dialogoRef.close();
+    this.interfazOtros.back();
   }
 
 }

@@ -7,6 +7,7 @@ import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { AnimacionService } from 'src/app/core/services/animacionService/animacion-service.service';
 import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('rendererCanvas', {static: true})
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
-  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, private animacionService: AnimacionService, private snackService: SnackService, public userService: UserService) { }
+  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, private animacionService: AnimacionService, private snackService: SnackService, public userService: UserService, public deviceService: DeviceDetectorService) { }
 
   ngOnInit() {
     if (this.tokenService.getToken()) {

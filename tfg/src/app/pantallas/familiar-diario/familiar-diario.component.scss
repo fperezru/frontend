@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+
+    .color-icons {
+        color: lightseagreen;
+    }
+}
+
+.container {
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 1px;
+   
+    .scroller {
+    height: 62vh;
+    margin-top: 10px;
+    }
+
+}
+
+#table-container {
+    padding: 0px 20px;
+}
+
+#add {
+    background-color: lightseagreen;
+}
+
+#add.cdk-program-focused {
+    background-color: darkcyan;
+    
+    div {
+        background-color: darkcyan;
+    }
+}
+
+#actions {
+    margin-top: 20px;
+}

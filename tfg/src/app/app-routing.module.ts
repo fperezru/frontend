@@ -20,6 +20,9 @@ import { FamiliarUserComponent } from './pantallas/familiar-user/familiar-user.c
 import { GuardService as guard} from 'src/app/core/services/guardService/guard-service.service';
 import { PublicoComponent } from './shared/layout/publico/publico.component';
 import { PrivadoComponent } from './shared/layout/privado/privado.component';
+import { EditarPerfilComponent } from './pantallas/editar-perfil/editar-perfil.component';
+import { FamiliarDiarioComponent } from './pantallas/familiar-diario/familiar-diario.component';
+import { FamiliarRecuerdosComponent } from './pantallas/familiar-recuerdos/familiar-recuerdos.component';
 
 const routes: Routes = [
   {
@@ -94,6 +97,18 @@ const routes: Routes = [
       {
         path: 'informacioncontenido',
         component: InformacionContenidoComponent,
+      },
+      {
+        path: 'editarperfil',
+        component: EditarPerfilComponent,
+      },
+      {
+        path: 'familiardiario',
+        component: FamiliarDiarioComponent,
+      },
+      {
+        path: 'familiarrecuerdos',
+        component: FamiliarRecuerdosComponent,
       }
     ],
     canActivate: [guard]

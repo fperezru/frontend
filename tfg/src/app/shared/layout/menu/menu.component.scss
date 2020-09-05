@@ -1,5 +1,6 @@
+@import './src/assets/scss/colores';
 nav {
-    background-color: mediumvioletred;
+    background-color: $menu;
     height: 100%;
     a {
       span {

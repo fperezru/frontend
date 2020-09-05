@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NuevoUsuario, Rol, Usuario } from 'src/app/core/clases/clases';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/authService/auth-service.service';
-import { AnimacionService } from 'src/app/core/services/animacionService/animacion-service.service';
+import { AnimacionRegistroService } from 'src/app/core/services/animacionRegistro/animacion-registro.service';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { usuarios } from '../login/login.component';
@@ -26,17 +26,18 @@ export class RegistroComponent implements OnInit {
   save: Boolean = true;
   familiar: number;
   usuarios: Usuario[] = [];
+  terminos: boolean = false;
 
   @ViewChild('rendererCanvas', {static: true})
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
-  constructor(private authService: AuthService, private animacionService: AnimacionService, private router: Router, private snackService: SnackService, private userService: UserService) { }
+  constructor(private authService: AuthService, private animacionService: AnimacionRegistroService, private router: Router, private snackService: SnackService, private userService: UserService) { }
 
   ngOnInit() {
     this.animacionService.createScene(this.rendererCanvas);
     this.animacionService.animate();
     this.hide = true;
-    this.disabled = false;
+    this.disabled = true;
     this.rol = new Rol();
     this.rol.id = 3;
     this.rol.rolNombre = "ROLE_FAMILIAR";
@@ -81,7 +82,6 @@ export class RegistroComponent implements OnInit {
         this.isRegister = true;
         this.isRegisterFail = false;
         this.loading = true;
-        this.disabled = true;
       },
         (error: any) => {
           console.log(error.error.mensaje);
@@ -103,6 +103,13 @@ export class RegistroComponent implements OnInit {
     }
     else 
       this.snackService.errorSnackbar('No hay ningun familiar registrado en la aplicacion con ese nombre de usuario');
+  }
+
+  aceptarTerminos() {
+    if(this.disabled === true) 
+      this.disabled = false;
+    else if( this.disabled === false) 
+      this.disabled = true;
   }
 
 }

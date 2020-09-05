@@ -1,18 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 
+$principal: #20b2aa;
+$secundario: rgb(0,28,28);
+$importante: #ffa07a;
+$header: rgb(184, 229, 255);
+$menu: rgb(184, 229, 255);
+$personas: #8bcdcd;
+$mascotas: #faf0af;
+$viajes: #e5edb7;
+$otros: #f1c5c5; 
+$informacion: rgb(255, 146, 222);
+$diario: rgb(173, 247, 231);
+$blanco: #ffffff;
+
 
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
-    overflow-x: hidden;
-    overflow-y: hidden;
     margin: 0%;
 }
+
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+ body {
+   overflow-x: visible;
+   overflow-y: visible;
+ }
+}
+
+//ORDENADORES
+@media all and (min-device-width: 1025px) {   
+  body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+ }
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .snackbar-ok {
-    background: #00c853;
+    background: #00fa68;
     color: white;
   }
   .snackbar-no {

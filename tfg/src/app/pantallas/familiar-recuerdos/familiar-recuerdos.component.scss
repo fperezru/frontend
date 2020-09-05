@@ -1,0 +1,97 @@
+$breakpoint: 900px;
+$circle-size: 10em;
+
+@media all and (min-device-width: 1025px) {  
+    .padre {
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .filas {
+        display: inline-flexbox;
+        flex-direction: column;
+
+        button {
+            width: 700px;
+            height: 300px;
+            font-size: 50px;
+            margin-left: 170px;
+        }
+
+        .btn-abajo {
+            margin-top: 200px;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: $circle-size;
+            height: $circle-size;
+            top: 50%;
+            left: 50%;
+            margin: -$circle-size/2 (0 0) -$circle-size/2;
+            border-radius: 50%;
+            border: .5em solid #2c3e50;
+            background: #34495e;
+            margin-top:-120px;
+            margin-left: -60px;
+      
+            // Hiding it on small screens
+            @media (max-width: 1024px) {
+            content: none;
+            }
+        
+            // Hiding it on browsers not supporting box-shadow/border-radius/pseudo-elements
+            .no-boxshadow & {
+            content: none;
+            }
+        }
+    }
+}
+
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+    .padre {
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .filas {
+        display: inline-flexbox;
+        flex-direction: column;
+
+        button {
+            width: 200px;
+            height: 200px;
+            font-size: 15px;
+            margin-left: 100px;
+            margin-bottom: 30px;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: $circle-size;
+            height: $circle-size;
+            top: 50%;
+            left: 50%;
+            margin: -$circle-size/2 (0 0) -$circle-size/2;
+            border-radius: 50%;
+            border: .5em solid #2c3e50;
+            background: #34495e;
+            margin-top:-120px;
+            margin-left: -60px;
+      
+            // Hiding it on small screens
+            @media (max-width: 1024px) {
+            content: none;
+            }
+        
+            // Hiding it on browsers not supporting box-shadow/border-radius/pseudo-elements
+            .no-boxshadow & {
+            content: none;
+            }
+        }
+    }
+}

@@ -64,6 +64,14 @@ import { ActualizarCuentaComponent } from './actualizar-cuenta/actualizar-cuenta
 import { MapaLocalizacionComponent } from './mapa-localizacion/mapa-localizacion.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
+import { FamiliarDiarioComponent } from './familiar-diario/familiar-diario.component';
+import { FamiliarRecuerdosComponent } from './familiar-recuerdos/familiar-recuerdos.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ActualizarPerfilComponent } from './actualizar-perfil/actualizar-perfil.component';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -120,7 +128,7 @@ export const MY_FORMATS = {
     InformacionTipoComponent, 
     InformacionContenidoComponent, 
     ActualizarCuentaComponent, 
-    MapaLocalizacionComponent,
+    MapaLocalizacionComponent, EditarPerfilComponent, FamiliarDiarioComponent, FamiliarRecuerdosComponent, ActualizarPerfilComponent,
   ],
   imports: [
     CommonModule,
@@ -144,13 +152,17 @@ export const MY_FORMATS = {
     CKEditorModule,
     MatSelectModule,
     GoogleMapsModule,
-    DeviceDetectorModule
+    DeviceDetectorModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatGridListModule
   ],
   providers: [
     {
       provide: MatPaginatorIntl,
       useClass: DiarioComponent,
     },
+    MatSlideToggleModule,
 
     DatePipe,
     MatDatepickerModule,
@@ -176,7 +188,8 @@ export const MY_FORMATS = {
     ViewDiarioComponent,
     ViewConfigComponent,
     ActualizarCuentaComponent,
-    MapaLocalizacionComponent
+    MapaLocalizacionComponent,
+    ActualizarPerfilComponent
   ],
 })
 export class PantallasModule { }

@@ -10,7 +10,7 @@ import { Persona } from '../../clases/clases';
 @Injectable({
   providedIn: 'root'
 })
-export class InterfazPersonasService {
+export class InterfazPersonasService implements OnDestroy {
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
@@ -31,9 +31,12 @@ export class InterfazPersonasService {
   private stars;
   private starGeo;
   private materialGlow: THREE.ShaderMaterial;
+  private materialNubes: THREE.ShaderMaterial;
   private esferas: Array<THREE.Mesh> = [];
+  private mesh: THREE.Mesh;
   id: number;
   i: number;
+  private si: boolean = false;
 
   constructor(private ngZone: NgZone, private personaService: PersonaService, public tokenService: TokenService, private dialogoService: DialogoService) { }
 
@@ -59,17 +62,63 @@ export class InterfazPersonasService {
     ]);
     texture.minFilter = THREE.LinearFilter;*/
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x00000f);
-    this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
+    this.scene.background = new THREE.Color(0x00d1ff);
+    this.scene.fog = new THREE.FogExp2( 0xefd1b5, 200 );
 
-    //const loader = new THREE.TextureLoader();
-    //this.scene.background = loader.load("../assets/stars.jpg");  
+    const loader = new THREE.TextureLoader();
+    //this.scene.background = loader.load("../assets/fondointerfaz.png");  
 
     this.camera.position.y = 0;
     this.camera.position.x = -150;
     this.camera.position.z = 0;
-    
+    //this.camera.rotation.x = Math.PI/2;
+  
     this.id = this.tokenService.getId();
+
+    var fog = new THREE.Fog( 0x4584b4, 0, 3000 );
+
+    var texture = THREE.ImageUtils.loadTexture( "../assets/nube.png", null, this.animate );
+		texture.magFilter = THREE.LinearMipMapLinearFilter;
+		texture.minFilter = THREE.LinearMipMapLinearFilter;
+    this.materialNubes = new THREE.ShaderMaterial({
+      uniforms: {
+        "map": { type: "t", value: texture },
+        "fogColor" : { type: "c", value: fog.color },
+        "fogNear" : { type: "f", value: fog.near },
+        "fogFar" : { type: "f", value: fog.far },
+      }
+      ,
+      vertexShader: 
+      'varying vec2 vUv; void main() {vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );}'
+      ,
+      fragmentShader: 
+      'uniform sampler2D map; uniform vec3 fogColor; uniform float fogNear;  uniform float fogFar; varying vec2 vUv; void main() {float depth = gl_FragCoord.z / gl_FragCoord.w; float fogFactor = smoothstep( fogNear, fogFar, depth ); gl_FragColor = texture2D( map, vUv ); gl_FragColor.w *= pow( gl_FragCoord.z, 20.0 ); gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor ); }',
+      
+      depthWrite: false,
+      depthTest: false,
+      transparent: true,
+    });
+
+    var plane = new THREE.Mesh( new THREE.PlaneGeometry( 64, 64 ) );
+
+    var geometry = new THREE.Geometry();
+				for ( var i = 0; i < 30000; i++ ) {
+
+					plane.position.x = Math.random() * 1000 - 500;
+					plane.position.y = - Math.random() * Math.random() * 200 - 15;
+					plane.position.z = i;
+					plane.rotation.z = Math.random() * Math.PI;
+					plane.scale.x = plane.scale.y = Math.random() * Math.random() * 1.5 + 0.5;
+					THREE.GeometryUtils.merge( geometry, plane );
+
+        }
+    
+        this.mesh = new THREE.Mesh( geometry, this.materialNubes );
+				this.scene.add( this.mesh);
+
+				this.mesh = new THREE.Mesh( geometry, this.materialNubes );
+        this.mesh.position.z = - 8000;
+        this.scene.add( this.mesh );
 
     this.materialGlow = new THREE.ShaderMaterial({
       uniforms: {
@@ -94,10 +143,10 @@ export class InterfazPersonasService {
       for (let i = 0; i < data.length; i ++) {
         const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
         this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-        this.sphere.position.x = 100;
-        this.sphere.position.y = 0;
-        this.sphere.position.z = 900 * i;
-        this.sphere.name = data[i].id.toString();
+        this.sphere.position.x = this.camera.position.x;
+        this.sphere.position.y = this.camera.position.y;
+        this.sphere.position.z = -800 - (900 * i);
+        this.sphere.rotation.x = -Math.PI/2;
         //this.scene.add(this.sphere);
         this.personas.push(data[i]);
         this.esferas.push(this.sphere);
@@ -125,7 +174,7 @@ export class InterfazPersonasService {
     this.controls = new FirstPersonControls( this.camera, this.renderer.domElement );
     this.controls.movementSpeed = 300;
     this.controls.lookSpeed = 0;
-
+    this.controls.enabled = false;
     this.use = true;
 
     const bloomEffect = new POSTPROCESSING.BloomEffect({
@@ -177,7 +226,14 @@ export class InterfazPersonasService {
       this.resize();
 
     });
-    window.addEventListener('click', (event:MouseEvent) => {this.pick();});
+    window.addEventListener('click', (event:MouseEvent) => {
+      this.pick(); 
+      
+    });
+
+    window.addEventListener('mouseup', (event:MouseEvent) => {
+      this.si = false;
+    });
     // We have to run this outside angular zones,
     // because it could trigger heavy changeDetection cycles.
     this.ngZone.runOutsideAngular(() => {
@@ -211,7 +267,15 @@ export class InterfazPersonasService {
     });
     this.starGeo.verticesNeedUpdate = true;
     this.stars.rotation.y +=0.002;
+    
+    if(this.si === false) {
+      this.camera.position.z -= 2;
+    }
+
+    //this.mesh.position.x += 0.12;
   }
+
+
 
   public resize(): void {
     const width = window.innerWidth;
@@ -238,7 +302,7 @@ export class InterfazPersonasService {
     var intersects = this.raycaster.intersectObjects(this.scene.children);
 
     if(intersects.length && this.use == true) {
-      this.pickedObject = intersects[0].object;
+      this.pickedObject = intersects[4].object;
       console.log(this.pickedObject.name);
       if (Math.sqrt((this.camera.position.x - this.pickedObject.position.x) ** 2 + (this.camera.position.y - this.pickedObject.position.y) ** 2 + (this.camera.position.z - this.pickedObject.position.z) ** 2 ) < 120) {
         for (let i = 0; i < this.personas.length; i++) {

@@ -77,6 +77,14 @@ export class Localizacion {
     longitud: number;
 }
 
+export class Archivo {
+    id?: number;
+    tipo: string;
+    link: string;
+    idRecuerdo: number;
+    usuario: Usuario;
+}
+
 export class JwtModel {
     token: string;
     type: string;

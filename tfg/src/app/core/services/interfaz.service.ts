@@ -6,6 +6,7 @@ import { TokenService } from './tokenService/token-service.service';
 import { DialogoService } from './dialogo/dialogo.service';
 import { Mascota } from '../clases/clases';
 import * as POSTPROCESSING from 'postprocessing';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +32,14 @@ export class InterfazService implements OnDestroy {
   private starGeo;
   private materialGlow: THREE.ShaderMaterial;
   private esferas: Array<THREE.Mesh> = [];
+  private movimientoDelante: boolean;
+  private movimientoDetras: boolean;
+  private openButton: boolean;
   id: number;
   i: number;
   
 
-  constructor(private ngZone: NgZone, private mascotaService: MascotaService, public tokenService: TokenService, private dialogoService: DialogoService) { }
+  constructor(private ngZone: NgZone, private mascotaService: MascotaService, public tokenService: TokenService, private dialogoService: DialogoService, public deviceService: DeviceDetectorService) { }
 
   public ngOnDestroy(): void {
     if (this.frameId != null) {
@@ -83,31 +87,52 @@ export class InterfazService implements OnDestroy {
       'uniform vec3 viewVector; varying float intensity; void main() {gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4( position, 1.0 );vec3 actual_normal = vec3(modelMatrix * vec4(normal, 0.0));intensity = pow( dot(normalize(viewVector), actual_normal), 6.0 );}'
       ,
       fragmentShader: 
-      'varying float intensity;void main() {vec3 glow = vec3(1, 1, 0) * intensity;gl_FragColor = vec4( glow, 1.0 );}',
+      'varying float intensity;void main() {vec3 glow = vec3(0.95, 0.8, 0.45) * intensity;gl_FragColor = vec4( glow, 1.0 );}',
       
       side: THREE.FrontSide,
       blending: THREE.AdditiveBlending,
       transparent: true
     });
   
-    this.mascotaService.getMascotasPorUser(this.id).subscribe(data => {
-      for (let i = 0; i < data.length; i ++) {
-        const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
-        this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-        this.sphere.position.x = 100;
-        this.sphere.position.y = 0;
-        this.sphere.position.z = 900 * i;
-        this.sphere.name = data[i].id.toString();
-        this.scene.add(this.sphere);
-        this.mascotas.push(data[i]);
-        this.esferas.push(this.sphere);
-      }
-    },
-      (error: any) => {
-        console.log(error)
-      }
-    );
-    
+    if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+      this.mascotaService.getMascotasPorUser(this.id).subscribe(data => {
+        for (let i = 0; i < data.length; i ++) {
+          const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+          this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+          this.sphere.position.x = 600*i;
+          this.sphere.position.y = 0;
+          this.sphere.position.z = 0;
+          this.sphere.name = data[i].id.toString();
+          this.scene.add(this.sphere);
+          this.mascotas.push(data[i]);
+          this.esferas.push(this.sphere);
+        }
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+    else {
+      this.mascotaService.getMascotasPorUser(this.tokenService.getIdUsuario()).subscribe(data => {
+        for (let i = 0; i < data.length; i ++) {
+          const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+          this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+          this.sphere.position.x = 600*i;
+          this.sphere.position.y = 0;
+          this.sphere.position.z = 0;
+          this.sphere.name = data[i].id.toString();
+          this.scene.add(this.sphere);
+          this.mascotas.push(data[i]);
+          this.esferas.push(this.sphere);
+        }
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+      
     this.raycaster = new THREE.Raycaster();
 
     this.clock = new THREE.Clock();
@@ -122,8 +147,8 @@ export class InterfazService implements OnDestroy {
     this.composer = new POSTPROCESSING.EffectComposer(this.renderer);
     
     this.controls = new FirstPersonControls( this.camera, this.renderer.domElement );
-    this.controls.movementSpeed = 150;
-    this.controls.lookSpeed = 0.1;
+    this.controls.movementSpeed = 300;
+    this.controls.lookSpeed = 0;
 
     this.use = true;
 
@@ -169,6 +194,10 @@ export class InterfazService implements OnDestroy {
 
       this.i = 0;
 
+      this.movimientoDelante = false;
+      this.movimientoDetras = false;
+      this.openButton = false;
+
   }
 
   public animate(): void {
@@ -176,7 +205,17 @@ export class InterfazService implements OnDestroy {
       this.resize();
 
     });
-    window.addEventListener('click', (event:MouseEvent) => {this.pick();});
+    if(this.deviceService.isDesktop())
+      window.addEventListener('click', (event:MouseEvent) => {this.pick();});
+
+    if(this.deviceService.isTablet() || this.deviceService.isMobile()) {
+      window.addEventListener('click', (event:MouseEvent) => {
+        if(this.openButton === true) {
+          this.pick();
+          this.openButton = false;
+        }
+      });    
+    }
     // We have to run this outside angular zones,
     // because it could trigger heavy changeDetection cycles.
     this.ngZone.runOutsideAngular(() => {
@@ -210,6 +249,14 @@ export class InterfazService implements OnDestroy {
     });
     this.starGeo.verticesNeedUpdate = true;
     this.stars.rotation.y +=0.002;
+
+    if(this.movimientoDelante === true) {
+      this.camera.position.x += 2;
+    }
+
+    if(this.movimientoDetras === true) {
+      this.camera.position.x -= 2;
+    }
   }
 
   public resize(): void {
@@ -254,23 +301,51 @@ export class InterfazService implements OnDestroy {
   }
 
   public addRecuerdo(mascota: Mascota) {
-    this.mascotaService.getMascotasPorUser(this.id).subscribe(data => {
-      mascota = data[data.length-1];
-      const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
-      this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-      this.sphere.position.x = 100;
-      this.sphere.position.y = 0;
-      this.sphere.position.z = 900 * (this.mascotas.length);
-      this.sphere.name = mascota.id.toString();
-      this.scene.add(this.sphere);
-      this.mascotas.push(mascota);
-      this.esferas.push(this.sphere);
-      this.i ++;
-    },
-      (error: any) => {
-        console.log(error)
-      }
-    );
+    if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+      this.mascotaService.getMascotasPorUser(this.id).subscribe(data => {
+        mascota = data[data.length-1];
+        const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+        this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+        if(this.esferas.length < 1)
+          this.sphere.position.x = 10;
+        else
+          this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
+        this.sphere.position.y = 0;
+        this.sphere.position.z = 0;
+        this.sphere.name = mascota.id.toString();
+        this.scene.add(this.sphere);
+        this.mascotas.push(mascota);
+        this.esferas.push(this.sphere);
+        this.i ++;
+        this.controls.bindEvents();
+        this.use = true;
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+    else {
+      this.mascotaService.getMascotasPorUser(this.tokenService.getIdUsuario()).subscribe(data => {
+        mascota = data[data.length-1];
+        const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
+        this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
+        this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
+        this.sphere.position.y = 0;
+        this.sphere.position.z = 0;
+        this.sphere.name = mascota.id.toString();
+        this.scene.add(this.sphere);
+        this.mascotas.push(mascota);
+        this.esferas.push(this.sphere);
+        this.i ++;
+        this.controls.bindEvents();
+        this.use = true;
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
   }
 
   public deleteRecuerdo(id: Number) {
@@ -317,7 +392,7 @@ export class InterfazService implements OnDestroy {
     this.dialogoService.abrirDialogo('EditarMascotaComponent', mascota, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
       this.controls.bindEvents();
       this.use = true;
-      this.controls.lookSpeed = 0.1;
+      this.controls.lookSpeed = 0;
     },
     error => console.log(error)
     );
@@ -326,7 +401,31 @@ export class InterfazService implements OnDestroy {
   public back() {
     this.controls.bindEvents();
     this.use = true;
-    this.controls.lookSpeed = 0.1;
+    this.controls.lookSpeed = 0;
+  }
+
+  public stop() {
+    this.controls.dispose();
+    this.use = true;
+    this.controls.lookSpeed = 0;
+  }
+
+  public delante(event: TouchEvent) {
+    this.movimientoDelante = true;
+    this.movimientoDetras = false;
+  }
+
+  public detras(event: TouchEvent) {
+    this.movimientoDetras = true;
+    this.movimientoDelante = false;
+    
+  }
+
+  public openTouch(event: TouchEvent) {
+    this.movimientoDelante = false;
+    this.movimientoDetras = false;
+    this.openButton = true;
+    //this.pickTouch();
   }
 }
 

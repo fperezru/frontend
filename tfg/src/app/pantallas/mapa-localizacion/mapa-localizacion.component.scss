@@ -1,0 +1,64 @@
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+    google-map {
+        display: flex;
+        position: relative;
+        
+    }
+
+    #actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-top: 10px;
+    
+        button {
+            color: white;
+            justify-content: center;
+        }
+    
+        #bregistro {
+            background: rgba(0,28,28,1);
+        }
+    
+        #blogin {
+            background:lightcoral;
+        }
+
+        #beliminar {
+            background: lightskyblue;
+            margin-left: 10px;
+        }
+    }
+}
+
+//ORDENADORES
+@media all and (min-device-width: 1025px) { 
+
+    #actions {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin-top: 20px;
+        justify-content: center;
+    
+        button {
+            color: white;
+            justify-content: center;
+        }
+    
+        #bregistro {
+            background: rgba(0,28,28,1);
+        }
+    
+        #blogin {
+            background:lightcoral;
+        }
+
+        #beliminar {
+            background: lightskyblue;
+            margin-left: 10px;
+        }
+    }
+}

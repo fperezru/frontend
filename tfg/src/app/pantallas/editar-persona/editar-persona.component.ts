@@ -1,10 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Persona } from 'src/app/core/clases/clases';
+import { Persona, Usuario } from 'src/app/core/clases/clases';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackService } from 'src/app/core/services/snack/snack.service';
 import { PersonaService } from 'src/app/core/services/persona/persona.service';
 import { UploadService } from 'src/app/core/services/uploadService/upload.service';
 import { InterfazPersonasService } from 'src/app/core/services/interfaz-personas/interfaz-personas.service';
+import { AuthService } from 'src/app/core/services/authService/auth-service.service';
+import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 
 @Component({
   selector: 'app-editar-persona',
@@ -13,6 +15,7 @@ import { InterfazPersonasService } from 'src/app/core/services/interfaz-personas
 })
 export class EditarPersonaComponent implements OnInit {
   persona: Persona;
+  usuario: Usuario;
   private nombreActual: string;
   private apellido1Actual: string;
   private apellido2Actual: string;
@@ -24,7 +27,7 @@ export class EditarPersonaComponent implements OnInit {
   modo: number;
   imageObject: Array<object>;
 
-  constructor(public dialogoRef: MatDialogRef<EditarPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Persona, public snackService: SnackService, private personaService: PersonaService, private uploadService: UploadService, private interfacePersona: InterfazPersonasService) { }
+  constructor(public dialogoRef: MatDialogRef<EditarPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Persona, public snackService: SnackService, private personaService: PersonaService, private uploadService: UploadService, private interfacePersona: InterfazPersonasService, private tokenService: TokenService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.modo = 0;
@@ -42,6 +45,14 @@ export class EditarPersonaComponent implements OnInit {
     this.descripcionActual = this.persona.descripcion;
     this.nacimientoActual = this.persona.fechaNacimiento;
     this.defuncionActual = this.persona.fechaDefuncion;
+
+    this.authService.getUser(this.tokenService.getUserName()).subscribe(data => {
+      this.usuario = data;
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
 
     this.imageObject = [
       {
@@ -109,14 +120,14 @@ export class EditarPersonaComponent implements OnInit {
     this.archvioSeleccionado = event.target.files[0];
   }
 
-  public onUpload() {
-    //this.persona.imagen1 = this.archvioSeleccionado.name;
+  public onUpload(idUsuario: number, idRecuerdo: number) {
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();
     uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
 
-    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+    this.uploadService.uploadFile(uploadImageData, "persona", idUsuario, idRecuerdo ).subscribe(data => {
       console.log("subida archivo ok");
     },
       (error: any) => {
@@ -139,7 +150,12 @@ export class EditarPersonaComponent implements OnInit {
     if (save) {
       this.personaService.editarPersona(persona, persona.id).subscribe(data => {
         console.log("actualizado persona ok");
-        this.onUpload();
+        if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+          this.onUpload(this.tokenService.getId(), persona.id);
+        }
+        else {
+          this.onUpload(this.tokenService.getIdUsuario(), persona.id);
+        }
       },
         (error: any) => {
           console.log(error)

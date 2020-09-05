@@ -16,12 +16,14 @@ import { UploadService } from 'src/app/core/services/uploadService/upload.servic
 export class NuevaPersonaComponent implements OnInit {
   persona: Persona;
   personas: Persona[] = [];
-  idUser: Number;
+  personaGuardada: Persona;
+  idUser: number;
   private archvioSeleccionado: File;
 
-  constructor(public dialogoRef: MatDialogRef<NuevaPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:Number, public snackService: SnackService, private personaService: PersonaService, private tokenService: TokenService, private interfazPersona: InterfazPersonasService, private uploadService: UploadService) { }
+  constructor(public dialogoRef: MatDialogRef<NuevaPersonaComponent>, @Inject(MAT_DIALOG_DATA) public data:number, public snackService: SnackService, private personaService: PersonaService, private tokenService: TokenService, private interfazPersona: InterfazPersonasService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
+    this.personaGuardada = new Persona();
     this.persona = new Persona();
     if(this.data !== null){
       this.idUser = this.data;
@@ -33,20 +35,21 @@ export class NuevaPersonaComponent implements OnInit {
     this.archvioSeleccionado = event.target.files[0];
   }
 
-  public onUpload() {
-    //this.persona.imagen1 = this.archvioSeleccionado.name;
+  public onUpload(idUsuario: number, idRecuerdo: number) {
+    //this.mascota.imagen1 = this.archvioSeleccionado.name;
     console.log(this.archvioSeleccionado);
 
     const uploadImageData = new FormData();
     uploadImageData.append('file', this.archvioSeleccionado, this.archvioSeleccionado.name)
 
-    this.uploadService.uploadFile(uploadImageData).subscribe(data => {
+    this.uploadService.uploadFile(uploadImageData, "persona", idUsuario, idRecuerdo ).subscribe(data => {
       console.log("subida archivo ok");
     },
       (error: any) => {
         console.log(error)
       }
     );
+
   }
 
   public validaciones(persona: Persona) {
@@ -81,17 +84,36 @@ export class NuevaPersonaComponent implements OnInit {
   public addPersona(persona: Persona) {
 
     this.idUser = this.tokenService.getId();
+    let idRecuerdo: number;
 
     let save = this.validaciones(persona);
     if (save) {
-      this.personaService.crearPersona(persona, this.idUser).subscribe(data => {
-        console.log("guardado persona ok");
-        this.interfazPersona.addRecuerdo(this.personas[this.personas.length-1]);
-      },
-        (error: any) => {
-          console.log(error)
-        }
-      );
+      if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+        this.personaService.crearPersona(persona, this.idUser).subscribe(data => {
+          console.log("guardado persona ok");
+          this.personaGuardada = data;
+          idRecuerdo = this.personaGuardada.id;
+          this.interfazPersona.addRecuerdo(this.personas[this.personas.length-1]);
+          this.onUpload(this.idUser, idRecuerdo);
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
+      else {
+        this.personaService.crearPersona(persona, this.tokenService.getIdUsuario()).subscribe(data => {
+          console.log("guardado persona ok");
+          this.personaGuardada = data;
+          idRecuerdo = this.personaGuardada.id;
+          this.interfazPersona.addRecuerdo(this.personas[this.personas.length-1]);
+          this.onUpload(this.idUser, idRecuerdo);
+        },
+          (error: any) => {
+            console.log(error)
+          }
+        );
+      }
       this.dialogoRef.close();
       this.interfazPersona.back();
     }

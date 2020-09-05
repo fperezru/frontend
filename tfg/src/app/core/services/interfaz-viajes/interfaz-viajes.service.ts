@@ -110,8 +110,8 @@ export class InterfazViajesService implements OnDestroy {
       this.geometry = new Tessalator3D(country_data[name], 0);
 
       var continents = ["EU", "AN", "AS", "OC", "SA", "AF", "NA"];
-      var color = new THREE.Color(0xff0000);
-      color.setHSL(continents.indexOf(country_data[name].data.cont) * (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+      var color = new THREE.Color(0xB9D89C);
+      //color.setHSL(continents.indexOf(country_data[name].data.cont) * (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
       var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
           color: color
       }));

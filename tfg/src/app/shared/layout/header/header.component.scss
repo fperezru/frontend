@@ -1,5 +1,7 @@
+@import './src/assets/scss/colores';
+
 .container {
-    background-color: mediumvioletred;
+    background-color: $header;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -77,7 +79,7 @@
     }
 
     button:focus{
-      color: mediumvioletred;
+      color: header;
       background-color: white;
     }
 
@@ -100,13 +102,14 @@
   mat-label {
     color: white;
     font-size: 30px;
+    cursor: pointer;
   }
 
   .item-active {
     background-color: white;
     border-radius: 5px;
     text-decoration: none;
-    color: mediumvioletred;
+    color: $header;
     width:110px;
     height: auto;
     text-align: center;
@@ -116,4 +119,12 @@
   color: white;
   text-decoration: none;
   margin-left: 20px;
+  }
+
+  *:focus {
+    outline: none;
+}
+
+  .icon {
+    color: white !important;
   }

@@ -23,7 +23,7 @@
         </ng-image-slider>
         <mat-dialog-actions>
             <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
-            <button mat-raised-button primary (click)="modo = 1" >Editar</button>
+            <button *ngIf="this.usuario.permiso === true" mat-raised-button primary (click)="modo = 1" >Editar</button>
         </mat-dialog-actions>
     </div>
 </div>
