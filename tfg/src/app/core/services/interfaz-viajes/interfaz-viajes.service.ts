@@ -1,18 +1,12 @@
 import * as THREE from 'three';
 import { Injectable, ElementRef, OnDestroy, NgZone} from '@angular/core';
-import { FirstPersonControls } from 'node_modules/first-person-controls/src/first-person-controls.js'
 import { ViajeService } from '../viaje/viaje.service';
 import { TokenService } from '../tokenService/token-service.service';
 import { DialogoService } from '../dialogo/dialogo.service';
-import * as POSTPROCESSING from 'postprocessing';
 import { Viaje } from '../../clases/clases';
-import { TrackballControls } from './TrackballControls';
 import { country_data } from './country_data';
 import { Tessalator3D } from './tessalator3d';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +31,11 @@ export class InterfazViajesService implements OnDestroy {
   private radius: number = 0.995;
   private base_globe: number = 0;
   private hover_scale: number = 1.01;
+  private viajes: Viaje[] = []
+  private lugares: string[];
+  private col: string;
+  private viajeEliminar: Viaje;
+  private lugarEliminar: string;
 
   constructor(private ngZone: NgZone, private viajeService: ViajeService, public tokenService: TokenService, private dialogoService: DialogoService) { }
 
@@ -106,19 +105,106 @@ export class InterfazViajesService implements OnDestroy {
 
     this.tierra.add(new THREE.Mesh(geometry_sphere, this.material));
 
-    for (var name in country_data) {
-      this.geometry = new Tessalator3D(country_data[name], 0);
+    var lugares = new Array();
 
-      var continents = ["EU", "AN", "AS", "OC", "SA", "AF", "NA"];
-      var color = new THREE.Color(0xB9D89C);
-      //color.setHSL(continents.indexOf(country_data[name].data.cont) * (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
-      var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
-          color: color
-      }));
-      mesh.name = "land";
-      mesh.userData.country = name;
-      this.tierra.add(mesh);
+    if (this.tokenService.getIdUsuario() === null || this.tokenService.getIdUsuario() === undefined || this.tokenService.getIdUsuario() === 0) {
+      this.viajeService.getViajesPorUser(this.tokenService.getId()).subscribe(data => {
+        this.viajes = data;
+        for(let i = 0; i < this.viajes.length; i++) {
+          lugares.push(this.viajes[i].lugar);
+        }
+        for (var name in country_data) {
+          this.geometry = new Tessalator3D(country_data[name], 0);
+          var color = new THREE.Color(0xB9D89C);
+          if (lugares.length >= 1) {
+            for(let i = 0; i < lugares.length; i++) {
+              console.log(i + lugares[i]);
+              if (lugares.includes(name)) {
+                color.setHSL( (2/ 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+                this.col = 'landv';
+              
+              }
+              else {   
+                color.setHSL( (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+                this.col = 'landa';
+              }
+
+              var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
+                color: color
+              }));
+              mesh.name = this.col;
+              mesh.userData.country = name;
+              this.tierra.add(mesh);
+            }    
+          }
+          else {
+            color.setHSL( (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);  
+            var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
+              color: color
+            }));
+            mesh.name = 'landa';
+            mesh.userData.country = name;
+            this.tierra.add(mesh);
+          }
+    
+        }
+        
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
     }
+    else {
+      this.viajeService.getViajesPorUser(this.tokenService.getIdUsuario()).subscribe(data => {
+        this.viajes = data;
+        for(let i = 0; i < this.viajes.length; i++) {
+          lugares.push(this.viajes[i].lugar);
+          console.log(lugares.length)
+          for (var name in country_data) {
+            this.geometry = new Tessalator3D(country_data[name], 0);
+            var color = new THREE.Color(0xB9D89C);
+            if (lugares.length >= 1) {
+              for(let i = 0; i < lugares.length; i++) {
+                console.log(i + lugares[i]);
+                if (lugares.includes(name)) {
+                  color.setHSL( (2/ 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+                  this.col = 'landv';
+                
+                }
+                else {   
+                  color.setHSL( (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+                  this.col = 'landa';
+                }
+  
+                var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
+                  color: color
+                }));
+                mesh.name = this.col;
+                mesh.userData.country = name;
+                this.tierra.add(mesh);
+              }    
+            }
+            else {
+              color.setHSL( (1 / 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);  
+              var mesh = country_data[name].mesh = new THREE.Mesh(this.geometry, new THREE.MeshLambertMaterial({
+                color: color
+              }));
+              mesh.name = 'landa';
+              mesh.userData.country = name;
+              this.tierra.add(mesh);
+            }
+      
+          }
+        }
+      },
+        (error: any) => {
+          console.log(error)
+        }
+      );
+    }
+
+   
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.rotateSpeed = 2.0;
@@ -140,7 +226,10 @@ export class InterfazViajesService implements OnDestroy {
       this.resize();
 
     });
-    window.addEventListener('mousemove', (event:MouseEvent) => {this.pick();});
+    window.addEventListener('mousemove', (event:MouseEvent) => {this.pick});
+
+    window.addEventListener('dblclick', (event:MouseEvent) => {this.pick();});
+
     this.ngZone.runOutsideAngular(() => {
       if (document.readyState !== 'loading') {
         this.render();
@@ -180,15 +269,38 @@ export class InterfazViajesService implements OnDestroy {
 
     if (intersects.length && this.use == true) {
       if (intersects[0].point !== null) {
-        if (intersects[0].object.name === "land") {
+        console.log(intersects[0].object.name);
+        if (intersects[0].object.name === "landa") {
           intersects[0].object.scale.set(this.hover_scale, this.hover_scale, this.hover_scale);
           this.pickedObject = intersects[0].object;
-          //this.openMenu();
-      
-      
+          this.openMenuAdd(this.pickedObject.userData.country);
+        }
+        
+        if (intersects[0].object.name === "landv") {
+          intersects[0].object.scale.set(this.hover_scale, this.hover_scale, this.hover_scale);
+          this.pickedObject = intersects[0].object;
+          this.openMenuEdit(this.pickedObject.userData.country);
         }
       }
     }
+  }
+
+  public deleteRecuerdo(id: number) {
+    this.viajeService.getViajesPorId(id).subscribe(data => {
+      this.viajeEliminar = data;
+      this.lugarEliminar = this.viajeEliminar.lugar;
+      if(this.pickedObject.userData.country === this.lugarEliminar) {
+        var color = new THREE.Color(0xB9D89C);
+        color.setHSL( (1/ 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+        var materialAmarillo = new THREE.MeshLambertMaterial({color: color});
+        this.pickedObject.material = materialAmarillo;
+        this.pickedObject.name = 'landa';
+      }
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
   }
 
   public getCanvasRelativePosition(event: MouseEvent) {
@@ -211,20 +323,29 @@ export class InterfazViajesService implements OnDestroy {
     this.pickPosition.y = -100000;
   }
 
-  public openMenu(viaje: Viaje) {
+  public openMenuAdd(viaje: string) {
     this.dialogoService.abrirDialogo('NuevoViajeComponent', viaje, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
-      this.controls.bindEvents();
-      this.use = true;
-      this.controls.lookSpeed = 0.1;
+      this.pickedObject.scale.set(1.0, 1.0, 1.0);
     },
     error => console.log(error)
     );
   }
 
-  public back() {
-    this.controls.bindEvents();
-    this.use = true;
-    this.controls.lookSpeed = 0.1;
+  public openMenuEdit(viaje: Viaje) {
+    this.dialogoService.abrirDialogo('EditarViajeComponent', viaje, {width: '1100px', height: 'auto'}).afterClosed().subscribe(data => {
+      this.pickedObject.scale.set(1.0, 1.0, 1.0);
+    },
+    error => console.log(error)
+    );
   }
+
+  public cambiarColor() {
+    var color = new THREE.Color(0xB9D89C);
+    color.setHSL( (2/ 7), Math.random() * 0.25 + 0.65, Math.random() / 2 + 0.25);
+    var materialVerde = new THREE.MeshLambertMaterial({color: color});
+    this.pickedObject.material = materialVerde;
+    this.pickedObject.name = 'landv';
+  }
+
 
 }

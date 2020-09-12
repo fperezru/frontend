@@ -1,5 +1,5 @@
 <div *ngIf= "modo == 0">
-    <mat-card-title>Añadir Recuerdo</mat-card-title>
+    <mat-card-title>Recuerdo</mat-card-title>
     <div id="EditorForm">
         <mat-dialog-content id=Information>
             <mat-label>
@@ -14,7 +14,7 @@
         </mat-dialog-content>
     </div>
     <div>
-        <ng-image-slider #nav
+        <ng-image-slider *ngIf="this.imageObject.length !== 0" #nav
             [images]="imageObject"
             [infinite]="false"
             [autoSlide]="1"
@@ -28,7 +28,7 @@
     </div>
 </div>
 <div *ngIf= "modo == 1">
-    <mat-card-title>Añadir Recuerdo</mat-card-title>
+    <mat-card-title>Editar Recuerdo</mat-card-title>
     <div id="EditorForm">
         <mat-dialog-content id=Information>
             <mat-label>
@@ -46,5 +46,8 @@
             <button mat-raised-button primary (click)="editarRecuerdo(otro)" >Guardar</button>
             <button mat-raised-button primary (click)="eliminarRecuerdo(otro.id)" >Eliminar</button>
         </mat-dialog-actions>
+    </div>
+    <div>
+        <input type="file" (change)="onFileChanged($event)" >
     </div>
 </div>

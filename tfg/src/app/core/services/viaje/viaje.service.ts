@@ -20,6 +20,10 @@ export class ViajeService {
     return this.httpClient.get<Viaje>(this.viajeURL + `detalle/${id}`);
   }
 
+  public getViajesPorLugar(lugar: string): Observable<Viaje> {
+    return this.httpClient.get<Viaje>(this.viajeURL + `detalles/${lugar}`);
+  }
+
   public getViajesPorUser(id: Number): Observable<Viaje[]> {
     return this.httpClient.get<Viaje[]>(this.viajeURL + `lista/${id}`);
   }

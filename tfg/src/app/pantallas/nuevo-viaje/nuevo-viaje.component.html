@@ -5,7 +5,7 @@
             <h4>Datos del viaje: </h4>
         </mat-label>
         <mat-form-field>
-            <input matInput [(ngModel)]="viaje.lugar" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Lugar"/>
+            <input matInput [(ngModel)]="this.pais" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required readonly='true'placeholder="Lugar"/>
         </mat-form-field>
         <mat-form-field>
             <input matInput [(ngModel)]="viaje.descripcion" pattern="[a-zA-Z0-9\u00C0-\u00FF]*$" required placeholder="Descripción"/>
@@ -15,4 +15,7 @@
         <button mat-raised-button secondary (click)="this.dialogoRef.close()" >Cancelar</button>
         <button mat-raised-button primary (click)="addViaje(viaje)" >Guardar</button>
     </mat-dialog-actions>
+</div>
+<div>
+    <input type="file" multiple (change)="onFileChanged($event)" >
 </div>

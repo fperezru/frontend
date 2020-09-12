@@ -132,7 +132,7 @@ export class InterfazPersonasService implements OnDestroy {
       'uniform vec3 viewVector; varying float intensity; void main() {gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4( position, 1.0 );vec3 actual_normal = vec3(modelMatrix * vec4(normal, 0.0));intensity = pow( dot(normalize(viewVector), actual_normal), 6.0 );}'
       ,
       fragmentShader: 
-      'varying float intensity;void main() {vec3 glow = vec3(0, 1, 1) * intensity;gl_FragColor = vec4( glow, 1.0 );}',
+      'varying float intensity;void main() {vec3 glow = vec3(0.57, 0.85, 0.85) * intensity;gl_FragColor = vec4( glow, 1.0 );}',
       
       side: THREE.FrontSide,
       blending: THREE.AdditiveBlending,

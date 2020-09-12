@@ -18,6 +18,7 @@ export class NuevoOtroComponent implements OnInit {
   otros: OtrosRecuerdos[] = [];
   otroGuardado: OtrosRecuerdos;
   idUser: number;
+  idFamiliar: number;
   private archvioSeleccionado: File;
 
   constructor(public dialogoRef: MatDialogRef<NuevoOtroComponent>, @Inject(MAT_DIALOG_DATA) public data:number, public snackService: SnackService, private otroService: OtroService, private tokenService: TokenService, private uploadService: UploadService, private interfazOtros: InterfazOtrosService) { }

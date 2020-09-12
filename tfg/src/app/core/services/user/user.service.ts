@@ -14,22 +14,22 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   public getUsuarios(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.url2+'lista');
+    return this.httpClient.get<Usuario[]>(this.usuarioURL+'lista');
   }
 
   public getFamiliares(rol: number): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.url2 + `lista/${rol}`);
+    return this.httpClient.get<Usuario[]>(this.usuarioURL + `lista/${rol}`);
   }
 
   public getPacientes(familiar: number): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.url2 + `familiar/${familiar}`);
+    return this.httpClient.get<Usuario[]>(this.usuarioURL + `familiar/${familiar}`);
   }
 
   public editarUsuario(usuario: Usuario, id: number): Observable<any> {
-    return this.httpClient.put<any>(this.url2 + `actualizar/${id}`, usuario);
+    return this.httpClient.put<any>(this.usuarioURL + `actualizar/${id}`, usuario);
   }
 
   public borrar(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.url2 + `borrar/${id}`);
+    return this.httpClient.delete<any>(this.usuarioURL + `borrar/${id}`);
   } 
 }
