@@ -1,10 +1,10 @@
 <div *ngIf= "modo == 0">
     <mat-card-title>Recuerdo</mat-card-title>
     <div id="EditorForm">
+        <mat-label>
+            <h4>Datos del viaje: </h4>
+        </mat-label>
         <mat-dialog-content id=Information>
-            <mat-label>
-                <h4>Datos del viaje </h4>
-            </mat-label>
             <mat-form-field>
                 <input matInput [(ngModel)]="viaje.lugar" [readonly]="true" placeholder="Lugar" />
             </mat-form-field>
@@ -22,32 +22,32 @@
             slideImage="1">
         </ng-image-slider>
         <mat-dialog-actions id="actions">
-            <button id="bregistro" mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
-            <button id="blogin" *ngIf="this.permiso === true" mat-raised-button primary (click)="modo = 1" >Editar</button>
+            <button class="bregistro" mat-raised-button secondary (click)="this.dialogoRef.close()" >Salir</button>
+            <button class="blogin" *ngIf="this.permiso === true" mat-raised-button primary (click)="modo = 1" >Editar</button>
         </mat-dialog-actions>
     </div>
 </div>
 <div *ngIf= "modo == 1">
     <mat-card-title>Editar Viaje</mat-card-title>
     <div id="EditorForm">
+        <mat-label>
+            <h4>Datos del viaje: </h4>
+        </mat-label>
         <mat-dialog-content id=Information>
-            <mat-label>
-                <h4>Datos del viaje: </h4>
-            </mat-label>
             <mat-form-field>
-                <input matInput [(ngModel)]="viaje.lugar" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Lugar"/>
+                <input matInput [(ngModel)]="viaje.lugar" [readonly]="true" required placeholder="Lugar"/>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="viaje.descripcion" pattern="[a-zA-Z\u00C0-\u00FF]*$" required placeholder="Descripción"/>
+                <input matInput [(ngModel)]="viaje.descripcion" required placeholder="Descripción"/>
             </mat-form-field>
         </mat-dialog-content>
-        <mat-dialog-actions>
-            <button mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
-            <button mat-raised-button primary (click)="editarViaje(viaje)" >Guardar</button>
-            <button mat-raised-button primary (click)="eliminarViaje(viaje.id)" >Eliminar</button>
+        <mat-dialog-actions id="actions">
+            <button class="bregistro" mat-raised-button secondary (click)="noEditar()" >Cancelar</button>
+            <button class="blogin" mat-raised-button primary (click)="editarViaje(viaje)" >Guardar</button>
+            <button class="beliminar" mat-raised-button primary (click)="eliminarViaje(viaje.id)" >Eliminar</button>
         </mat-dialog-actions>
     </div>
-    <div>
+    <div id="archivo">
         <input type="file" (change)="onFileChanged($event)" >
     </div>
 </div>

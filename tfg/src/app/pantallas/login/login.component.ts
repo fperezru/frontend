@@ -97,7 +97,6 @@ export class LoginComponent implements OnInit {
           else if(this.tokenService.isLoggedIn() && this.roles[0] == 'ROLE_FAMILIAR')
             this.router.navigate(['familiarhome']);
           console.log(this.roles[0]);
-          this.snackService.successSnackbar('Inicio de sesión correcto');
         } else {
           console.log("Error al iniciar sesión");
         }

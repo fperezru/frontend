@@ -1,32 +1,208 @@
-#EditionForm {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    padding-bottom: 20px;
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+  mat-form-field {
+    width:250px !important;
+    height:65px !important;
+  }
+
   
-    #Information {
-      display: flex;
-      flex-direction: column;
-  
-      h4 {
-        display: inline;
-        margin-right: 10px;
-      }
-  
-      label {
-        margin-bottom: 15px;
-      }
-    }
-  
-    button {
-      width: 200px;
+  form {
+      margin: auto;
+  }
+
+  #principal {
+      margin-top: 25px;
+      overflow-y: visible;
+      overflow-x: hidden;
+  }
+
+  #archivo {
+    margin-top: 40px;
+    
+    input {
+        width: 135px;
+        margin-left: 60px;
     }
   }
+      
+  #actions {
+      display: inline;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: center;
+      
+      button {
+          width: 120px;
+          height: 40px;
+          font-size: 15px;
+          color: white;
+          justify-content: center;
+      }
   
-.mat-dialog-actions {
-    justify-content: flex-end;
-}
+      .bregistro {
+          background: rgba(0,28,28,1);
+      }
   
-mat-form-field {
-    margin-left: 20px;
+      .blogin {
+          background: rgba(13,167,167,1);
+          margin-top: 8px;
+          //margin-left: 40px;
+      }
+
+      .beliminar {
+          background: lightsalmon;
+          margin-top: 10px;
+          margin-left: 60px;
+      }
+  }
+
+  
+  mat-datepicker-toggle {
+      color: lightseagreen !important;
+  }
+
+  .filas {
+      display: inline-flexbox;
+      flex-direction: column;
+  }
+
+  /deep/ .mat-checkbox-frame { 
+      border-color: white;
+  }
+
+  a {
+      font-size: 11px;
+  }
+
+  mat-error {
+      visibility: hidden;
+  }
 }
+
+//ORDENADORES
+@media all and (min-device-width: 1025px) {   
+    mat-form-field {
+      width:250px !important;
+      margin-right: 5px;
+    }
+  
+    #principal {
+        margin-top: 25px;
+        overflow-y: hidden;
+    }
+  
+    #permiso {
+        margin-left: 40px;
+      }
+  
+    form {
+        margin: auto;
+    }
+  
+    mat-dialog-content {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  
+    mat-label {
+      margin-top: 60px;
+    }
+  
+    #archivo {
+      margin-top: 40px;
+    }
+      
+    #actions {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin-top: 20px;
+        justify-content: space-between;
+    
+        button {
+            width: 120px;
+            height: 40px;
+            font-size: 15px;
+            color: white;
+            justify-content: center;
+        }
+    
+        .bregistro {
+            background: rgba(0,28,28,1);
+        }
+    
+        .blogin {
+            background: rgba(13,167,167,1);
+        }
+  
+        .beliminar {
+            background: lightsalmon;
+            width: 140px;
+        }
+    }
+    
+    mat-datepicker-toggle {
+        color: lightseagreen !important;
+    }
+      
+    .filas {
+        display: inline-flexbox;
+        flex-direction: column;
+    }
+  
+    /deep/ .mat-checkbox-frame { 
+        border-color: lightgreen;
+    } 
+  }
+  
+  mat-error ::ng-deep{
+    color:lightsalmon;
+  }
+  
+  mat-icon {
+    color: lightseagreen;
+  }
+  
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: lightseagreen !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   /*change color of underline when focused*/
+   background-color: lightseagreen !important;;
+  }
+  
+  ::ng-deep.mat-form-field-empty.mat-form-field-label {
+    color: lightseagreen;
+  }
+  
+  ::ng-deep.mat-form-field-focused {
+    color: lightsalmon;
+  }
+  
+  ::ng-deep.mat-slide-toggle-thumb {
+      width: 10px !important;
+      height: 10px !important;
+      transform: translate(50%, 50%);
+  }
+  
+  ::ng-deep.mat-slide-toggle-bar {
+    background-color:lightsalmon;
+    border-radius: 15px !important;
+    height: 16px !important;
+  }
+  
+  ::ng-deep.mat-slide-toggle-thumb-container {
+    top: -2px !important;
+  }
+  
+  ::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: lightseagreen;
+    color: lightseagreen;
+  }
+  
+  ::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #fff;
+  }

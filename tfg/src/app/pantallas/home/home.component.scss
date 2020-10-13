@@ -1,179 +1,132 @@
 
-*, :after, :before {
-  box-sizing: border-box;
-}
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+  div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 40px;
+      margin-left: 67px;
+      
+      button {
+        width: 200px;
+        height: 200px;
+        font-size: 25px;
+      }
+    }
 
-// Configuration variables
-$margin: 2em;
-$mask-size: 12em;
-$circle-size: 5em;
-$breakpoint: 700px;
-$border-radius: .25em; 
-$colors: (alpha: #1abc9c, beta: #2ecc71, gamma: #3498db, delta: #9b59b6);
+    #div2{
+      margin-top: 1px;
+    }
 
-// Boxes wrapper
-// 1. Clearing inner float
-// 2. Enabling position context for pseudo-element
-.boxes {
-  list-style: none; 
-  padding: 0 $margin;
-  margin: 0;
-  overflow: hidden; // 1
-  position: relative; // 2
-  
-  // Central dark disk
-  &:after {
-    content: '';
-    position: absolute;
-    width: 20%;
-    height: 30%;
-    top: 50%;
-    left: 50%;
-    margin: -$circle-size/2 (0 0) -$circle-size/2;
-    margin-top: -105px;
-    margin-left: -102px;
-    //border-radius: 50%;
-    //border: .5em solid #2c3e50;
-    background-image: url('src/assets/200x200.png');
-    background-repeat: no-repeat;
-    // Hiding it on small screens
-    @media (max-width: $breakpoint) {
-      content: none;
+    #div3{
+      margin-top: 1px;
     }
     
-    // Hiding it on browsers not supporting box-shadow/border-radius/pseudo-elements
-    .no-boxshadow & {
-      content: none;
+    #uno {
+      background: linear-gradient(to right, black ,#8bcdcd);
+      color: white;
     }
-  }
-}
-
-// Box
-.box {
-  float: left;
-  width: 50%;
-  margin: $margin 0;
-  
-  // Moving them back to a single column on small screens
-  @media (max-width: $breakpoint) {
-    width: 100%;
-    float: none;
-  }
-}
-
-// Inner box wrapper
-.box__content {
-  // Adding a right padding on left boxes for the central gutter
-  .box--left & {
-    padding-right: $margin;
-  }
-  
-  // Adding a left padding on right boxes for the central gutter
-  .box--right & {
-    padding-left: $margin;
-  }
-  
-  // Removing padding on small screens
-  @media (max-width: $breakpoint) {
-    padding: 0 !important;
-  }
-}
-
-// Since there is no content, forcing some height
-.box__header,
-.box__footer {
-  min-height: 12em;
-}
-
-// Applying border-radius to top corners
-.box__header {
-  border-radius: $border-radius $border-radius 0 0;
-}
-
-// Applying border-radius to bottom corners
-.box__footer {
-  border-radius: 0 0 $border-radius $border-radius;
-}
-
-// Part that is being truncated by the circle
-// 1. Removing background color
-// 2. Making sure the box-shadow from pseudo-element doesn't leak outside the container
-// 3. Enabling position context for pseudo-element
-.box__cut {
-  background: none !important; // 1
-  overflow: hidden; // 2
-  position: relative; // 3
-  
-  // Transparent circle
-  // 1. Moving it on a lower plan
-  // 2. Applying a very large box-shadow, using currentColor as color
-  &:after {
-    content: '';
-    position: absolute;
-    width: $mask-size;
-    height: $mask-size;
-    z-index: -1; // 1
-    border-radius: 50%;
-    margin: -($mask-size / 2 + $margin);
-    box-shadow: 0 0 0 55em; // 2
     
-    // Hiding it on small screens
-    @media (max-width: $breakpoint) {   
-      content: none;
+    #dos {
+      background: linear-gradient(to left, black, #faf0af);
+      color: white;
+      margin-top: 30px;
+    } 
+
+    #tres {
+      background: linear-gradient(to right, black ,#e5edb7);
+      color: white;
+      margin-top: 30px;
     }
-  }
-  
-  // Positioning transparent circles for left boxes
-  .box--left &:after {
-    right: 0;
-  }
-  
-  // Positioning transparent circles for right boxes
-  .box--right &:after {
-    left: 0;
-  }
-  
-  // Positioning transparent circles for top boxes
-  .box--top &:after {
-    bottom: 0;
-  }
-  
-  // Positioning transparent circles for bottom boxes
-  .box--bottom &:after {
-    top: 0;
-  }
+    
+    #cuatro {
+      background: linear-gradient(to left, black, #f1c5c5);
+      color: white;
+      margin-top: 30px;
+    } 
+
+    #cinco {
+      background: linear-gradient(to left, black, #3a3535);
+      color: white;
+      margin-top: 30px;
+    } 
 }
 
-// Applying colors by looping on the color map
-@each $key, $value in $colors {
-  // Targeting the box
-  .box--#{$key} {
-    // Applying background colors
-    .box__header,
-    .box__footer {
-      background: $value;
-    }
-  
-    // Applying color for box-shadow
-    .box__cut {
+//ORDENADORES
+@media all and (min-device-width: 1025px) {   
+  div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      
+      button {
+        width: 900px;
+        height: 300px;
+        font-size: 50px;
+      }
+
+      // Central dark disk
       &:after {
-        color: darken($value, 10%);
+        content: '';
+        position: absolute;
+        width: 20%;
+        height: 30%;
+        top: 50%;
+        left: 50%;
+        margin: -5em/2 (0 0) -5em/2;
+        margin-top: -180px;
+        margin-left: -102px;
+        background-image: url('src/assets/200x200.png');
+        background-repeat: no-repeat;
       }
-  
-      // Applying background for small screens
-      // since the pseudo-element will be hidden
-      @media (max-width: $breakpoint) {
-        background: darken($value, 10%) !important;
-      }
-     
-      // Applying background on browsers not supporting box-shadow/border-radius/pseudo-elements
-      .no-boxshadow & {
-        background: darken($value, 10%) !important;
+      
+    }
+
+    #div1{
+      margin-top: 50px;
+    }
+
+    #div2{
+      margin-top: 30px;
+    }
+
+    #div3{
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+      justify-content: space-around;
+      align-items: center;
+
+      button {
+        width: 900px;
+        height: 100px;
+        font-size: 50px;
       }
     }
-  }
-}
+    
+    #uno {
+      background: linear-gradient(to right, black ,#8bcdcd);
+      color: white;
+    }
+    
+    #dos {
+      background: linear-gradient(to left, black, #faf0af);
+      color: white;
+    } 
 
-*:focus {
-  outline: none;
+    #tres {
+      background: linear-gradient(to right, black ,#e5edb7);
+      color: white;
+    }
+    
+    #cuatro {
+      background: linear-gradient(to left, black, #f1c5c5);
+      color: white;
+    } 
+
+    #cinco {
+      background: linear-gradient(to left, black, #3a3535);
+      color: white;
+    } 
 }

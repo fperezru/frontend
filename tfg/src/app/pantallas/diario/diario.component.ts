@@ -3,9 +3,10 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogoService } from 'src/app/core/services/dialogo/dialogo.service';
 import { DiarioService } from 'src/app/core/services/diarioService/diario.service';
-import { Diario } from 'src/app/core/clases/clases';
+import { Diario, Usuario } from 'src/app/core/clases/clases';
 import { TokenService } from 'src/app/core/services/tokenService/token-service.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/core/services/authService/auth-service.service';
 
 @Component({
   selector: 'app-diario',
@@ -22,10 +23,12 @@ export class DiarioComponent extends MatPaginatorIntl {
   fechaAux: string;
   fechaPaginaAux: string;
   fechaBoton: Date;
+  permiso: boolean = true;
+  usuario: Usuario;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
-  constructor(public dialogoService: DialogoService, private diarioService: DiarioService, private tokenService: TokenService, public datepipe: DatePipe) {
+  constructor(public dialogoService: DialogoService, private diarioService: DiarioService, private tokenService: TokenService, public datepipe: DatePipe, public authService: AuthService) {
     super();
     this.nextPageLabel = 'Siguiente'
     this.previousPageLabel = 'Anterior';
@@ -40,6 +43,16 @@ export class DiarioComponent extends MatPaginatorIntl {
     this.comprobarDiario();
     this.fechaBoton = new Date();
     this.fechaBoton.setHours(0,0,0,0);
+    this.usuario = new Usuario();
+
+    this.authService.getUser(this.tokenService.getUserName()).subscribe(data => {
+      this.usuario = data;
+      this.permiso = this.usuario.permiso;
+    },
+      (error: any) => {
+        console.log(error)
+      }
+    );
   }
 
   applyFilter(event: Event) {

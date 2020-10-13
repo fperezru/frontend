@@ -356,7 +356,10 @@ export class InterfazOtrosService implements OnDestroy {
           recuerdo = data[data.length-1];
           const geometry_sphere = new THREE.SphereGeometry(50, 32, 50 );
           this.sphere = new THREE.Mesh( geometry_sphere, this.materialGlow);
-          this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
+          if(this.esferas.length < 1)
+            this.sphere.position.x = 10;
+          else
+            this.sphere.position.x = this.esferas[this.esferas.length-1].position.x + 600;
           this.sphere.position.y = 0;
           this.sphere.position.z = 0;
           this.sphere.name = recuerdo.id.toString();

@@ -13,7 +13,9 @@ export class UploadService {
 
 
   serverURL = 'http://localhost:8080/api/upload/';
+  serverURL1 = 'http://192.168.0.21/api/upload/';
   archivoURL = 'http://localhost:8080/api/archivos/';
+  archivoURL1 = 'http://192.168.0.21:8080/api/archivos/';
 
   constructor(private httpClient: HttpClient) { }
 

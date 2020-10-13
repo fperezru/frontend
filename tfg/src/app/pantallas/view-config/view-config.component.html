@@ -1,17 +1,53 @@
 <mat-card-title>Información detallada</mat-card-title>
-<div id="EditorForm">
-    <mat-dialog-content id=Information>
-        <mat-form-field>
-            <input matInput [(ngModel)]="usuario.nombreUsuario" [readonly]="true"  placeholder="Usuario"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="usuario.email" [readonly]="true"  placeholder="Email"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="usuario.nombre" [readonly]="true"  placeholder="Nombre"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [(ngModel)]="usuario.roles[0].rolNombre" [readonly]="true"  placeholder="Rol"/>
-        </mat-form-field>
-    </mat-dialog-content>
-</div>
+<div id="principal">
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.nombre" [readonly]="true" matInput placeholder="Nombre"/>
+        <mat-error> Campo nombre vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Apellidos</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.apellidos" [readonly]="true" matInput placeholder="Apellidos"/>
+        <mat-error> Campo apellidos vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput name="user" [(ngModel)]="this.fechaAux" placeholder="Fecha de nacimiento" [readonly]="true"/>
+        <mat-error> Campo cumpleaños vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>DNI/Pasaporte</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.identificacion" [readonly]="true" matInput placeholder="Identificación"/>
+        <mat-error> Campo identificación vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.nombreUsuario" [readonly]="true" matInput placeholder="Email"/>
+        <mat-error> Campo usuario vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.email" [readonly]="true" matInput placeholder="Usuario"/>
+        <mat-error> Campo usuario vacío </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="filas">
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.telefono" [readonly]="true" matInput placeholder="Teléfono"/>
+        <mat-error> Campo teléfono vacío </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Domicilio</mat-label>
+        <input name="user" [(ngModel)]="this.usuario.domicilio" [readonly]="true" matInput placeholder="Domicilio"/>
+        <mat-error> Campo domicilio vacío </mat-error>
+      </mat-form-field>
+    </div>
+  <div id="actions">
+      <button id="bregistro" mat-raised-button (click)="dialogoRef.close()">Cerrar</button>
+  </div>

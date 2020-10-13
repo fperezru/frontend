@@ -46,7 +46,7 @@ export class AdminInfoComponent extends MatPaginatorIntl {
           if (Number(informacion[i].tipo) === 1) {
             this.tipoAux = new Tipo();
             this.tipoAux.id = 1;
-            this.tipoAux.tipoNombre = "ALIMENTACION";
+            this.tipoAux.tipoNombre = "ALIMENTACIÓN";
             informacion[i].tipo = this.tipoAux;
           }
           else if (Number(informacion[i].tipo) === 2) {

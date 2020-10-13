@@ -1,21 +1,19 @@
 <mat-card-title>Diario del día</mat-card-title>
 <div id="EditorForm">
+    <mat-label>
+        <h4>Datos de la página: </h4>
+    </mat-label>
     <mat-dialog-content id=Information>
-        <mat-label>
-            <h4>Título:
-                <mat-form-field>
-                    <input matInput [(ngModel)]="diario.titulo" required ngModel pattern="[a-zA-Z0-9\u00C0-\u00FF]*$"/>
-                </mat-form-field> 
-                Fecha: 
-                <mat-form-field id="description">
-                    <input matInput [(ngModel)]="fechaAux" [readonly]="true" required ngModel />
-                </mat-form-field>
-            </h4>
-        </mat-label>
-        <app-nuevo-diario [(diario)]="diario.diario" ></app-nuevo-diario>
+        <mat-form-field>
+            <input matInput [(ngModel)]="diario.titulo" required ngModel pattern="[a-zA-Z0-9\u00C0-\u00FF]*$"/>
+        </mat-form-field> 
+        <mat-form-field id="description">
+            <input matInput [(ngModel)]="fechaAux" [readonly]="true" required ngModel />
+        </mat-form-field>
     </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-raised-button secondary  (click)="this.dialogoRef.close()" >Cancelar</button>
-        <button mat-raised-button primary (click)="editarPagina(diario)" >Guardar</button>
+    <app-nuevo-diario [(diario)]="diario.diario" ></app-nuevo-diario>
+    <mat-dialog-actions id="actions">
+        <button  class="bregistro" mat-raised-button secondary  (click)="this.dialogoRef.close()" >Cancelar</button>
+        <button class="blogin"  mat-raised-button primary (click)="editarPagina(diario)" >Guardar</button>
     </mat-dialog-actions>
 </div>

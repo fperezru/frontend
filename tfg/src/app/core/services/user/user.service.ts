@@ -9,27 +9,27 @@ import { Usuario, Rol } from '../../clases/clases';
 export class UserService {
 
   usuarioURL = 'http://localhost:8080/api/usuarios/';
-  private url2 = 'http://192.168.1.34:8080/api/usuarios/';
+  private usuarioURL1 = 'http://192.168.0.21:8080/api/usuarios/';
 
   constructor(private httpClient: HttpClient) { }
 
   public getUsuarios(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.usuarioURL+'lista');
+    return this.httpClient.get<Usuario[]>(this.usuarioURL1+'lista');
   }
 
   public getFamiliares(rol: number): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.usuarioURL + `lista/${rol}`);
+    return this.httpClient.get<Usuario[]>(this.usuarioURL1 + `lista/${rol}`);
   }
 
   public getPacientes(familiar: number): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.usuarioURL + `familiar/${familiar}`);
+    return this.httpClient.get<Usuario[]>(this.usuarioURL1 + `familiar/${familiar}`);
   }
 
   public editarUsuario(usuario: Usuario, id: number): Observable<any> {
-    return this.httpClient.put<any>(this.usuarioURL + `actualizar/${id}`, usuario);
+    return this.httpClient.put<any>(this.usuarioURL1 + `actualizar/${id}`, usuario);
   }
 
   public borrar(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.usuarioURL + `borrar/${id}`);
+    return this.httpClient.delete<any>(this.usuarioURL1 + `borrar/${id}`);
   } 
 }

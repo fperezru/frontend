@@ -75,14 +75,14 @@ export class EditarViajeComponent implements OnInit {
 
     let save: boolean = true;
 
-    if (viaje.lugar === undefined || viaje.lugar.length === 0 || !/^[a-zA-Z0-9\u00C0-\u00FF]*$/.test(viaje.lugar)) {
+    /*if (viaje.lugar === undefined || viaje.lugar.length === 0 || !/^[a-zA-Z0-9\u00C0-\u00FF]*$/.test(viaje.lugar)) {
       this.snackService.errorSnackbar('El lugar del viaje no debe estar vacío');
       save = false;
     }
     else if (viaje.descripcion === undefined || viaje.descripcion.trim().length === 0 || !/^[a-zA-Z0-9\u00C0-\u00FF]*$/.test(viaje.descripcion)) {
       this.snackService.errorSnackbar('La descripción del viaje no debe estar vacía');
       save = false;
-    }
+    }*/
 
     console.log(save);
     return save;

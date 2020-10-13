@@ -81,10 +81,11 @@ export class NuevoViajeComponent implements OnInit {
         this.viajeService.crearViaje(viaje, this.idUser).subscribe(data => {
           console.log("guardado viaje ok");
           this.viajeGuardado = data;
+          this.interfazViajeService.cambiarColor();
           idRecuerdo = this.viajeGuardado.id;
           console.log(data);
-          this.onUpload(this.idUser, idRecuerdo);
-          this.interfazViajeService.cambiarColor();
+          if (this.archvioSeleccionado != null)
+            this.onUpload(this.idUser, idRecuerdo);
         },
           (error: any) => {
             console.log(error)
@@ -95,9 +96,9 @@ export class NuevoViajeComponent implements OnInit {
         this.viajeService.crearViaje(viaje, this.tokenService.getIdUsuario()).subscribe(data => {
           console.log("guardado viaje ok");
           this.viajeGuardado = data;
+          this.interfazViajeService.cambiarColor();
           idRecuerdo = this.viajeGuardado.id;
           this.onUpload(this.tokenService.getIdUsuario(), idRecuerdo);
-          this.interfazViajeService.cambiarColor();
         },
           (error: any) => {
             console.log(error)

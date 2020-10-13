@@ -159,7 +159,7 @@ export class EditarOtroComponent implements OnInit {
   }
 
   public slider() {
-    this.uploadService.getMascotas(this.idUsuario).subscribe(data => {
+    this.uploadService.getOtros(this.idUsuario).subscribe(data => {
       this.archivos = data;
       console.log(this.archivos.length);
       for(let i = 0; i < this.archivos.length; i ++) {

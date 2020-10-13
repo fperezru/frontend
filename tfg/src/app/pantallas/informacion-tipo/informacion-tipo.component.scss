@@ -1,0 +1,65 @@
+
+//DISPOSITIVOS MÓVILES
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {   
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 40px;
+        margin-left: 40px;
+        width: 100%;
+        float: none;
+        
+        button {
+          width: 250px;
+          height: 100px;
+          font-size: 20px;
+          margin-bottom: 30px;
+          background: lightseagreen;
+          color: white;
+        }
+      }
+      
+      #uno {
+        background: rgb(231, 159, 131);
+        color: white;
+      }
+      
+      #dos {
+        background: rgb(240, 125, 159);
+        color: white;
+        margin-top: 50px;
+      } 
+  }
+  
+//ORDENADORES
+@media all and (min-device-width: 1025px) {   
+    div {
+        display: flexbox;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 100px;
+        margin-left: 340px;
+        
+        button {
+          width: 600px;
+          height: 200px;
+          font-size: 30px;
+          margin-bottom: 60px;
+          margin-right: 60px;
+          background: lightseagreen;
+          color: white;
+        }
+      }
+      
+      #uno {
+        background: rgb(231, 159, 131);
+        color: white;
+      }
+      
+      #dos {
+        background: rgb(240, 125, 159);
+        color: white;
+      } 
+}
+  
